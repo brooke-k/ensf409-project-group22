@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4b7c912a-1edd-40d3-9bac-b125c2feab06" name="Default Changelist" comment="Test">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql-connector-java-8.0.23.jar" beforeDir="false" afterPath="$PROJECT_DIR$/lib/mysql-connector-java-8.0.23.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/edu/ucalgary/ensf409/DatabaseIO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/edu/ucalgary/ensf409/DatabaseIO.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -93,6 +93,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Neeraj\Documents\GitHub\ensf409-project-group22\lib" />
       <recent name="C:\Users\Neeraj\Documents\GitHub\ensf409-project-group22" />
     </key>
   </component>
