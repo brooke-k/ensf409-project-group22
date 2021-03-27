@@ -20,11 +20,11 @@ public class FileIO {
     private String consoleOutputString;
 
     /**
-     *
-     * @param outputFileName
-     * @param itemsOrdered
-     * @param originalRequest
-     * @param orderCost
+     * Constructor for FileIO where outputFile name is specified
+     * @param outputFileName Name of output file, where order should be written to
+     * @param itemsOrdered String array of the items that were ordered
+     * @param originalRequest String of the original request submitted by the user
+     * @param orderCost int cost of the entire order
      */
     public FileIO(String outputFileName, String[] itemsOrdered, String originalRequest, int orderCost){
         this.outputFileName = outputFileName;
