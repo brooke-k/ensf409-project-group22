@@ -6,8 +6,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 /**
- * FileIO is a class used for formatting and writing the output from the order to a .txt file
- *
+ * FileIO is a class used for formatting and writing the output from the order to a .txt file,
+ * if the order was successful, and for creating and printing an appropriate console message to
+ * the console informing them of the order status.
  */
 public class FileIO {
     private File outputFile;
