@@ -24,10 +24,21 @@ public class PriceOptimizer {
      * current FurnitureConfigurationData.
      */
     public String[] optimize() {
-        String[] ids = new String[10];
+
+
+        String[] ids = new String[partCount];
         return ids;
     }
 
+    /**
+     * @param index
+     * @return
+     */
+    private boolean compatible(int[] index){
+        boolean[] comp = new boolean[partCount];
+        //do later
+        return false;
+    }
     /**
      * searchable() will try to find the
      */
