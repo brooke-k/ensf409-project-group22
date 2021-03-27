@@ -7,6 +7,7 @@ import java.io.IOException;
 
 /**
  * FileIO is a class used for formatting and writing the output from the order to a .txt file
+ * Needs to be completed based on Component
  */
 public class FileIO {
     private String outputFileName;
@@ -47,6 +48,11 @@ public class FileIO {
         this("AutomaticOrderOutput.txt", itemsOrdered, originalRequest, orderCost);
     };
 
+    public void createOutput(boolean orderSuccessful){
+        if(!orderSuccessful){
+        }
+    }
+
     public void createOutput(){
         try{outWriter = new BufferedWriter(new FileWriter(outputFile));
         } catch(IOException e){
@@ -75,6 +81,28 @@ public class FileIO {
     public void createOutputString(){
         StringBuilder outFileString = new StringBuilder();
         StringBuilder consoleFileString = new StringBuilder();
+
+        outFileString.append("Furniture Order Form");
+        outFileString.append("\n\n\n");
+        outFileString.append("Faculty Name: ");
+        outFileString.append("\n");
+        outFileString.append("Contact: ");
+        outFileString.append("\n\n\n");
+        outFileString.append("Original Order: " + originalRequest);
+        outFileString.append("\n\n\n");
+        outFileString.append("Items Ordered: ");
+        outFileString.append("\n");
+       /*
+            This is all subject to change depending
+            on how the component class is arranged
+            and needs to be altered later.
+
+
+
+        */
+
+
+
 
         consoleFileString.append("\n");
         consoleFileString.append("Purchased: ");
