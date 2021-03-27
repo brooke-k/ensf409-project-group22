@@ -1,6 +1,6 @@
 package edu.ucalgary.ensf409;
 
 //finds cheapest combination
-public class FindCombination {
+public class PriceOptimizer {
 
 }
