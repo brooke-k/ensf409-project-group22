@@ -1,7 +1,7 @@
 package edu.ucalgary.ensf409;
 
 /*
-    FurnitureConfigurationData contains two parallel arrays, one with
+    FurnitureConfigurationData contains three parallel arrays, one with
     the specified furniture ID and one with the specified parts for a
     specific furniture configuration. For instance
      id[0] = D0890, boolean[0] = {F, F, T}, price[0] = 25
