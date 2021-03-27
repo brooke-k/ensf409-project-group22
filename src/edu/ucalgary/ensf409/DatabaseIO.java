@@ -32,30 +32,6 @@ public class DatabaseIO {
         }
     }
 
-    public int getSize(String table, String type){
-        int size = 0;
-        try {
-            Statement myStmt = dbConnect.createStatement();
-            results = myStmt.executeQuery("SELECT * FROM " + table);
-
-            while(results.next()){
-                if(results.getString("type").equals(type)){
-                    size++;
-                }
-            }
-        } catch(SQLException e){
-            System.out.println();
-        }
-        return size;
-    }
-
-    public boolean getBoolean(String bool){
-        if(bool.equals("Y")){
-            return true;
-        } else{
-            return false;
-        }
-    }
 
     public FurnitureConfigurationData getChairData(String type){
         int size = getSize("chair", type);
@@ -185,6 +161,38 @@ public class DatabaseIO {
         }
     }
 
+    public ArrayList<String> suggestedManufacturers(String tableName){
+        ArrayList<String> manuList = new ArrayList<String>();
+        ArrayList<String> suggestList = new ArrayList<String>();
+
+        try {
+            Statement myStmt = dbConnect.createStatement();
+            results = myStmt.executeQuery("SELECT * FROM " + tableName);
+
+            while(results.next()){
+                String tempManu = results.getString("manuid");
+                if(!manuList.contains(tempManu)){
+                    manuList.add(tempManu);
+                }
+            }
+
+            results = myStmt.executeQuery("SELECT * FROM manufacturer");
+
+            while(results.next()){
+                String tempManu = results.getString("manuid");
+                if(manuList.contains(tempManu)){
+                    suggestList.add(tempManu);
+                }
+            }
+
+        } catch(SQLException e){
+            System.out.println("Database error");
+            e.printStackTrace();
+        }
+
+        return suggestList;
+    }
+
     public void close(){
         try{
             dbConnect.close();
@@ -192,6 +200,31 @@ public class DatabaseIO {
         } catch (SQLException e){
             System.out.println("Unable to close the connection");
             e.printStackTrace();
+        }
+    }
+
+    public int getSize(String table, String type){
+        int size = 0;
+        try {
+            Statement myStmt = dbConnect.createStatement();
+            results = myStmt.executeQuery("SELECT * FROM " + table);
+
+            while(results.next()){
+                if(results.getString("type").equals(type)){
+                    size++;
+                }
+            }
+        } catch(SQLException e){
+            System.out.println();
+        }
+        return size;
+    }
+
+    public boolean getBoolean(String bool){
+        if(bool.equals("Y")){
+            return true;
+        } else{
+            return false;
         }
     }
 
