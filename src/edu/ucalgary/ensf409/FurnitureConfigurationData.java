@@ -11,6 +11,7 @@ public class FurnitureConfigurationData {
     private String[] id;
     private int[] price;
 
+
     /**
      * FurnitureConfigurationData(String id, boolean[][] parts) will construct
      * the FurnitureConfigurationData object with the given data.
