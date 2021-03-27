@@ -6,6 +6,7 @@ package edu.ucalgary.ensf409;
  */
 public class PriceOptimizer {
     private FurnitureConfigurationData data;
+    private int partCount;
 
     /**
      * This constructor sets the data value based on the provided
@@ -14,6 +15,7 @@ public class PriceOptimizer {
      */
     public PriceOptimizer(FurnitureConfigurationData data) {
         this.data = data;
+        partCount = data.getParts()[0].length;
     }
 
     /**
