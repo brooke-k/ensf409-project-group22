@@ -5,17 +5,22 @@ package edu.ucalgary.ensf409;
     FurnitureConfigurationData file.
  */
 public class PriceOptimizer {
-    private FurnitureConfigurationData data;
     private int partCount;
+    private boolean[][] parts;
+    private String[] id;
+    private int[] price;
 
     /**
-     * This constructor sets the data value based on the provided
-     * Object.
-     * @param data data to be set.
+     * PriceOptimizer will construct
+     * the PriceOptimizer object with the given data.
+     * @param id String for id of the specific piece of furniture
+     * @param parts 2D boolean array of parts list
      */
-    public PriceOptimizer(FurnitureConfigurationData data) {
-        this.data = data;
-        partCount = data.getParts()[0].length;
+    public PriceOptimizer(String[] id, boolean[][] parts, int[] price) {
+        this.id = id;
+        this.parts = parts;
+        this.price = price;
+        this.partCount = parts[0].length;
     }
 
     /**
@@ -24,23 +29,12 @@ public class PriceOptimizer {
      * current FurnitureConfigurationData.
      */
     public String[] optimize() {
-
-
-        String[] ids = new String[partCount];
+        String[] ids = new String[10];
         return ids;
     }
 
     /**
-     * @param index
-     * @return
-     */
-    private boolean compatible(int[] index){
-        boolean[] comp = new boolean[partCount];
-        //do later
-        return false;
-    }
-    /**
-     * searchable() will try to find the
+     * parallelSort() will sort the arrays, keeping data in the same order
      */
 
 }
