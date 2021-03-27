@@ -1,6 +1,7 @@
 package edu.ucalgary.ensf409;
 
 public class InventoryManagement {
+
     private String[][] inventory;
 
     public InventoryManagement(String[] itemID){
