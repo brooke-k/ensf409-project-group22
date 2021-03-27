@@ -32,26 +32,143 @@ public class DatabaseIO {
         }
     }
 
-    public ArrayList<String> getID(String tableName, String type){
-        ArrayList<String> idList = new ArrayList<String>();
-
-        try{
+    public int getSize(String table, String type){
+        int size = 0;
+        try {
             Statement myStmt = dbConnect.createStatement();
-            results = myStmt.executeQuery("SELECT * FROM " + tableName);
+            results = myStmt.executeQuery("SELECT * FROM " + table);
 
             while(results.next()){
                 if(results.getString("type").equals(type)){
-                    idList.add(results.getString("id"));
+                    size++;
+                }
+            }
+        } catch(SQLException e){
+            System.out.println();
+        }
+        return size;
+    }
+
+    public boolean getBoolean(String bool){
+        if(bool.equals("Y")){
+            return true;
+        } else{
+            return false;
+        }
+    }
+
+    public FurnitureConfigurationData getChairData(String type){
+        int size = getSize("chair", type);
+        String [] idList = new String[size];
+        int [] priceList = new int[size];
+        boolean [][] partList = new boolean[size][4];
+
+        try{
+            Statement myStmt = dbConnect.createStatement();
+            results = myStmt.executeQuery("SELECT * FROM chair");
+
+            for(int i = 0; i < size; i++){
+                if(results.getString("type").equals(type)){
+                    idList[i] = results.getString("id");
+                    priceList[i] = results.getInt("price");
+                    partList[i][0] = getBoolean(results.getString("legs"));
+                    partList[i][0] = getBoolean(results.getString("arms"));
+                    partList[i][0] = getBoolean(results.getString("seat"));
+                    partList[i][0] = getBoolean(results.getString("cushion"));
                 }
             }
 
         } catch (SQLException e){
-            System.out.println("Database does not exist");
+            System.out.println("Database error");
             e.printStackTrace();
         }
 
-        return idList;
+        return new FurnitureConfigurationData(idList, partList, priceList);
     }
+
+    public FurnitureConfigurationData getDeskData(String type){
+        int size = getSize("desk", type);
+        String [] idList = new String[size];
+        int [] priceList = new int[size];
+        boolean [][] partList = new boolean[size][3];
+
+        try{
+            Statement myStmt = dbConnect.createStatement();
+            results = myStmt.executeQuery("SELECT * FROM desk");
+
+            for(int i = 0; i < size; i++){
+                if(results.getString("type").equals(type)){
+                    idList[i] = results.getString("id");
+                    priceList[i] = results.getInt("price");
+                    partList[i][0] = getBoolean(results.getString("legs"));
+                    partList[i][1] = getBoolean(results.getString("top"));
+                    partList[i][2] = getBoolean(results.getString("drawer"));
+                }
+            }
+
+        } catch (SQLException e){
+            System.out.println("Database error");
+            e.printStackTrace();
+        }
+
+        return new FurnitureConfigurationData(idList, partList, priceList);
+    }
+
+    public FurnitureConfigurationData getLampData(String type){
+        int size = getSize("lamp", type);
+        String [] idList = new String[size];
+        int [] priceList = new int[size];
+        boolean [][] partList = new boolean[size][2];
+
+        try{
+            Statement myStmt = dbConnect.createStatement();
+            results = myStmt.executeQuery("SELECT * FROM lamp");
+
+            for(int i = 0; i < size; i++){
+                if(results.getString("type").equals(type)){
+                    idList[i] = results.getString("id");
+                    priceList[i] = results.getInt("price");
+                    partList[i][0] = getBoolean(results.getString("base"));
+                    partList[i][1] = getBoolean(results.getString("bulb"));
+                }
+            }
+
+        } catch (SQLException e){
+            System.out.println("Database error");
+            e.printStackTrace();
+        }
+
+        return new FurnitureConfigurationData(idList, partList, priceList);
+    }
+
+    public FurnitureConfigurationData getFilingData(String type){
+        int size = getSize("filing", type);
+        String [] idList = new String[size];
+        int [] priceList = new int[size];
+        boolean [][] partList = new boolean[size][3];
+
+        try{
+            Statement myStmt = dbConnect.createStatement();
+            results = myStmt.executeQuery("SELECT * FROM filing");
+
+            for(int i = 0; i < size; i++){
+                if(results.getString("type").equals(type)){
+                    idList[i] = results.getString("id");
+                    priceList[i] = results.getInt("price");
+                    partList[i][0] = getBoolean(results.getString("rails"));
+                    partList[i][1] = getBoolean(results.getString("drawers"));
+                    partList[i][2] = getBoolean(results.getString("cabinet"));
+                }
+            }
+
+        } catch (SQLException e){
+            System.out.println("Database error");
+            e.printStackTrace();
+        }
+
+        return new FurnitureConfigurationData(idList, partList, priceList);
+    }
+
 
     public void removeItem(String tableName, String ID){
         try {
@@ -71,6 +188,7 @@ public class DatabaseIO {
     public void close(){
         try{
             dbConnect.close();
+            results.close();
         } catch (SQLException e){
             System.out.println("Unable to close the connection");
             e.printStackTrace();
