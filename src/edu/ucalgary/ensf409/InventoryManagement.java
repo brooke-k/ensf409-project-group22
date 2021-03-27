@@ -3,8 +3,11 @@ package edu.ucalgary.ensf409;
 public class InventoryManagement {
     private String[][] inventory;
 
-    public InventoryManagement(int size){
-        inventory = new String[size][2];
+    public InventoryManagement(String[] itemID){
+        inventory = new String[itemID.length][2];
+        for (int i = 0; i < itemID.length; i++) {
+            inventory[i][0] = itemID[0];
+        }
     }
 
     public int getStock(String id){
@@ -32,5 +35,4 @@ public class InventoryManagement {
         }
         return false;
     }
-
 }
