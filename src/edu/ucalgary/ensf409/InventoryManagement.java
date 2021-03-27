@@ -24,4 +24,13 @@ public class InventoryManagement {
         }
     }
 
+    public boolean itemExists(String id){
+        for(String[] strings : inventory){
+            if(strings[0].equals(id)){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
