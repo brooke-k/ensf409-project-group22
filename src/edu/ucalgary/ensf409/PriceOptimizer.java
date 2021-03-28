@@ -12,7 +12,9 @@ public class PriceOptimizer {
     private String[] id;
     private int[] price;
     private int min = 0;
-    private int[] minIndex = null;
+    private int[] minIndex = new int[3];
+    int partsAvailable[];
+    private int currentCost = 0;
     /**
      * PriceOptimizer will construct
      * the PriceOptimizer object with the given data.
@@ -24,6 +26,7 @@ public class PriceOptimizer {
         this.parts = parts;
         this.price = price;
         this.partCount = parts[0].length;
+        partsAvailable = new int[partCount];
     }
 
     /**
@@ -40,6 +43,19 @@ public class PriceOptimizer {
      * current FurnitureConfigurationData.
      */
     public String[] optimize() {
+        // Store the current state of the parts array
+        boolean[][] temp;
+        temp = copyOf(parts);
+        // Update the boolean array based on current available parts
+        for(int i = 0; i < partCount; i++) {
+            if(partsAvailable[i] >= 1) {
+                for (int j = 0; j < partCount; j++) {
+                    parts[i][j] = true;
+                }
+                partsAvailable[i]--;
+            }
+        }
+        // Optimize
         min = 0;
         for(int p : price){
             min += p;
@@ -57,14 +73,30 @@ public class PriceOptimizer {
             return null;
         }
 
-        String[] ids = null;
-        if(minIndex != null){
-            ids = new String[minIndex.length];
-            for (int i = 0; i < ids.length; i++) {
-                ids[i] = id[minIndex[i]];
-            }
+        String[] ids = new String[minIndex.length];
+
+        for (int i = 0; i < ids.length; i++) {
+            ids[i] = id[minIndex[i]];
         }
 
+        // Restore the parts array
+        parts = temp;
+        // Update the available parts and the cost
+        currentCost += min;
+        // Count the number of total parts
+        for(int i = 0; i < partCount; i++) {
+            int count = 0;
+            for(int j = 0; j < partCount; j++) {
+                if(parts[i][j]) {
+                    count++;
+                    parts[i][j] = false;
+                }
+            }
+            count--;
+            if(count > 0) {
+                partsAvailable[i] += count;
+            }
+        }
         return ids;
     }
 
@@ -129,7 +161,7 @@ public class PriceOptimizer {
     }
 
 
-    public int getPrice(int[] index){
+    private int getPrice(int[] index){
         int sum = 0;
         for(int i = 0; i < index.length; i++) {
             sum += price[index[i]];
@@ -172,5 +204,19 @@ public class PriceOptimizer {
                 }
             }
         }
+    }
+
+    /**
+     * copyOf makes a direct copy of a boolean array.
+     * @return boolean[][]
+     */
+    private boolean[][] copyOf(boolean[][] array){
+        boolean[][] newArray = new boolean[array.length][array[0].length];
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[0].length; j++) {
+                newArray[i][j] = array[i][j];
+            }
+        }
+        return newArray;
     }
 }
