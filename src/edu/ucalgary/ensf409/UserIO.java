@@ -1,17 +1,22 @@
 package edu.ucalgary.ensf409;
 
+import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /*
  * This class facilitates IO with the command-line interface
  */
 public class UserIO {
     private Scanner input;
     private String furnitureType;
-    private String furnitureCatagory;
+    private String furnitureCategory;
     private String numberOfItems;
     private DatabaseIO databaseIO;
     private FileIO fileIO;
+    private PriceOptimizer priceOptimizer;
     private String currentOutputFile = "OrderOutput.txt";
 
     /**
@@ -103,7 +108,13 @@ public class UserIO {
     public void processInput(int inputValue){
         switch(inputValue){
             case 1:
-                System.out.println("\nSelected option 1\n");
+                readLine();
+                System.out.println("\nPlease input request for furniture item in the form");
+                System.out.println("[type] [furniture category], [quantity of items]");
+                System.out.println("ex. mesh chair, 1");
+                System.out.println("Enter request: ");
+                String readFromScan = readLine();
+                processUserRequest(readFromScan);
                 break;
             case 2:
                 System.out.println("\nCurrent output file name is: " + currentOutputFile + "\n");
@@ -126,6 +137,52 @@ public class UserIO {
 
         }
     }
+
+    public void processUserRequest(String userRequest){
+        String requestREGEX = "([a-z]+) ([a-z]+), ([0-9]+)";
+        Pattern requestPattern = Pattern.compile(requestREGEX);
+        Matcher requestMatch = requestPattern.matcher(userRequest);
+        boolean matchesFound = requestMatch.find();
+        if(!matchesFound){
+            System.out.println("Invalid input provided.");
+            processUserRequest(readLine());
+        }
+        else{
+            furnitureType = requestMatch.group(1);
+            furnitureCategory = requestMatch.group(2);
+            numberOfItems = requestMatch.group(3);
+
+            System.out.println("Furniture type: " + furnitureType);
+            System.out.println("Furniture category: " + furnitureCategory);
+            System.out.println("Number of items: " + numberOfItems);
+            checkFurniture();
+            String[] temp = priceOptimizer.optimize();
+            System.out.println(Arrays.toString(temp));
+
+        }
+
+        //System.out.println("In process read \"" + userRequest + "\"");
+    }
+
+    public void checkFurniture(){
+        switch (this.furnitureCategory) {
+            case "chair":
+                this.priceOptimizer = databaseIO.getChairData(this.furnitureType);
+                break;
+            case "desk":
+                this.priceOptimizer = databaseIO.getDeskData(this.furnitureType);
+                break;
+            case "lamp":
+                this.priceOptimizer = databaseIO.getLampData(this.furnitureType);
+                break;
+            case "filing":
+                this.priceOptimizer = databaseIO.getFilingData(this.furnitureType);
+                break;
+            default:
+                System.out.println("error");
+        }
+    }
+
 
 
     /**
