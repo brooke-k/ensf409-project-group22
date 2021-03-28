@@ -28,6 +28,14 @@ public class PriceOptimizer {
     }
 
     /**
+     * getMin returns the minimum price in the object
+     * @return minimum price as an integer
+     */
+    public int getMin() {
+        return min;
+    }
+
+    /**
      * optimize() will try to find the optimal configuration of
      * furniture parts for the lowest price based on the
      * current FurnitureConfigurationData.
