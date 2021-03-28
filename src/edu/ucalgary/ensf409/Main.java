@@ -9,7 +9,10 @@ public class Main {
         UserIO input = new UserIO();
 
         int selection = input.menu();
-        input.processInput(selection);
+        while(true) {
+            input.processInput(selection);
+            selection = input.menu();
+        }
 
 
        //System.out.println("You entered: " + selection);
