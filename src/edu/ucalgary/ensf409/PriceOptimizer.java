@@ -120,7 +120,7 @@ public class PriceOptimizer {
     }
 
 
-    private int getPrice(int[] index){
+    public int getPrice(int[] index){
         int sum = 0;
         for(int i = 0; i < index.length; i++) {
             sum += price[index[i]];
