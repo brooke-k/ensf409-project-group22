@@ -10,7 +10,7 @@ public class PriceOptimizer {
     private String[] id;
     private int[] price;
     private int min = 0;
-
+    private int[] minIndex;
     /**
      * PriceOptimizer will construct
      * the PriceOptimizer object with the given data.
@@ -41,8 +41,11 @@ public class PriceOptimizer {
         for (int i = 1; i < partCount; i++) {
             combination(indexs, i);
         }
+        String[] ids = new String[minIndex.length];
 
-        String[] ids = new String[partCount];
+        for (int i = 0; i < ids.length; i++) {
+            ids[i] = id[indexs[i]];
+        }
         return ids;
     }
 
@@ -50,7 +53,10 @@ public class PriceOptimizer {
 
         if(index == r){
             if(compatible(data)){
-                //WOO
+                if(getPrice(data) < min){
+                    minIndex = new int[data.length];
+                    minIndex = data;
+                }
             }
         }
 
@@ -77,6 +83,14 @@ public class PriceOptimizer {
         return false;
     }
 
+
+    public int getPrice(int[] index){
+        int sum = 0;
+        for (int i = 0; i < index.length; i++) {
+            sum += price[index[i]];
+        }
+        return sum;
+    }
     /**
      * parallelSort() will sort the arrays, keeping data in the same order
      */
