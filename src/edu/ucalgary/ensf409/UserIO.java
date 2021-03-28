@@ -153,16 +153,29 @@ public class UserIO {
             furnitureType = requestMatch.group(1);
             furnitureCategory = requestMatch.group(2);
             numberOfItems = requestMatch.group(3);
-
-            checkFurniture();
-            String[] temp = priceOptimizer.optimize(Integer.parseInt(numberOfItems));
-
-            if(temp!=null){
-                fileIO = new FileIO(currentOutputFile,temp,userRequest,priceOptimizer.getCurrentCost());
+            if(furnitureCategory.equals("chair") || furnitureCategory.equals("desk") || furnitureCategory.equals("filing") || furnitureCategory.equals("lamp")){
+                if(databaseIO.typeExists(furnitureType)){
+                    checkFurniture();
+                    String[] temp = priceOptimizer.optimize(Integer.parseInt(numberOfItems));
+                    if(temp!=null){
+                        for(String t: temp){
+                            databaseIO.removeItem(furnitureCategory, t);
+                        }
+                        fileIO = new FileIO(currentOutputFile,temp,userRequest,priceOptimizer.getCurrentCost());
+                    }
+                    else{
+                        fileIO = new FileIO(databaseIO.suggestedManufacturers(furnitureCategory));
+                    }
+                } else {
+                    System.out.println("Invalid type, try again.");
+                    processUserRequest(readLine());
+                }
+            } else {
+                System.out.println("Invalid category, try again.");
+                processUserRequest(readLine());
             }
-            else{
-                fileIO = new FileIO(databaseIO.suggestedManufacturers(furnitureCategory));
-            }
+
+
         }
     }
 

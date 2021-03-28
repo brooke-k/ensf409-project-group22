@@ -21,8 +21,8 @@ public class DatabaseIO {
      */
     public DatabaseIO(){
         this.dbUrl = "jdbc:mysql://localhost/inventory";
-        this.username = "scm";
-        this.password = "ensf409";
+        this.username = "root";
+        this.password = "password";
     }
 
     /**
@@ -235,11 +235,9 @@ public class DatabaseIO {
      */
     public void removeItem(String tableName, String ID){
         try {
-            String query = "DELETE FROM " + tableName + " WHERE " + ID + " = ?";
+            String query = "DELETE FROM "+tableName+" WHERE ID = ?";
             PreparedStatement myStmt = dbConnect.prepareStatement(query);
-
             myStmt.setString(1, ID);
-
             myStmt.executeUpdate();
             myStmt.close();
 
@@ -313,6 +311,25 @@ public class DatabaseIO {
         return size;
     }
 
+    /**
+     * Checks if the type exists in the database
+     * @param type The string entered by the user
+     * @return Boolean check on if the type exists
+     */
+    public boolean typeExists(String type){
+        boolean exists = false;
+        try {
+            Statement myStmt = dbConnect.createStatement();
+            results = myStmt.executeQuery("SELECT * FROM chair, desk, filing, lamp");
+            while (results.next())
+                if(results.getString("type").equals(type)){
+                    exists = true;
+                }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return exists;
+    }
 
     /**
      * The method close promises to close the database connection.
