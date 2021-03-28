@@ -90,14 +90,15 @@ public class PriceOptimizerTest {
         int[] price = {100, 75, 75, 50};
         boolean[][] parts = {
                 {true, false, true, true},
-                {true, false, false, false},
+                {true, true, false, false},
                 {false, false, true, false},
                 {false, false, false, true}
         };
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
         String[] result = p.optimize();
         String[] result2 = p.optimize();
-        assertNull(result);
+        String[] expected = {"C0942", "C6748"};
+        assertTrue("Output array incorrect.", Arrays.equals(expected, result));
         assertNull(result2);
     }
 }
