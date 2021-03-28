@@ -72,13 +72,35 @@ public class PriceOptimizer {
 
 
     /**
-     * @param index
-     * @return
+     * Compatible checks if a specified list of indices for the boolean
+     * array is compatible (will have all parts fulfilled)
+     * For instance if the list of specified furniture items has parts[][]
+     * as follows,
+     * T F F T
+     * F T T F
+     * it would return true, since it can be fit together to
+     * make one complete set of furniture.
+     * @param list int[] of the indices to be checked together.
+     * @return Boolean, true if compatible, false otherwise.
      */
-    private boolean compatible(int[] index){
-        boolean[] comp = new boolean[partCount];
-        //do later
-        return false;
+    private boolean compatible(int[] list){
+        boolean[] fulfilledParts = new boolean[partCount];
+        boolean ok = true;
+        for(int i = 0; i < list.length; i++) {
+            int indexNum = list[i];
+            for(int j = 0; j < partCount; j++) {
+                if(parts[indexNum][j]) {
+                    fulfilledParts[j] = true;
+                }
+            }
+        }
+        // Make sure whole array is true
+        for(int i = 0; i < partCount; i++) {
+            if(!fulfilledParts[i]) {
+                return false;
+            }
+        }
+        return true;
     }
 
 
