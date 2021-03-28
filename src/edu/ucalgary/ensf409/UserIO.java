@@ -5,14 +5,14 @@ import java.util.Scanner;
 /*
  * This class facilitates IO with the command-line interface
  */
-class UserIO {
-    Scanner input;
-    String furnitureType;
-    String furnitureCatagory;
-    String numberOfItems;
-    DatabaseIO databaseIO;
-    FileIO fileIO;
-    String currentOutputFile = "OrderOutput.txt";
+public class UserIO {
+    private Scanner input;
+    private String furnitureType;
+    private String furnitureCatagory;
+    private String numberOfItems;
+    private DatabaseIO databaseIO;
+    private FileIO fileIO;
+    private String currentOutputFile = "OrderOutput.txt";
 
     /**
      * int menu() will display the user menu and return the selected option
