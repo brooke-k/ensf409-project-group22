@@ -14,5 +14,8 @@ public class Main {
         System.out.print("Please enter user input: ");
         int in = input.readIntUntilAccepted(0, 4);
         System.out.println("You entered: " + in);
+
+        // Testing PriceOptimizer
+
     }
 }
