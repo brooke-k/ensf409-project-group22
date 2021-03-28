@@ -94,14 +94,14 @@ public class DatabaseIO {
             results = myStmt.executeQuery("SELECT * FROM chair");
 
             for(int i = 0; i < size; i++){
-                if(results.getString("type").equals(type)){
-                    idList[i] = results.getString("id");
-                    priceList[i] = results.getInt("price");
+                if(results.getString("Type").equals(type)){
+                    idList[i] = results.getString("ID");
+                    priceList[i] = results.getInt("Price");
                     System.out.println("Part list: "+ priceList.length);
-                    partList[i][0] = results.getString("legs").equals("Y");
-                    partList[i][1] = results.getString("arms").equals("Y");
-                    partList[i][2] = results.getString("seat").equals("Y");
-                    partList[i][3] = results.getString("cushion").equals("Y");
+                    partList[i][0] = results.getString("Legs").equals("Y");
+                    partList[i][1] = results.getString("Arms").equals("Y");
+                    partList[i][2] = results.getString("Seat").equals("Y");
+                    partList[i][3] = results.getString("Cushion").equals("Y");
                 }
             }
 
