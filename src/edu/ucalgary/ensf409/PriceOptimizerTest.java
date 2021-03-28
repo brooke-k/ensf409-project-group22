@@ -36,6 +36,18 @@ public class PriceOptimizerTest {
     }
 
     @Test
+    public void testPriceOptimizer_compatibleValidSmall() {
+        String[] id  = {};
+        int[] price = {};
+        boolean[][] parts = {
+                {true, false, true}
+        };
+        int[] list = {0};
+        PriceOptimizer p = new PriceOptimizer(id,parts,price);
+        assertFalse(p.compatible(list));
+    }
+
+    @Test
     public void testPriceOptimizer_testOptimize() {
         String[] id  = {"C0942", "C6748", "C8138", "C9890"};
         int[] price = {100, 75, 75, 50};
