@@ -117,7 +117,7 @@ public class PriceOptimizer {
 
     /**
      * sortOnPrice() will sort the arrays based on price, keeping data in the same order
-     * for all the arrays using bubble sort. (TODO: Better if its possible to do this on object)
+     * for all the arrays using bubble sort.
      */
     public void sortOnPrice() {
         for(int i = 0; i < price.length; i++) {
