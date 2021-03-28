@@ -13,7 +13,7 @@ public class PriceOptimizer {
     private String[] id;
     private int[] price;
     private int min = 0;
-    private int[] minIndex = new int[3];
+    private int[] minIndex = null;
     /**
      * PriceOptimizer will construct
      * the PriceOptimizer object with the given data.
@@ -50,10 +50,12 @@ public class PriceOptimizer {
             return null;
         }
 
-        String[] ids = new String[minIndex.length];
-
-        for (int i = 0; i < ids.length; i++) {
-            ids[i] = id[minIndex[i]];
+        String[] ids = null;
+        if(minIndex != null){
+            ids = new String[minIndex.length];
+            for (int i = 0; i < ids.length; i++) {
+                ids[i] = id[minIndex[i]];
+            }
         }
 
         return ids;

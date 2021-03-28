@@ -1,0 +1,230 @@
+Index: src/edu/ucalgary/ensf409/PriceOptimizer.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package edu.ucalgary.ensf409;\r\n\r\n/*\r\n    PriceOptimizer contains three parallel arrays, one with\r\n    the specified furniture ID and one with the specified parts for a\r\n    specific furniture configuration. For instance\r\n     id[0] = D0890, boolean[0] = {F, F, T}, price[0] = 25\r\n     And provides methods for optimization of the price.\r\n */\r\npublic class PriceOptimizer {\r\n    private int partCount;\r\n    private boolean[][] parts;\r\n    private String[] id;\r\n    private int[] price;\r\n    private int min = 0;\r\n    private int[] minIndex = new int[3];\r\n    /**\r\n     * PriceOptimizer will construct\r\n     * the PriceOptimizer object with the given data.\r\n     * @param id String for id of the specific piece of furniture\r\n     * @param parts 2D boolean array of parts list\r\n     */\r\n    public PriceOptimizer(String[] id, boolean[][] parts, int[] price) {\r\n        this.id = id;\r\n        this.parts = parts;\r\n        this.price = price;\r\n        this.partCount = parts[0].length;\r\n    }\r\n\r\n    /**\r\n     * optimize() will try to find the optimal configuration of\r\n     * furniture parts for the lowest price based on the\r\n     * current FurnitureConfigurationData.\r\n     */\r\n    public String[] optimize() {\r\n        min = 0;\r\n        for(int p : price){\r\n            min += p;\r\n        }\r\n        System.out.println(\"Initial min price is \" + min);\r\n        int[] indexs = new int[parts.length];\r\n        for (int i = 0; i < parts.length; i++) {\r\n            indexs[i] = i;\r\n        }\r\n\r\n        for (int i = 1; i <= partCount; i++) {\r\n            combination(indexs, indexs.length, i);\r\n        }\r\n        String[] ids = new String[minIndex.length];\r\n\r\n        for (int i = 0; i < ids.length; i++) {\r\n            ids[i] = id[minIndex[i]];\r\n        }\r\n        return ids;\r\n    }\r\n\r\n\r\n    private void recursion(int[] arr, int[] data, int start, int end, int index, int r) {\r\n\r\n        if (index == r) {\r\n            if(compatible(data)){\r\n                if(getPrice(data) < min){\r\n                    min = getPrice(data);\r\n                    minIndex = new int[data.length];\r\n                    for (int i = 0; i < data.length; i++) {\r\n                        minIndex[i] = data[i];\r\n                    }\r\n                }\r\n            }\r\n            return;\r\n        }\r\n        for (int i = start; i <= end && end - i + 1 >= r - index; i++) {\r\n            data[index] = arr[i];\r\n            recursion(arr, data, i + 1, end, index + 1, r);\r\n        }\r\n\r\n    }\r\n\r\n    private void combination(int arr[], int n, int r) {\r\n        int[] data = new int[r];\r\n        recursion(arr, data, 0, n - 1, 0, r);\r\n    }\r\n\r\n\r\n    /**\r\n     * Compatible checks if a specified list of indices for the boolean\r\n     * array is compatible (will have all parts fulfilled)\r\n     * For instance if the list of specified furniture indices of parts[][]\r\n     * as follows,\r\n     * T F F T\r\n     * F T T F\r\n     * it would return true, since it can be fit together to\r\n     * make one complete set of furniture.\r\n     * @param list int[] of the indices to be checked together.\r\n     * @return Boolean, true if compatible, false otherwise.\r\n     */\r\n    public boolean compatible(int[] list) {\r\n        boolean[] fulfilledParts = new boolean[partCount];\r\n        boolean ok = true;\r\n        for(int i = 0; i < list.length; i++) {\r\n            int indexNum = list[i];\r\n            for(int j = 0; j < partCount; j++) {\r\n                if(parts[indexNum][j]) {\r\n                    fulfilledParts[j] = true;\r\n                }\r\n            }\r\n        }\r\n        // Make sure whole array is true\r\n        for(int i = 0; i < partCount; i++) {\r\n            if(!fulfilledParts[i]) {\r\n                return false;\r\n            }\r\n        }\r\n        return true;\r\n    }\r\n\r\n\r\n    private int getPrice(int[] index){\r\n        int sum = 0;\r\n        for(int i = 0; i < index.length; i++) {\r\n            sum += price[index[i]];\r\n        }\r\n        return sum;\r\n    }\r\n\r\n    /**\r\n     * sortOnPrice() will sort the arrays based on price, keeping data in the same order\r\n     * for all the arrays using bubble sort.\r\n     */\r\n    public void sortOnPrice() {\r\n        for(int i = 0; i < price.length; i++) {\r\n            for(int j = i; j < price.length; j++) {\r\n                if(price[i] > price[j]) {\r\n                    // Sort price\r\n                    int temp = price[i];\r\n                    price[i] = price[j];\r\n                    price[j] = temp;\r\n                    // Sort parts\r\n                    boolean[] tempBool = parts[i];\r\n                    parts[i] = parts[j];\r\n                    parts[j] = tempBool;\r\n                    // Sort id\r\n                    String tempID = id[i];\r\n                    id[i] = id[j];\r\n                    id[j] = tempID;\r\n                }\r\n            }\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/edu/ucalgary/ensf409/PriceOptimizer.java b/src/edu/ucalgary/ensf409/PriceOptimizer.java
+--- a/src/edu/ucalgary/ensf409/PriceOptimizer.java	(revision 5f4dccfecdba0143c30fc54734bc410c177caf19)
++++ b/src/edu/ucalgary/ensf409/PriceOptimizer.java	(date 1616900095761)
+@@ -13,7 +13,7 @@
+     private String[] id;
+     private int[] price;
+     private int min = 0;
+-    private int[] minIndex = new int[3];
++    private int[] minIndex = null;
+     /**
+      * PriceOptimizer will construct
+      * the PriceOptimizer object with the given data.
+@@ -37,7 +37,6 @@
+         for(int p : price){
+             min += p;
+         }
+-        System.out.println("Initial min price is " + min);
+         int[] indexs = new int[parts.length];
+         for (int i = 0; i < parts.length; i++) {
+             indexs[i] = i;
+@@ -46,10 +45,12 @@
+         for (int i = 1; i <= partCount; i++) {
+             combination(indexs, indexs.length, i);
+         }
+-        String[] ids = new String[minIndex.length];
+-
+-        for (int i = 0; i < ids.length; i++) {
+-            ids[i] = id[minIndex[i]];
++        String[] ids = null;
++        if(minIndex != null){
++            ids = new String[minIndex.length];
++            for (int i = 0; i < ids.length; i++) {
++                ids[i] = id[minIndex[i]];
++            }
+         }
+         return ids;
+     }
+Index: src/edu/ucalgary/ensf409/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package edu.ucalgary.ensf409;\r\n\r\nimport java.util.Scanner;\r\n\r\npublic class Main {\r\n\r\n    public static void main(String[] args) {\r\n        System.out.println(\"Hello world!\");\r\n        UserIO input = new UserIO();\r\n        // Initiate a menu object\r\n        int selection = input.menu();\r\n\r\n\r\n        System.out.println(\"You entered: \" + selection);\r\n        // Example taking in input\r\n        System.out.print(\"Please enter user input: \");\r\n        int in = input.readIntUntilAccepted(0, 4);\r\n        System.out.println(\"You entered: \" + in);\r\n\r\n        // Testing PriceOptimizer\r\n\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/edu/ucalgary/ensf409/Main.java b/src/edu/ucalgary/ensf409/Main.java
+--- a/src/edu/ucalgary/ensf409/Main.java	(revision 5f4dccfecdba0143c30fc54734bc410c177caf19)
++++ b/src/edu/ucalgary/ensf409/Main.java	(date 1616900095767)
+@@ -5,7 +5,7 @@
+ public class Main {
+ 
+     public static void main(String[] args) {
+-        System.out.println("Hello world!");
++     /*   System.out.println("Hello world!");
+         UserIO input = new UserIO();
+         // Initiate a menu object
+         int selection = input.menu();
+@@ -16,8 +16,28 @@
+         System.out.print("Please enter user input: ");
+         int in = input.readIntUntilAccepted(0, 4);
+         System.out.println("You entered: " + in);
+-
++*/
+         // Testing PriceOptimizer
++        String[] id  = {"C0942", "C6748", "C8138", "C9890"};
++        int[] price = {100, 75, 75, 50};
++        boolean[][] parts = {
++                {true, false, true, true},
++                {true, false, false, false},
++                {false, false, true, false},
++                {false, false, false, true},
++
++        };
++        PriceOptimizer opt = new PriceOptimizer(id, parts, price);
++        String[] output = opt.optimize();
++
++        if(output == null){
++            System.out.println("No Match found");
++        } else{
++            for(String i : output){
++                System.out.println(i);
++            }
++        }
++
+ 
+     }
+ }
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"4b7c912a-1edd-40d3-9bac-b125c2feab06\" name=\"Default Changelist\" comment=\"Some initial implementation of UserIO\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"PREVIEW_PUSH_PROTECTED_ONLY\" value=\"true\" />\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitSEFilterConfiguration\">\r\n    <file-type-list>\r\n      <filtered-out-file-type name=\"LOCAL_BRANCH\" />\r\n      <filtered-out-file-type name=\"REMOTE_BRANCH\" />\r\n      <filtered-out-file-type name=\"TAG\" />\r\n      <filtered-out-file-type name=\"COMMIT_BY_MESSAGE\" />\r\n    </file-type-list>\r\n  </component>\r\n  <component name=\"GithubProjectSettings\">\r\n    <option name=\"CREATE_PULL_REQUEST_DEFAULT_BRANCH\" value=\"main\" />\r\n    <option name=\"CREATE_PULL_REQUEST_DEFAULT_REPO_USER\" value=\"brooke-k\" />\r\n    <option name=\"CREATE_PULL_REQUEST_DEFAULT_REPO_NAME\" value=\"ensf409-project-group22\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"1qLdKiZONjWvltE6rXHY2HcwnDK\" />\r\n  <component name=\"ProjectView\">\r\n    <navigator currentView=\"ProjectPane\" proportions=\"\" version=\"1\" splitterProportion=\"0.5\">\r\n      <flattenPackages />\r\n      <showMembers />\r\n      <showModules />\r\n      <showLibraryContents />\r\n      <hideEmptyPackages />\r\n      <abbreviatePackageNames />\r\n      <autoscrollToSource />\r\n      <autoscrollFromSource />\r\n      <sortByType />\r\n    </navigator>\r\n    <panes>\r\n      <pane id=\"Scope\" />\r\n      <pane id=\"PackagesPane\" />\r\n      <pane id=\"ProjectPane\">\r\n        <subPane>\r\n          <PATH>\r\n            <PATH_ELEMENT>\r\n              <option name=\"myItemId\" value=\"untitled104\" />\r\n              <option name=\"myItemType\" value=\"com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode\" />\r\n            </PATH_ELEMENT>\r\n          </PATH>\r\n          <PATH>\r\n            <PATH_ELEMENT>\r\n              <option name=\"myItemId\" value=\"untitled104\" />\r\n              <option name=\"myItemType\" value=\"com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode\" />\r\n            </PATH_ELEMENT>\r\n            <PATH_ELEMENT>\r\n              <option name=\"myItemId\" value=\"untitled104\" />\r\n              <option name=\"myItemType\" value=\"com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode\" />\r\n            </PATH_ELEMENT>\r\n          </PATH>\r\n          <PATH>\r\n            <PATH_ELEMENT>\r\n              <option name=\"myItemId\" value=\"untitled104\" />\r\n              <option name=\"myItemType\" value=\"com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode\" />\r\n            </PATH_ELEMENT>\r\n            <PATH_ELEMENT>\r\n              <option name=\"myItemId\" value=\"untitled104\" />\r\n              <option name=\"myItemType\" value=\"com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode\" />\r\n            </PATH_ELEMENT>\r\n            <PATH_ELEMENT>\r\n              <option name=\"myItemId\" value=\"src\" />\r\n              <option name=\"myItemType\" value=\"com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode\" />\r\n            </PATH_ELEMENT>\r\n            <PATH_ELEMENT>\r\n              <option name=\"myItemId\" value=\"company\" />\r\n              <option name=\"myItemType\" value=\"com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode\" />\r\n            </PATH_ELEMENT>\r\n          </PATH>\r\n        </subPane>\r\n      </pane>\r\n    </panes>\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">\r\n    <property name=\"SHARE_PROJECT_CONFIGURATION_FILES\" value=\"true\" />\r\n    <property name=\"WebServerToolWindowFactoryState\" value=\"false\" />\r\n    <property name=\"aspect.path.notification.shown\" value=\"true\" />\r\n    <property name=\"last_opened_file_path\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\Neeraj\\Documents\\GitHub\\ensf409-project-group22\\lib\" />\r\n      <recent name=\"C:\\Users\\Neeraj\\Documents\\GitHub\\ensf409-project-group22\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\">\r\n    <configuration default=\"true\" type=\"ArquillianTestNG\" factoryName=\"\" nameIsGenerated=\"true\">\r\n      <option name=\"arquillianRunConfiguration\">\r\n        <value>\r\n          <option name=\"containerStateName\" value=\"\" />\r\n        </value>\r\n      </option>\r\n      <option name=\"TEST_OBJECT\" value=\"CLASS\" />\r\n      <properties />\r\n      <listeners />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"Main\" type=\"Application\" factoryName=\"Application\" temporary=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"edu.ucalgary.ensf409.Main\" />\r\n      <module name=\"ensf409-project-group22\" />\r\n      <option name=\"WORKING_DIRECTORY\" value=\"file://$PROJECT_DIR$\" />\r\n      <RunnerSettings RunnerId=\"Run\" />\r\n      <ConfigurationWrapper RunnerId=\"Run\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Application.Main\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"4b7c912a-1edd-40d3-9bac-b125c2feab06\" name=\"Default Changelist\" comment=\"\" />\r\n      <created>1616862744262</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1616862744262</updated>\r\n      <workItem from=\"1616862747946\" duration=\"2000\" />\r\n      <workItem from=\"1616863815220\" duration=\"4442000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Test\">\r\n      <created>1616864441576</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1616864441576</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"Test\">\r\n      <created>1616865779405</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1616865779405</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"Some initial implementation of UserIO\">\r\n      <created>1616868007892</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1616868007892</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"4\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n    <option name=\"oldMeFiltersMigrated\" value=\"true\" />\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"Test\" />\r\n    <MESSAGE value=\"Some initial implementation of UserIO\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Some initial implementation of UserIO\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 5f4dccfecdba0143c30fc54734bc410c177caf19)
++++ b/.idea/workspace.xml	(date 1616900012386)
+@@ -1,8 +1,15 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="ChangeListManager">
+-    <list default="true" id="4b7c912a-1edd-40d3-9bac-b125c2feab06" name="Default Changelist" comment="Some initial implementation of UserIO">
++    <list default="true" id="4b7c912a-1edd-40d3-9bac-b125c2feab06" name="Default Changelist" comment="FINISHED PRICE OPTIMIZEER!!!!!!!!!!!!!!!!!!!!">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/ensf409-project-group22/edu/ucalgary/ensf409/FileIO.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ensf409-project-group22/edu/ucalgary/ensf409/FileIO.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/ensf409-project-group22/edu/ucalgary/ensf409/InventoryManagement.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/ensf409-project-group22/edu/ucalgary/ensf409/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ensf409-project-group22/edu/ucalgary/ensf409/Main.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/ensf409-project-group22/edu/ucalgary/ensf409/PriceOptimizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ensf409-project-group22/edu/ucalgary/ensf409/PriceOptimizer.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/ensf409-project-group22/edu/ucalgary/ensf409/UserIO.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ensf409-project-group22/edu/ucalgary/ensf409/UserIO.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/edu/ucalgary/ensf409/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/edu/ucalgary/ensf409/Main.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/edu/ucalgary/ensf409/PriceOptimizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/edu/ucalgary/ensf409/PriceOptimizer.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -101,11 +108,12 @@
+   </component>
+   <component name="RecentsManager">
+     <key name="MoveFile.RECENT_KEYS">
++      <recent name="C:\Users\Neeraj\Documents\School\ENSF409\Ensf409-fork\ensf409-project-group22\lib" />
+       <recent name="C:\Users\Neeraj\Documents\GitHub\ensf409-project-group22\lib" />
+       <recent name="C:\Users\Neeraj\Documents\GitHub\ensf409-project-group22" />
+     </key>
+   </component>
+-  <component name="RunManager">
++  <component name="RunManager" selected="Application.Main">
+     <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+       <option name="arquillianRunConfiguration">
+         <value>
+@@ -125,6 +133,37 @@
+       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+       <RunnerSettings RunnerId="Run" />
+       <ConfigurationWrapper RunnerId="Run" />
++      <method v="2">
++        <option name="Make" enabled="true" />
++      </method>
++    </configuration>
++    <configuration name="PriceOptimizerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
++      <module name="ensf409-project-group22" />
++      <extension name="coverage">
++        <pattern>
++          <option name="PATTERN" value="edu.ucalgary.ensf409.*" />
++          <option name="ENABLED" value="true" />
++        </pattern>
++      </extension>
++      <option name="PACKAGE_NAME" value="edu.ucalgary.ensf409" />
++      <option name="MAIN_CLASS_NAME" value="edu.ucalgary.ensf409.PriceOptimizerTest" />
++      <option name="TEST_OBJECT" value="class" />
++      <method v="2">
++        <option name="Make" enabled="true" />
++      </method>
++    </configuration>
++    <configuration name="PriceOptimizerTest.testPriceOptimizer_testOptimize" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
++      <module name="ensf409-project-group22" />
++      <extension name="coverage">
++        <pattern>
++          <option name="PATTERN" value="edu.ucalgary.ensf409.*" />
++          <option name="ENABLED" value="true" />
++        </pattern>
++      </extension>
++      <option name="PACKAGE_NAME" value="edu.ucalgary.ensf409" />
++      <option name="MAIN_CLASS_NAME" value="edu.ucalgary.ensf409.PriceOptimizerTest" />
++      <option name="METHOD_NAME" value="testPriceOptimizer_testOptimize" />
++      <option name="TEST_OBJECT" value="method" />
+       <method v="2">
+         <option name="Make" enabled="true" />
+       </method>
+@@ -132,6 +171,8 @@
+     <recent_temporary>
+       <list>
+         <item itemvalue="Application.Main" />
++        <item itemvalue="JUnit.PriceOptimizerTest.testPriceOptimizer_testOptimize" />
++        <item itemvalue="JUnit.PriceOptimizerTest" />
+       </list>
+     </recent_temporary>
+   </component>
+@@ -167,7 +208,35 @@
+       <option name="project" value="LOCAL" />
+       <updated>1616868007892</updated>
+     </task>
+-    <option name="localTasksCounter" value="4" />
++    <task id="LOCAL-00004" summary="added price optimizer">
++      <created>1616892504767</created>
++      <option name="number" value="00004" />
++      <option name="presentableId" value="LOCAL-00004" />
++      <option name="project" value="LOCAL" />
++      <updated>1616892504767</updated>
++    </task>
++    <task id="LOCAL-00005" summary="Added PriceOptimizer">
++      <created>1616892937904</created>
++      <option name="number" value="00005" />
++      <option name="presentableId" value="LOCAL-00005" />
++      <option name="project" value="LOCAL" />
++      <updated>1616892937904</updated>
++    </task>
++    <task id="LOCAL-00006" summary="Added PriceOptimizer">
++      <created>1616897679455</created>
++      <option name="number" value="00006" />
++      <option name="presentableId" value="LOCAL-00006" />
++      <option name="project" value="LOCAL" />
++      <updated>1616897679455</updated>
++    </task>
++    <task id="LOCAL-00007" summary="FINISHED PRICE OPTIMIZEER!!!!!!!!!!!!!!!!!!!!">
++      <created>1616898688200</created>
++      <option name="number" value="00007" />
++      <option name="presentableId" value="LOCAL-00007" />
++      <option name="project" value="LOCAL" />
++      <updated>1616898688200</updated>
++    </task>
++    <option name="localTasksCounter" value="8" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+@@ -188,6 +257,9 @@
+   <component name="VcsManagerConfiguration">
+     <MESSAGE value="Test" />
+     <MESSAGE value="Some initial implementation of UserIO" />
+-    <option name="LAST_COMMIT_MESSAGE" value="Some initial implementation of UserIO" />
++    <MESSAGE value="added price optimizer" />
++    <MESSAGE value="Added PriceOptimizer" />
++    <MESSAGE value="FINISHED PRICE OPTIMIZEER!!!!!!!!!!!!!!!!!!!!" />
++    <option name="LAST_COMMIT_MESSAGE" value="FINISHED PRICE OPTIMIZEER!!!!!!!!!!!!!!!!!!!!" />
+   </component>
+ </project>
+\ No newline at end of file
