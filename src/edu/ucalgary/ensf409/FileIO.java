@@ -57,7 +57,7 @@ public class FileIO {
      * Output is provided only in the terminal.
      * No order form is created.
      */
-    public void createUnfulfilledOutput(){
+    private void createUnfulfilledOutput(){
         StringBuilder outputString = new StringBuilder();
         outputString.append("\nOrder could not be fulfilled based on current inventory.");
         outputString.append("\n");
@@ -96,7 +96,7 @@ public class FileIO {
      *
      * Calls the private method printOutputs to display console output and write to the order form.
      */
-    public void createFulfilledOutput(){
+    private void createFulfilledOutput(){
         StringBuilder consoleBuilder = new StringBuilder();
         StringBuilder fileBuilder = new StringBuilder();
 
