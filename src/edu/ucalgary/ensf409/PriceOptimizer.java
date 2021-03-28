@@ -74,7 +74,8 @@ public class PriceOptimizer {
     }
 
 
-    private void recursion(int[] arr, int[] data, int start, int end, int index, int r) {
+    private void recursion(int[] arr, int[] data, int start,
+                           int end, int index, int r) {
         if (index == r) {
             if(compatible(data)){
                 if(getPrice(data) < currentCost){
@@ -147,8 +148,8 @@ public class PriceOptimizer {
     }
 
     /**
-     * sortOnPrice() will sort the arrays based on price, keeping data in the same order
-     * for all the arrays using bubble sort.
+     * sortOnPrice() will sort the arrays based on price, keeping
+     * data in the same order for all the arrays using bubble sort.
      */
     public void sortOnPrice() {
         for(int i = 0; i < price.length; i++) {

@@ -16,8 +16,10 @@ public class DatabaseIO {
     private String password;
 
     /**
-     * Constructor for DatabaseIO in the case that no username or password has been entered.
-     * Sets the username variable as "scm" and the password variable as "ensf409".
+     * Constructor for DatabaseIO in the case that no username or password
+     * has been entered.
+     * Sets the username variable as "scm" and the password variable as
+     * "ensf409".
      */
     public DatabaseIO(){
         this.dbUrl = "jdbc:mysql://localhost/inventory";
@@ -26,10 +28,13 @@ public class DatabaseIO {
     }
 
     /**
-     * Constructor for DatabaseIO in the case that the user has inputted their username and password.
+     * Constructor for DatabaseIO in the case that the user has inputted their
+     * username and password.
      * The DatabaseIO object can be constructed using the given data.
-     * @param username String username is the user-entered variable of their username
-     * @param password String password is the user-entered variable of their password
+     * @param username String username is the user-entered variable of
+     *                 their username
+     * @param password String password is the user-entered variable of
+     *                 their password
      */
     public DatabaseIO(String username, String password){
         this.dbUrl = "jdbc:mysql://localhost/inventory";
@@ -62,12 +67,14 @@ public class DatabaseIO {
     }
 
     /**
-     * The method initializeConnection promises to create a connection to the database otherwise
+     * The method initializeConnection promises to create a connection to the
+     * database otherwise
      * it will output an error.
      */
     public void createConnection(){
         try{
-            this.dbConnect = DriverManager.getConnection(this.dbUrl, this.username, this.password);
+            this.dbConnect = DriverManager.getConnection(this.dbUrl,
+                    this.username, this.password);
         } catch (SQLException e){
             System.out.println("Unable to create a connection.");
             e.printStackTrace();
@@ -77,10 +84,13 @@ public class DatabaseIO {
 
     /**
      * The method getChairData takes in a String of the furniture type.
-     * The method promises to return an object of FurnitureConfigurationData which contains
-     * the list of prices, list of parts and list of ID's for the furniture type given.
+     * The method promises to return an object of FurnitureConfigurationData
+     * which contains
+     * the list of prices, list of parts and list of ID's for the furniture
+     * type given.
      * @param type String of the furniture type
-     * @return object FurnitureConfigurationData containing data from the Chair table
+     * @return object FurnitureConfigurationData containing data from the
+     * Chair table
      */
     public PriceOptimizer getChairData(String type){
         int size = getSize("chair", type);
@@ -99,10 +109,14 @@ public class DatabaseIO {
                     idList[i] = results.getString("ID");
                     priceList[i] = results.getInt("Price");
 
-                    partList[i][0] = results.getString("Legs").equals("Y");
-                    partList[i][1] = results.getString("Arms").equals("Y");
-                    partList[i][2] = results.getString("Seat").equals("Y");
-                    partList[i][3] = results.getString("Cushion").equals("Y");
+                    partList[i][0] = results.getString("Legs")
+                            .equals("Y");
+                    partList[i][1] = results.getString("Arms")
+                            .equals("Y");
+                    partList[i][2] = results.getString("Seat")
+                            .equals("Y");
+                    partList[i][3] = results.getString("Cushion")
+                            .equals("Y");
                     i++;
                 }
 
@@ -118,10 +132,13 @@ public class DatabaseIO {
 
     /**
      * The method getDeskData takes in a String of the furniture type.
-     * The method promises to return an object of FurnitureConfigurationData which contains
-     * the list of prices, list of parts and list of ID's for the furniture type given.
+     * The method promises to return an object of FurnitureConfigurationData
+     * which contains
+     * the list of prices, list of parts and list of ID's for the furniture
+     * type given.
      * @param type String of the furniture type
-     * @return object FurnitureConfigurationData containing data from the Desk table
+     * @return object FurnitureConfigurationData containing data from the
+     * Desk table
      */
     public PriceOptimizer getDeskData(String type){
         int size = getSize("desk", type);
@@ -138,9 +155,12 @@ public class DatabaseIO {
                 if(results.getString("Type").equals(type)){
                     idList[i] = results.getString("ID");
                     priceList[i] = results.getInt("Price");
-                    partList[i][0] = results.getString("Legs").equals("Y");
-                    partList[i][1] = results.getString("Top").equals("Y");
-                    partList[i][2] = results.getString("Drawer").equals("Y");
+                    partList[i][0] = results.getString("Legs")
+                            .equals("Y");
+                    partList[i][1] = results.getString("Top")
+                            .equals("Y");
+                    partList[i][2] = results.getString("Drawer")
+                            .equals("Y");
                     i++;
                 }
             }
@@ -155,10 +175,12 @@ public class DatabaseIO {
 
     /**
      * The method getLampData takes in a String of the furniture type.
-     * The method promises to return an object of FurnitureConfigurationData which contains
-     * the list of prices, list of parts and list of ID's for the furniture type given.
+     * The method promises to return an object of
+     * FurnitureConfigurationData which contains the list of prices, list of
+     * parts and list of ID's for the furniture type given.
      * @param type String of the furniture type
-     * @return object FurnitureConfigurationData containing data from the Lamp table
+     * @return object FurnitureConfigurationData containing data from the Lamp
+     * table
      */
     public PriceOptimizer getLampData(String type){
         int size = getSize("lamp", type);
@@ -175,8 +197,10 @@ public class DatabaseIO {
                 if(results.getString("type").equals(type)){
                     idList[i] = results.getString("id");
                     priceList[i] = results.getInt("price");
-                    partList[i][0] = results.getString("base").equals("Y");
-                    partList[i][1] = results.getString("bulb").equals("Y");
+                    partList[i][0] = results.getString("base")
+                            .equals("Y");
+                    partList[i][1] = results.getString("bulb")
+                            .equals("Y");
                     i++;
                 }
             }
@@ -191,10 +215,13 @@ public class DatabaseIO {
 
     /**
      * The method getFilingData takes in a String of the furniture type.
-     * The method promises to return an object of FurnitureConfigurationData which contains
-     * the list of prices, list of parts and list of ID's for the furniture type given.
+     * The method promises to return an object of
+     * FurnitureConfigurationData which contains
+     * the list of prices, list of parts and list of ID's for the
+     * furniture type given.
      * @param type String of the furniture type
-     * @return object FurnitureConfigurationData containing data from the Filing table
+     * @return object FurnitureConfigurationData containing data
+     * from the Filing table
      */
     public PriceOptimizer getFilingData(String type){
         int size = getSize("filing", type);
@@ -211,9 +238,12 @@ public class DatabaseIO {
                 if(results.getString("type").equals(type)){
                     idList[i] = results.getString("id");
                     priceList[i] = results.getInt("price");
-                    partList[i][0] = results.getString("rails").equals("Y");
-                    partList[i][1] = results.getString("drawers").equals("Y");
-                    partList[i][2] = results.getString("cabinet").equals("Y");
+                    partList[i][0] = results.getString("rails")
+                            .equals("Y");
+                    partList[i][1] = results.getString("drawers")
+                            .equals("Y");
+                    partList[i][2] = results.getString("cabinet")
+                            .equals("Y");
                     i++;
                 }
             }
@@ -228,8 +258,8 @@ public class DatabaseIO {
 
 
     /**
-     * The method removeItem deletes the the furniture item corresponding to the ID given
-     * from the given table name.
+     * The method removeItem deletes the the furniture item
+     * corresponding to the ID given from the given table name.
      * @param tableName String variable of the type of furniture
      * @param ID String variable of the ID of the furniture
      */
@@ -250,8 +280,9 @@ public class DatabaseIO {
     }
 
     /**
-     * The method suggestedManufacturers creates a list of suggested manufacturers to choose from if a user
-     * request is not fulfilled for a certain furniture.
+     * The method suggestedManufacturers creates a list of suggested
+     * manufacturers to choose from if a user request is not
+     * fulfilled for a certain furniture.
      * @param tableName String variable of the furniture
      * @return String ArrayList of the suggested manufacturers of a furniture
      */
@@ -288,8 +319,9 @@ public class DatabaseIO {
     }
 
     /**
-     * The method getSize takes in a table corresponding to a certain furniture and also obtains
-     * the furniture type. The method promises to return an int of the number of a certain furniture type
+     * The method getSize takes in a table corresponding to a certain
+     * furniture and also obtains the furniture type. The method promises
+     * to return an int of the number of a certain furniture type
      * in the given table.
      * @param table String variable of furniture name
      * @param type String variable of type of furniture

@@ -7,9 +7,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * FileIO is a class used for formatting and writing the output from the order to a .txt file,
- * if the order was successful, and for creating and printing an appropriate console message to
- * the console informing them of the order status.
+ * FileIO is a class used for formatting and writing the output from the
+ * order to a .txt file, if the order was successful, and for creating and
+ * printing an appropriate console message to the console informing them of
+ * the order status.
  */
 public class FileIO {
     private File outputFile;
@@ -21,9 +22,11 @@ public class FileIO {
     private ArrayList<String> manufacturer;
 
     /**
-     * Constructor for FileIO in the case of an unfulfilled order. Creates an output message to the console that
+     * Constructor for FileIO in the case of an unfulfilled order.
+     * Creates an output message to the console that
      * includes the suggested alternative manufacturer(s).
-     * @param manufacturer Arraylist of length 1+ elements that contains all suggested manufacturers for the item
+     * @param manufacturer Arraylist of length 1+ elements that contains
+     *                     all suggested manufacturers for the item
      *                     order that couldn't be fulfilled
      */
     public FileIO(ArrayList<String> manufacturer){
@@ -33,15 +36,19 @@ public class FileIO {
 
 
     /**
-     * Constructor for FileIO in the case of a fulfilled order. Creates an output message to the console that
-     * contains the items that have been ordered and generates an output file with the name specified where
+     * Constructor for FileIO in the case of a fulfilled order. Creates an
+     * output message to the console that contains the items that have been
+     * ordered and generates an output file with the name specified where
      * the order form will be written to.
-     * @param outputFileName String name of the file where the order form is to be written to
-     * @param itemsOrdered String array of item ID's that were purchased to fulfill the order
+     * @param outputFileName String name of the file where the order form is
+     *                       to be written to
+     * @param itemsOrdered String array of item ID's that were purchased to
+     *                     fulfill the order
      * @param originalRequest String of the original request made by the user
      * @param orderCost int of the total cost of the order in dollars
      */
-    public FileIO(String outputFileName, String[] itemsOrdered, String originalRequest, int orderCost){
+    public FileIO(String outputFileName, String[] itemsOrdered,
+                  String originalRequest, int orderCost){
         this.itemsOrdered = itemsOrdered;
         this.originalRequest = originalRequest;
         this.orderCost = orderCost;
@@ -59,10 +66,12 @@ public class FileIO {
      */
     private void createUnfulfilledOutput(){
         StringBuilder outputString = new StringBuilder();
-        outputString.append("\nOrder could not be fulfilled based on current inventory.");
+        outputString.append("\nOrder could not be fulfilled based " +
+                "on current inventory.");
         outputString.append("\n");
         if(manufacturer.size() == 1){
-            outputString.append("The suggested manufacturer for this order is ");
+            outputString.append("The suggested manufacturer for this " +
+                    "order is ");
             outputString.append(manufacturer.get(0));
             outputString.append(".");
             consoleOutputString = outputString.toString();
@@ -89,12 +98,14 @@ public class FileIO {
 
     /**
      * Method for handling the output for an order that has been fulfilled.
-     * Informs the user in the terminal that the order was successful, followed by a list
-     * of the IDs of the components that were used to fulfill the order and the total cost of the order.
-     * Creates and formats the output for the order form, containing blank spaces for faculty, contact,
-     * and date, the original request, the IDs of the ordered components, and the total cost of the order.
-     *
-     * Calls the private method printOutputs to display console output and write to the order form.
+     * Informs the user in the terminal that the order was successful,
+     * followed by a list of the IDs of the components that were used to
+     * fulfill the order and the total cost of the order.
+     * Creates and formats the output for the order form, containing blank
+     * spaces for faculty, contact, and date, the original request, the IDs of
+     * the ordered components, and the total cost of the order.
+     * Calls the private method printOutputs to display console output and
+     * write to the order form.
      */
     private void createFulfilledOutput(){
         StringBuilder consoleBuilder = new StringBuilder();
@@ -159,16 +170,18 @@ public class FileIO {
     }
 
     /**
-     * Method for printing the user order update to the console and for writing the order
-     * form to the output file.
+     * Method for printing the user order update to the console
+     * and for writing the order form to the output file.
      */
     private void printOutputs(){
         try {
-            BufferedWriter outWriter = new BufferedWriter(new FileWriter(outputFile));
+            BufferedWriter outWriter = new BufferedWriter(
+                    new FileWriter(outputFile));
             outWriter.write(orderOutputString);
             outWriter.close();
         }catch(IOException e){
-            System.err.println("Output file could not be created for order form.");
+            System.err.println("Output file could not be created " +
+                    "for order form.");
         }
 
         System.out.println(consoleOutputString);
