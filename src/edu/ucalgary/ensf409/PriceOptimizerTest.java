@@ -84,4 +84,18 @@ public class PriceOptimizerTest {
         assertNull(result);
     }
 
+    @Test
+    public void testPriceOptimizer_testOptimize2() {
+        String[] id  = {"C0942", "C6748", "C8138", "C9890"};
+        int[] price = {100, 75, 75, 50};
+        boolean[][] parts = {
+                {true, false, true, true},
+                {true, false, false, false},
+                {false, false, true, false},
+                {false, false, false, true}
+        };
+        PriceOptimizer p = new PriceOptimizer(id,parts,price);
+        String[] result = p.optimize();
+        assertNull(result);
+    }
 }
