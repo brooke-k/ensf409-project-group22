@@ -37,7 +37,6 @@ public class PriceOptimizer {
         for(int p : price){
             min += p;
         }
-        System.out.println("Initial min price is " + min);
         int[] indexs = new int[parts.length];
         for (int i = 0; i < parts.length; i++) {
             indexs[i] = i;
@@ -46,11 +45,17 @@ public class PriceOptimizer {
         for (int i = 1; i <= partCount; i++) {
             combination(indexs, indexs.length, i);
         }
+
+        if(!compatible(indexs)) {
+            return null;
+        }
+
         String[] ids = new String[minIndex.length];
 
         for (int i = 0; i < ids.length; i++) {
             ids[i] = id[minIndex[i]];
         }
+
         return ids;
     }
 
