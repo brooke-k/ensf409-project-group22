@@ -20,15 +20,15 @@ class UserIO {
      * @return int corresponding to the selected option by the user
      */
     public int menu() {
-        System.out.println("1. Input a User Request");
-        System.out.println("2. View Current Output Filename");
-        System.out.println("3. View Current SQL Database Credentials");
-        System.out.println("4. Change Output Filename");
-        System.out.println("5. Change SQL Database Credentials");
+            System.out.println("1. Input a User Request");
+            System.out.println("2. View Current Output Filename");
+            System.out.println("3. View Current SQL Database Credentials");
+            System.out.println("4. Change Output Filename");
+            System.out.println("5. Change SQL Database Credentials");
 
-        System.out.println("0. Exit Program");
-        System.out.print("Enter your selection: ");
-        return readIntUntilAccepted(0,5);
+            System.out.println("0. Exit Program");
+            System.out.print("Enter your selection: ");
+            return readIntUntilAccepted(0, 5);
     }
 
 
@@ -38,6 +38,7 @@ class UserIO {
      */
     public UserIO() {
         input = new Scanner(System.in);
+        databaseIO = new DatabaseIO();
     }
 
     /**
@@ -105,10 +106,12 @@ class UserIO {
                 System.out.println("\nSelected option 1\n");
                 break;
             case 2:
-                System.out.println("\nCurrent output file name is " + currentOutputFile + "\n");
+                System.out.println("\nCurrent output file name is: " + currentOutputFile + "\n");
                 break;
             case 3:
-                System.out.println("\nSelected option 3\n");
+                System.out.println("\nCurrent database URL: " + databaseIO.getDbUrl());
+                System.out.println("Current database username: " + databaseIO.getUsername());
+                System.out.println("Current database password: " + databaseIO.getPassword());
                 break;
             case 4:
                 System.out.println("\nSelected option 4\n");
