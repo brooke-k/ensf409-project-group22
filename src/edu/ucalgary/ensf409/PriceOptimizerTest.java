@@ -1,6 +1,7 @@
 package edu.ucalgary.ensf409;
 import org.junit.*;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -89,6 +90,26 @@ public class PriceOptimizerTest {
         String[] id  = {"C0942", "C6748", "C8138", "C9890"};
         int[] price = {100, 75, 75, 50};
         boolean[][] parts = {
+                {true, true, true, true},
+                {true, true, true, true},
+                {false, false, true, false},
+                {false, false, false, true}
+        };
+        PriceOptimizer p = new PriceOptimizer(id,parts,price);
+        String[] result = p.optimize(2);
+        String[] expected = {"C0942", "C6748"};
+        String[] expected2 = {"C6748", "C0942"};
+        for(int i = 0; i < result.length; i++) {
+            System.out.print(result[i] + " ");
+        }
+        assertTrue("Output array incorrect.", Arrays.equals(expected, result) || Arrays.equals(result, expected));
+    }
+
+    @Test
+    public void testPriceOptimizer_testOptimize3() {
+        String[] id  = {"C0942", "C6748", "C8138", "C9890"};
+        int[] price = {100, 75, 75, 50};
+        boolean[][] parts = {
                 {true, false, false, true},
                 {false, true, true, true},
                 {false, true, false, false},
@@ -97,6 +118,9 @@ public class PriceOptimizerTest {
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
         String[] result = p.optimize(2);
         String[] expected = {"C0942", "C6748", "C9890"};
-        assertTrue("Output array incorrect.", Arrays.equals(expected, result));
+        for(int i = 0; i < result.length; i++) {
+            System.out.print(result[i] + " ");
+        }
+        assertTrue("Output array incorrect.", Arrays.equals(expected, result) || Arrays.equals(result, expected));
     }
 }
