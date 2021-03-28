@@ -12,7 +12,6 @@ public class PriceOptimizer {
     private String[] id;
     private int[] price;
     private int[] minIndex = null;
-    int partsAvailable[];
     private int currentCost = 0;
     private int itemCount;
     /**
@@ -26,7 +25,6 @@ public class PriceOptimizer {
         this.parts = parts;
         this.price = price;
         this.partCount = parts[0].length;
-        partsAvailable = new int[partCount];
     }
 
     /**
