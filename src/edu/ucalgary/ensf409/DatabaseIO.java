@@ -93,7 +93,8 @@ public class DatabaseIO {
             Statement myStmt = dbConnect.createStatement();
             results = myStmt.executeQuery("SELECT * FROM chair");
 
-            for(int i = 0; i < size; i++){
+            int i = 0;
+            while(results.next()){
                 if(results.getString("Type").equals(type)){
                     idList[i] = results.getString("ID");
                     priceList[i] = results.getInt("Price");
@@ -102,7 +103,9 @@ public class DatabaseIO {
                     partList[i][1] = results.getString("Arms").equals("Y");
                     partList[i][2] = results.getString("Seat").equals("Y");
                     partList[i][3] = results.getString("Cushion").equals("Y");
+                    i++;
                 }
+
             }
 
         } catch (SQLException e){
@@ -130,13 +133,15 @@ public class DatabaseIO {
             Statement myStmt = dbConnect.createStatement();
             results = myStmt.executeQuery("SELECT * FROM desk");
 
-            for(int i = 0; i < size; i++){
-                if(results.getString("type").equals(type)){
-                    idList[i] = results.getString("id");
-                    priceList[i] = results.getInt("price");
-                    partList[i][0] = results.getString("legs").equals("Y");
-                    partList[i][1] = results.getString("top").equals("Y");
-                    partList[i][2] = results.getString("drawer").equals("Y");
+            int i = 0;
+            while(results.next()){
+                if(results.getString("Type").equals(type)){
+                    idList[i] = results.getString("ID");
+                    priceList[i] = results.getInt("Price");
+                    partList[i][0] = results.getString("Legs").equals("Y");
+                    partList[i][1] = results.getString("Top").equals("Y");
+                    partList[i][2] = results.getString("Drawer").equals("Y");
+                    i++;
                 }
             }
 
@@ -165,12 +170,14 @@ public class DatabaseIO {
             Statement myStmt = dbConnect.createStatement();
             results = myStmt.executeQuery("SELECT * FROM lamp");
 
-            for(int i = 0; i < size; i++){
+            int i = 0;
+            while(results.next()){
                 if(results.getString("type").equals(type)){
                     idList[i] = results.getString("id");
                     priceList[i] = results.getInt("price");
                     partList[i][0] = results.getString("base").equals("Y");
                     partList[i][1] = results.getString("bulb").equals("Y");
+                    i++;
                 }
             }
 
@@ -199,13 +206,15 @@ public class DatabaseIO {
             Statement myStmt = dbConnect.createStatement();
             results = myStmt.executeQuery("SELECT * FROM filing");
 
-            for(int i = 0; i < size; i++){
+            int i = 0;
+            while(results.next()){
                 if(results.getString("type").equals(type)){
                     idList[i] = results.getString("id");
                     priceList[i] = results.getInt("price");
                     partList[i][0] = results.getString("rails").equals("Y");
                     partList[i][1] = results.getString("drawers").equals("Y");
                     partList[i][2] = results.getString("cabinet").equals("Y");
+                    i++;
                 }
             }
 
