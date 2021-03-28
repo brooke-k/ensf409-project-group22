@@ -51,7 +51,7 @@ public class UserIO {
      */
     public String readLine() {
         // Take the next line of input
-        input.skip("\n");
+        input.nextLine();
         return input.nextLine();
     }
 
