@@ -82,7 +82,7 @@ public class DatabaseIO {
      * @param type String of the furniture type
      * @return object FurnitureConfigurationData containing data from the Chair table
      */
-    public FurnitureConfigurationData getChairData(String type){
+    public PriceOptimizer getChairData(String type){
         int size = getSize("chair", type);
         String [] idList = new String[size];
         int [] priceList = new int[size];
@@ -108,7 +108,7 @@ public class DatabaseIO {
             e.printStackTrace();
         }
 
-        return new FurnitureConfigurationData(idList, partList, priceList);
+        return new PriceOptimizer(idList, partList, priceList);
     }
 
     /**
@@ -118,7 +118,7 @@ public class DatabaseIO {
      * @param type String of the furniture type
      * @return object FurnitureConfigurationData containing data from the Desk table
      */
-    public FurnitureConfigurationData getDeskData(String type){
+    public PriceOptimizer getDeskData(String type){
         int size = getSize("desk", type);
         String [] idList = new String[size];
         int [] priceList = new int[size];
@@ -143,7 +143,7 @@ public class DatabaseIO {
             e.printStackTrace();
         }
 
-        return new FurnitureConfigurationData(idList, partList, priceList);
+        return new PriceOptimizer(idList, partList, priceList);
     }
 
     /**
@@ -153,7 +153,7 @@ public class DatabaseIO {
      * @param type String of the furniture type
      * @return object FurnitureConfigurationData containing data from the Lamp table
      */
-    public FurnitureConfigurationData getLampData(String type){
+    public PriceOptimizer getLampData(String type){
         int size = getSize("lamp", type);
         String [] idList = new String[size];
         int [] priceList = new int[size];
@@ -177,7 +177,7 @@ public class DatabaseIO {
             e.printStackTrace();
         }
 
-        return new FurnitureConfigurationData(idList, partList, priceList);
+        return new PriceOptimizer(idList, partList, priceList);
     }
 
     /**
@@ -187,7 +187,7 @@ public class DatabaseIO {
      * @param type String of the furniture type
      * @return object FurnitureConfigurationData containing data from the Filing table
      */
-    public FurnitureConfigurationData getFilingData(String type){
+    public PriceOptimizer getFilingData(String type){
         int size = getSize("filing", type);
         String [] idList = new String[size];
         int [] priceList = new int[size];
@@ -212,7 +212,7 @@ public class DatabaseIO {
             e.printStackTrace();
         }
 
-        return new FurnitureConfigurationData(idList, partList, priceList);
+        return new PriceOptimizer(idList, partList, priceList);
     }
 
 
