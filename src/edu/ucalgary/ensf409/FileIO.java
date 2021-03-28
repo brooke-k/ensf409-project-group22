@@ -50,18 +50,6 @@ public class FileIO {
     }
 
     /**
-     * Constructor for FileIO in the case of a fulfilled order. Creates an output message to the console that
-     * contains the items that have been ordered and generates an output file with the name "OrderOutput.txt" in
-     * the immediate local directory.
-     * @param itemsOrdered String array of item ID's that were purchased to fulfill the order
-     * @param originalRequest String of the original order request made by the user
-     * @param orderCost int of the total cost of the order in dollars
-     */
-    public FileIO(String[] itemsOrdered, String originalRequest, int orderCost){
-        this("OrderOutput.txt", itemsOrdered,originalRequest,orderCost);
-    }
-
-    /**
      * Method for handling the output for an order that is not fulfilled.
      * Notifies the user the order could not be filled,
      * then provides a list of suggested manufacturers that produce the product

@@ -10,6 +10,9 @@ class UserIO {
     String furnitureType;
     String furnitureCatagory;
     String numberOfItems;
+    DatabaseIO databaseIO;
+    FileIO fileIO;
+    String currentOutputFile = "OrderOutput.txt";
 
     /**
      * int menu() will display the user menu and return the selected option
@@ -102,7 +105,7 @@ class UserIO {
                 System.out.println("\nSelected option 1\n");
                 break;
             case 2:
-                System.out.println("\nSelected option 2\n");
+                System.out.println("\nCurrent output file name is " + currentOutputFile + "\n");
                 break;
             case 3:
                 System.out.println("\nSelected option 3\n");
