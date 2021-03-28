@@ -117,26 +117,14 @@
       <recent name="C:\Users\Neeraj\Documents\GitHub\ensf409-project-group22" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.PriceOptimizerTest">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true">
-      <option name="MAIN_CLASS_NAME" value="edu.ucalgary.ensf409.Main" />
-      <module name="ensf409-project-group22" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.PriceOptimizerTest.testPriceOptimizer_testOptimize3">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -152,22 +140,6 @@
       <option name="PACKAGE_NAME" value="edu.ucalgary.ensf409" />
       <option name="MAIN_CLASS_NAME" value="edu.ucalgary.ensf409.PriceOptimizerTest" />
       <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="PriceOptimizerTest.testPriceOptimizer_compatibleValid" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="ensf409-project-group22" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="edu.ucalgary.ensf409.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="edu.ucalgary.ensf409" />
-      <option name="MAIN_CLASS_NAME" value="edu.ucalgary.ensf409.PriceOptimizerTest" />
-      <option name="METHOD_NAME" value="testPriceOptimizer_compatibleValid" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -204,13 +176,45 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="PriceOptimizerTest.testPriceOptimizer_testOptimize2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ensf409-project-group22" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="edu.ucalgary.ensf409.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="edu.ucalgary.ensf409" />
+      <option name="MAIN_CLASS_NAME" value="edu.ucalgary.ensf409.PriceOptimizerTest" />
+      <option name="METHOD_NAME" value="testPriceOptimizer_testOptimize2" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PriceOptimizerTest.testPriceOptimizer_testOptimize3" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ensf409-project-group22" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="edu.ucalgary.ensf409.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="edu.ucalgary.ensf409" />
+      <option name="MAIN_CLASS_NAME" value="edu.ucalgary.ensf409.PriceOptimizerTest" />
+      <option name="METHOD_NAME" value="testPriceOptimizer_testOptimize3" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.PriceOptimizerTest.testPriceOptimizer_testOptimize3" />
+        <item itemvalue="JUnit.PriceOptimizerTest.testPriceOptimizer_testOptimize2" />
         <item itemvalue="JUnit.PriceOptimizerTest" />
         <item itemvalue="JUnit.PriceOptimizerTest.testPriceOptimizer_testOptimize1" />
         <item itemvalue="JUnit.PriceOptimizerTest.testPriceOptimizer_testOptimize" />
-        <item itemvalue="JUnit.PriceOptimizerTest.testPriceOptimizer_compatibleValid" />
-        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
