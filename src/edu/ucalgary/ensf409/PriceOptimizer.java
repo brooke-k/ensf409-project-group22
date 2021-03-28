@@ -10,7 +10,7 @@ public class PriceOptimizer {
     private String[] id;
     private int[] price;
     private int min = 0;
-    private int[] minIndex;
+    private int[] minIndex = new int[3];
     /**
      * PriceOptimizer will construct
      * the PriceOptimizer object with the given data.
@@ -37,37 +37,46 @@ public class PriceOptimizer {
         int[] indexs = new int[parts.length];
         for (int i = 0; i < parts.length; i++) {
             indexs[i] = i;
+            System.out.println(indexs[i]);
         }
-        for (int i = 1; i < partCount; i++) {
-            combination(indexs, i);
+
+        for (int i = 1; i <= partCount; i++) {
+            combination(indexs, indexs.length, i);
         }
         String[] ids = new String[minIndex.length];
 
         for (int i = 0; i < ids.length; i++) {
-            ids[i] = id[indexs[i]];
+            ids[i] = id[minIndex[i]];
         }
         return ids;
     }
 
-    private void recursion(int[] array, int[] data, int start, int end, int index, int r){
-        if(index == r){
+
+    private void recursion(int[] arr, int[] data, int start, int end, int index, int r) {
+
+        if (index == r) {
             if(compatible(data)){
+                for(int i: data){
+                    System.out.print(i+" ");
+                }
+                System.out.println();
                 if(getPrice(data) < min){
                     minIndex = new int[data.length];
                     minIndex = data;
                 }
             }
+            return;
+        }
+        for (int i = start; i <= end && end - i + 1 >= r - index; i++) {
+            data[index] = arr[i];
+            recursion(arr, data, i + 1, end, index + 1, r);
         }
 
-        for (int i = start; i <= end && (end + 1 - i) >= (r - index); i++) {
-            data[index] = array[i];
-            recursion(array, data, i+1, end, index+1, r);
-        }
     }
 
-    private void combination(int[] array, int comb){
-        int[] data = new int[comb];
-        recursion(array, data, 0, data.length-1, 0, comb);
+    private void combination(int arr[], int n, int r) {
+        int[] data = new int[r];
+        recursion(arr, data, 0, n - 1, 0, r);
     }
 
 
@@ -104,7 +113,7 @@ public class PriceOptimizer {
     }
 
 
-    public int getPrice(int[] index){
+    private int getPrice(int[] index){
         int sum = 0;
         for (int i = 0; i < index.length; i++) {
             sum += price[index[i]];
