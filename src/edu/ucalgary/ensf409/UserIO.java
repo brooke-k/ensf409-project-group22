@@ -154,9 +154,6 @@ public class UserIO {
             furnitureCategory = requestMatch.group(2);
             numberOfItems = requestMatch.group(3);
 
-            // System.out.println("Furniture type: " + furnitureType);
-            // System.out.println("Furniture category: " + furnitureCategory);
-            // System.out.println("Number of items: " + numberOfItems);
             checkFurniture();
             String[] temp = priceOptimizer.optimize(Integer.parseInt(numberOfItems));
 
@@ -166,12 +163,7 @@ public class UserIO {
             else{
                 fileIO = new FileIO(databaseIO.suggestedManufacturers(furnitureCategory));
             }
-            //System.out.println(Arrays.toString(temp));
-
-
         }
-
-        //System.out.println("In process read \"" + userRequest + "\"");
     }
 
     public void checkFurniture(){
