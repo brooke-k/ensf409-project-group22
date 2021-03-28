@@ -36,7 +36,7 @@ public class PriceOptimizerTest {
     }
 
     @Test
-    public void testPriceOptimizer_compatibleValidSmall() {
+    public void testPriceOptimizer_compatibleInvalidSmall() {
         String[] id  = {};
         int[] price = {};
         boolean[][] parts = {
