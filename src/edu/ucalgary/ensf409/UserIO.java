@@ -7,6 +7,9 @@ import java.util.Scanner;
  */
 class UserIO {
     Scanner input;
+    String furnitureType;
+    String furnitureCatagory;
+    String numberOfItems;
 
     /**
      * int menu() will display the user menu and return the selected option
@@ -15,12 +18,14 @@ class UserIO {
      */
     public int menu() {
         System.out.println("1. Input a User Request");
-        System.out.println("2. Change SQL Database Credentials");
-        System.out.println("3. Change Output Filename");
+        System.out.println("2. View Current Output Filename");
+        System.out.println("3. View Current SQL Database Credentials");
+        System.out.println("4. Change Output Filename");
+        System.out.println("5. Change SQL Database Credentials");
 
         System.out.println("0. Exit Program");
         System.out.print("Enter your selection: ");
-        return readIntUntilAccepted(0,2);
+        return readIntUntilAccepted(0,5);
     }
 
 
@@ -90,6 +95,32 @@ class UserIO {
 
         return userInput;
     }
+
+    public void processInput(int inputValue){
+        switch(inputValue){
+            case 1:
+                System.out.println("\nSelected option 1\n");
+                break;
+            case 2:
+                System.out.println("\nSelected option 2\n");
+                break;
+            case 3:
+                System.out.println("\nSelected option 3\n");
+                break;
+            case 4:
+                System.out.println("\nSelected option 4\n");
+                break;
+            case 5:
+                System.out.println("\nSelected option 5\n");
+                break;
+            case 0:
+                System.out.println("\nSelected option 0. Now closing program.");
+                input.close();
+                System.exit(0);
+
+        }
+    }
+
 
     /**
      * close will close the System.in scanner object
