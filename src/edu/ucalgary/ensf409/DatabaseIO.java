@@ -3,6 +3,10 @@ package edu.ucalgary.ensf409;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * DatabaseIO is a class used to
+ */
+
 public class DatabaseIO {
     private Connection dbConnect;
     private ResultSet results;
@@ -11,18 +15,56 @@ public class DatabaseIO {
     private String username;
     private String password;
 
+    /**
+     * Constructor for DatabaseIO in the case that no username or password has been entered.
+     * Sets the username variable as "scm" and the password variable as "ensf409".
+     */
     public DatabaseIO(){
         this.dbUrl = "jdbc:mysql://localhost/inventory";
         this.username = "scm";
         this.password = "ensf409";
     }
 
+    /**
+     * Constructor for DatabaseIO in the case that the user has inputted their username and password.
+     * The DatabaseIO object can be constructed using the given data.
+     * @param username String username is the user-entered variable of their username
+     * @param password String password is the user-entered variable of their password
+     */
     public DatabaseIO(String username, String password){
         this.dbUrl = "jdbc:mysql://localhost/inventory";
         this.username = username;
         this.password = password;
     }
 
+    /**
+     * Getter method for the database URL
+     * @return string of database URL
+     */
+    public String getDbUrl() {
+        return dbUrl;
+    }
+
+    /**
+     * Getter method for the users mySQL username
+     * @return string of mySQL username
+     */
+    public String getUsername() {
+        return username;
+    }
+
+    /**
+     * Getter method for the users mySQL password
+     * @return string of mySQL password
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * The method initializeConnection promises to create a connection to the database otherwise
+     * it will output an error.
+     */
     public void createConnection(){
         try{
             this.dbConnect = DriverManager.getConnection(this.dbUrl, this.username, this.password);
@@ -33,6 +75,13 @@ public class DatabaseIO {
     }
 
 
+    /**
+     * The method getChairData takes in a String of the furniture type.
+     * The method promises to return an object of FurnitureConfigurationData which contains
+     * the list of prices, list of parts and list of ID's for the furniture type given.
+     * @param type String of the furniture type
+     * @return object FurnitureConfigurationData containing data from the Chair table
+     */
     public FurnitureConfigurationData getChairData(String type){
         int size = getSize("chair", type);
         String [] idList = new String[size];
@@ -47,10 +96,10 @@ public class DatabaseIO {
                 if(results.getString("type").equals(type)){
                     idList[i] = results.getString("id");
                     priceList[i] = results.getInt("price");
-                    partList[i][0] = getBoolean(results.getString("legs"));
-                    partList[i][0] = getBoolean(results.getString("arms"));
-                    partList[i][0] = getBoolean(results.getString("seat"));
-                    partList[i][0] = getBoolean(results.getString("cushion"));
+                    partList[i][0] = results.getString("legs").equals("Y");
+                    partList[i][0] = results.getString("arms").equals("Y");
+                    partList[i][0] = results.getString("seat").equals("Y");
+                    partList[i][0] = results.getString("cushion").equals("Y");
                 }
             }
 
@@ -62,6 +111,13 @@ public class DatabaseIO {
         return new FurnitureConfigurationData(idList, partList, priceList);
     }
 
+    /**
+     * The method getDeskData takes in a String of the furniture type.
+     * The method promises to return an object of FurnitureConfigurationData which contains
+     * the list of prices, list of parts and list of ID's for the furniture type given.
+     * @param type String of the furniture type
+     * @return object FurnitureConfigurationData containing data from the Desk table
+     */
     public FurnitureConfigurationData getDeskData(String type){
         int size = getSize("desk", type);
         String [] idList = new String[size];
@@ -76,9 +132,9 @@ public class DatabaseIO {
                 if(results.getString("type").equals(type)){
                     idList[i] = results.getString("id");
                     priceList[i] = results.getInt("price");
-                    partList[i][0] = getBoolean(results.getString("legs"));
-                    partList[i][1] = getBoolean(results.getString("top"));
-                    partList[i][2] = getBoolean(results.getString("drawer"));
+                    partList[i][0] = results.getString("legs").equals("Y");
+                    partList[i][1] = results.getString("top").equals("Y");
+                    partList[i][2] = results.getString("drawer").equals("Y");
                 }
             }
 
@@ -90,6 +146,13 @@ public class DatabaseIO {
         return new FurnitureConfigurationData(idList, partList, priceList);
     }
 
+    /**
+     * The method getLampData takes in a String of the furniture type.
+     * The method promises to return an object of FurnitureConfigurationData which contains
+     * the list of prices, list of parts and list of ID's for the furniture type given.
+     * @param type String of the furniture type
+     * @return object FurnitureConfigurationData containing data from the Lamp table
+     */
     public FurnitureConfigurationData getLampData(String type){
         int size = getSize("lamp", type);
         String [] idList = new String[size];
@@ -104,8 +167,8 @@ public class DatabaseIO {
                 if(results.getString("type").equals(type)){
                     idList[i] = results.getString("id");
                     priceList[i] = results.getInt("price");
-                    partList[i][0] = getBoolean(results.getString("base"));
-                    partList[i][1] = getBoolean(results.getString("bulb"));
+                    partList[i][0] = results.getString("base").equals("Y");
+                    partList[i][1] = results.getString("bulb").equals("Y");
                 }
             }
 
@@ -117,6 +180,13 @@ public class DatabaseIO {
         return new FurnitureConfigurationData(idList, partList, priceList);
     }
 
+    /**
+     * The method getFilingData takes in a String of the furniture type.
+     * The method promises to return an object of FurnitureConfigurationData which contains
+     * the list of prices, list of parts and list of ID's for the furniture type given.
+     * @param type String of the furniture type
+     * @return object FurnitureConfigurationData containing data from the Filing table
+     */
     public FurnitureConfigurationData getFilingData(String type){
         int size = getSize("filing", type);
         String [] idList = new String[size];
@@ -131,9 +201,9 @@ public class DatabaseIO {
                 if(results.getString("type").equals(type)){
                     idList[i] = results.getString("id");
                     priceList[i] = results.getInt("price");
-                    partList[i][0] = getBoolean(results.getString("rails"));
-                    partList[i][1] = getBoolean(results.getString("drawers"));
-                    partList[i][2] = getBoolean(results.getString("cabinet"));
+                    partList[i][0] = results.getString("rails").equals("Y");
+                    partList[i][1] = results.getString("drawers").equals("Y");
+                    partList[i][2] = results.getString("cabinet").equals("Y");
                 }
             }
 
@@ -146,6 +216,12 @@ public class DatabaseIO {
     }
 
 
+    /**
+     * The method removeItem deletes the the furniture item corresponding to the ID given
+     * from the given table name.
+     * @param tableName String variable of the type of furniture
+     * @param ID String variable of the ID of the furniture
+     */
     public void removeItem(String tableName, String ID){
         try {
             String query = "DELETE FROM " + tableName + " WHERE " + ID + " = ?";
@@ -156,11 +232,18 @@ public class DatabaseIO {
             myStmt.executeUpdate();
             myStmt.close();
 
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } catch (SQLException e) {
+            System.out.println("Database error while removing ");
+            e.printStackTrace();
         }
     }
 
+    /**
+     * The method suggestedManufacturers creates a list of suggested manufacturers to choose from if a user
+     * request is not fulfilled for a certain furniture.
+     * @param tableName String variable of the furniture
+     * @return String ArrayList of the suggested manufacturers of a furniture
+     */
     public ArrayList<String> suggestedManufacturers(String tableName){
         ArrayList<String> manuList = new ArrayList<String>();
         ArrayList<String> suggestList = new ArrayList<String>();
@@ -181,7 +264,7 @@ public class DatabaseIO {
             while(results.next()){
                 String tempManu = results.getString("manuid");
                 if(manuList.contains(tempManu)){
-                    suggestList.add(tempManu);
+                    suggestList.add(results.getString("name"));
                 }
             }
 
@@ -193,16 +276,14 @@ public class DatabaseIO {
         return suggestList;
     }
 
-    public void close(){
-        try{
-            dbConnect.close();
-            results.close();
-        } catch (SQLException e){
-            System.out.println("Unable to close the connection");
-            e.printStackTrace();
-        }
-    }
-
+    /**
+     * The method getSize takes in a table corresponding to a certain furniture and also obtains
+     * the furniture type. The method promises to return an int of the number of a certain furniture type
+     * in the given table.
+     * @param table String variable of furniture name
+     * @param type String variable of type of furniture
+     * @return number of furniture of type specified by user
+     */
     public int getSize(String table, String type){
         int size = 0;
         try {
@@ -220,12 +301,17 @@ public class DatabaseIO {
         return size;
     }
 
-    public boolean getBoolean(String bool){
-        if(bool.equals("Y")){
-            return true;
-        } else{
-            return false;
+
+    /**
+     * The method close promises to close the database connection.
+     */
+    public void close(){
+        try{
+            dbConnect.close();
+            results.close();
+        } catch (SQLException e){
+            System.out.println("Unable to close the connection");
+            e.printStackTrace();
         }
     }
-
 }
