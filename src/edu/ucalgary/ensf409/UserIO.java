@@ -7,6 +7,12 @@ import java.util.Scanner;
  */
 class UserIO {
     Scanner input;
+    String furnitureType;
+    String furnitureCatagory;
+    String numberOfItems;
+    DatabaseIO databaseIO;
+    FileIO fileIO;
+    String currentOutputFile = "OrderOutput.txt";
 
     /**
      * int menu() will display the user menu and return the selected option
@@ -14,13 +20,15 @@ class UserIO {
      * @return int corresponding to the selected option by the user
      */
     public int menu() {
-        System.out.println("1. Input a User Request");
-        System.out.println("2. Change SQL Database Credentials");
-        System.out.println("3. Change Output Filename");
+            System.out.println("1. Input a User Request");
+            System.out.println("2. View Current Output Filename");
+            System.out.println("3. View Current SQL Database Credentials");
+            System.out.println("4. Change Output Filename");
+            System.out.println("5. Change SQL Database Credentials");
 
-        System.out.println("0. Exit Program");
-        System.out.print("Enter your selection: ");
-        return readIntUntilAccepted(0,2);
+            System.out.println("0. Exit Program");
+            System.out.print("Enter your selection: ");
+            return readIntUntilAccepted(0, 5);
     }
 
 
@@ -30,6 +38,7 @@ class UserIO {
      */
     public UserIO() {
         input = new Scanner(System.in);
+        databaseIO = new DatabaseIO();
     }
 
     /**
@@ -90,6 +99,34 @@ class UserIO {
 
         return userInput;
     }
+
+    public void processInput(int inputValue){
+        switch(inputValue){
+            case 1:
+                System.out.println("\nSelected option 1\n");
+                break;
+            case 2:
+                System.out.println("\nCurrent output file name is: " + currentOutputFile + "\n");
+                break;
+            case 3:
+                System.out.println("\nCurrent database URL: " + databaseIO.getDbUrl());
+                System.out.println("Current database username: " + databaseIO.getUsername());
+                System.out.println("Current database password: " + databaseIO.getPassword());
+                break;
+            case 4:
+                System.out.println("\nSelected option 4\n");
+                break;
+            case 5:
+                System.out.println("\nSelected option 5\n");
+                break;
+            case 0:
+                System.out.println("\nSelected option 0. Now closing program.");
+                input.close();
+                System.exit(0);
+
+        }
+    }
+
 
     /**
      * close will close the System.in scanner object

@@ -9,6 +9,8 @@ public class Main {
         UserIO input = new UserIO();
         // Initiate a menu object
         int selection = input.menu();
+
+
         System.out.println("You entered: " + selection);
         // Example taking in input
         System.out.print("Please enter user input: ");
