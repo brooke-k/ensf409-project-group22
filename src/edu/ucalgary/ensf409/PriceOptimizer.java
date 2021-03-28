@@ -50,7 +50,6 @@ public class PriceOptimizer {
     }
 
     private void recursion(int[] array, int[] data, int start, int end, int index, int r){
-
         if(index == r){
             if(compatible(data)){
                 if(getPrice(data) < min){
@@ -64,7 +63,6 @@ public class PriceOptimizer {
             data[index] = array[i];
             recursion(array, data, i+1, end, index+1, r);
         }
-
     }
 
     private void combination(int[] array, int comb){
