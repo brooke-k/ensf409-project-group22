@@ -10,9 +10,8 @@ public class PriceOptimizer {
     private int partCount;
     private boolean[][] parts;
     private String[] id;
-    public int[] price;
+    private int[] price;
     private int[] minIndex = null;
-    int partsAvailable[];
     private int currentCost = 0;
     private int itemCount;
     /**
@@ -28,7 +27,6 @@ public class PriceOptimizer {
         if(parts != null) {
             this.partCount = parts[0].length;
         }
-        partsAvailable = new int[partCount];
     }
 
     /**
@@ -76,7 +74,6 @@ public class PriceOptimizer {
     }
 
     private void recursion(int[] arr, int[] data, int start, int end, int index, int r) {
-
         if (index == r) {
             if(compatible(data)){
                 if(getPrice(data) < currentCost){
@@ -104,7 +101,8 @@ public class PriceOptimizer {
 
     /**
      * Compatible checks if a specified list of indices for the boolean
-     * array is compatible (will have all parts fulfilled)
+     * array is compatible (will have all parts fulfilled) for the given number
+     * of parts specified in itemCount
      * For instance if the list of specified furniture indices of parts[][]
      * as follows,
      * T F F T
@@ -114,7 +112,6 @@ public class PriceOptimizer {
      * @param list int[] of the indices to be checked together.
      * @return Boolean, true if compatible, false otherwise.
      */
-
     public boolean compatible(int[] list) {
         int[] fulfilledParts = new int[partCount];
         for (int indexNum : list) {
@@ -134,6 +131,12 @@ public class PriceOptimizer {
     }
 
 
+    /**
+     * getPrice will return the int of a given series of indices
+     * in the list
+     * @param index Indices to be checked
+     * @return The price of the given series of indices combined
+     */
     private int getPrice(int[] index){
         int sum = 0;
         for(int i = 0; i < index.length; i++) {
