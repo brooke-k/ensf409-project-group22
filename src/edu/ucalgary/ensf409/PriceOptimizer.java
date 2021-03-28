@@ -1,8 +1,11 @@
 package edu.ucalgary.ensf409;
 
 /*
-    Find the cheapest combination of prices based on the given
-    FurnitureConfigurationData file.
+    PriceOptimizer contains three parallel arrays, one with
+    the specified furniture ID and one with the specified parts for a
+    specific furniture configuration. For instance
+     id[0] = D0890, boolean[0] = {F, F, T}, price[0] = 25
+     And provides methods for optimization of the price.
  */
 public class PriceOptimizer {
     private int partCount;
@@ -74,7 +77,7 @@ public class PriceOptimizer {
     /**
      * Compatible checks if a specified list of indices for the boolean
      * array is compatible (will have all parts fulfilled)
-     * For instance if the list of specified furniture items has parts[][]
+     * For instance if the list of specified furniture indices of parts[][]
      * as follows,
      * T F F T
      * F T T F
@@ -83,7 +86,7 @@ public class PriceOptimizer {
      * @param list int[] of the indices to be checked together.
      * @return Boolean, true if compatible, false otherwise.
      */
-    private boolean compatible(int[] list){
+    public boolean compatible(int[] list) {
         boolean[] fulfilledParts = new boolean[partCount];
         boolean ok = true;
         for(int i = 0; i < list.length; i++) {
@@ -106,13 +109,34 @@ public class PriceOptimizer {
 
     public int getPrice(int[] index){
         int sum = 0;
-        for (int i = 0; i < index.length; i++) {
+        for(int i = 0; i < index.length; i++) {
             sum += price[index[i]];
         }
         return sum;
     }
-    /**
-     * parallelSort() will sort the arrays, keeping data in the same order
-     */
 
+    /**
+     * sortOnPrice() will sort the arrays based on price, keeping data in the same order
+     * for all the arrays using bubble sort. (TODO: Better if its possible to do this on object)
+     */
+    public void sortOnPrice() {
+        for(int i = 0; i < price.length; i++) {
+            for(int j = i; j < price.length; j++) {
+                if(price[i] > price[j]) {
+                    // Sort price
+                    int temp = price[i];
+                    price[i] = price[j];
+                    price[j] = temp;
+                    // Sort parts
+                    boolean[] tempBool = parts[i];
+                    parts[i] = parts[j];
+                    parts[j] = tempBool;
+                    // Sort id
+                    String tempID = id[i];
+                    id[i] = id[j];
+                    id[j] = tempID;
+                }
+            }
+        }
+    }
 }
