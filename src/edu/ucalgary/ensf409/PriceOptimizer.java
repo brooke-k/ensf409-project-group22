@@ -30,11 +30,11 @@ public class PriceOptimizer {
     }
 
     /**
-     * getMin returns the minimum price in the object
+     * getCurrentCost returns the minimum price in the object
      * @return minimum price as an integer
      */
-    public int getMin() {
-        return min;
+    public int getCurrentCost() {
+        return currentCost;
     }
 
     /**
@@ -46,6 +46,7 @@ public class PriceOptimizer {
         // Store the current state of the parts array
         boolean[][] temp;
         temp = copyOf(parts);
+        boolean[] usedPart = new boolean[partCount];
         // Update the boolean array based on current available parts
         for(int i = 0; i < partCount; i++) {
             if(partsAvailable[i] >= 1) {
@@ -53,6 +54,7 @@ public class PriceOptimizer {
                     parts[i][j] = true;
                 }
                 partsAvailable[i]--;
+                usedPart[i] = true;
             }
         }
         // Optimize
@@ -83,13 +85,23 @@ public class PriceOptimizer {
         parts = temp;
         // Update the available parts and the cost
         currentCost += min;
+        // If it orginally had a true boolean in the spot
+        // AND there is a part available, then there will be
+        // one extra part available.
+        for(int i = 0; i < minIndex.length && i < partCount; i++) {
+            for(int j = 0; j < partCount; j++) {
+                if(parts[minIndex[i]][j] && usedPart[j]) {
+                    partsAvailable[j]++;
+                }
+            }
+        }
         // Count the number of total parts
-        for(int i = 0; i < partCount; i++) {
+        for(int i = 0; i < minIndex.length && i < partCount; i++) {
             int count = 0;
             for(int j = 0; j < partCount; j++) {
-                if(parts[i][j]) {
+                if(parts[minIndex[i]][j]) {
                     count++;
-                    parts[i][j] = false;
+                    parts[minIndex[i]][j] = false;
                 }
             }
             count--;
