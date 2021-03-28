@@ -1,5 +1,4 @@
 package edu.ucalgary.ensf409;
-
 /*
     PriceOptimizer contains three parallel arrays, one with
     the specified furniture ID and one with the specified parts for a
@@ -180,6 +179,18 @@ public class PriceOptimizer {
             sum += price[index[i]];
         }
         return sum;
+    }
+
+    private boolean[][] copyOf(boolean[][] array){
+        int length = array.length;
+        int depth = array[0].length;
+        boolean[][] newArray = new boolean[array.length][array[0].length];
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[0].length; j++) {
+                newArray[i][j] = array[i][j];
+            }
+        }
+        return newArray;
     }
 
     /**
