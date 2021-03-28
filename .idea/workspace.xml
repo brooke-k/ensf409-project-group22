@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4b7c912a-1edd-40d3-9bac-b125c2feab06" name="Default Changelist" comment="Some initial implementation of UserIO">
+    <list default="true" id="4b7c912a-1edd-40d3-9bac-b125c2feab06" name="Default Changelist" comment="PriceOptimizerTests">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ensf409-project-group22/edu/ucalgary/ensf409/DatabaseIO.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ensf409-project-group22/edu/ucalgary/ensf409/DatabaseIO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ensf409-project-group22/edu/ucalgary/ensf409/FileIO.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ensf409-project-group22/edu/ucalgary/ensf409/FileIO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ensf409-project-group22/edu/ucalgary/ensf409/InventoryManagement.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ensf409-project-group22/edu/ucalgary/ensf409/PriceOptimizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ensf409-project-group22/edu/ucalgary/ensf409/PriceOptimizer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ensf409-project-group22/edu/ucalgary/ensf409/UserIO.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ensf409-project-group22/edu/ucalgary/ensf409/UserIO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/edu/ucalgary/ensf409/PriceOptimizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/edu/ucalgary/ensf409/PriceOptimizer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/edu/ucalgary/ensf409/PriceOptimizerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/edu/ucalgary/ensf409/PriceOptimizerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,10 +101,15 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -105,7 +117,17 @@
       <recent name="C:\Users\Neeraj\Documents\GitHub\ensf409-project-group22" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.PriceOptimizerTest">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="edu.ucalgary.ensf409.Main" />
+      <module name="ensf409-project-group22" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -119,18 +141,75 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true">
-      <option name="MAIN_CLASS_NAME" value="edu.ucalgary.ensf409.Main" />
+    <configuration name="PriceOptimizerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ensf409-project-group22" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="edu.ucalgary.ensf409.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="edu.ucalgary.ensf409" />
+      <option name="MAIN_CLASS_NAME" value="edu.ucalgary.ensf409.PriceOptimizerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PriceOptimizerTest.testPriceOptimizer_compatibleValid" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ensf409-project-group22" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="edu.ucalgary.ensf409.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="edu.ucalgary.ensf409" />
+      <option name="MAIN_CLASS_NAME" value="edu.ucalgary.ensf409.PriceOptimizerTest" />
+      <option name="METHOD_NAME" value="testPriceOptimizer_compatibleValid" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PriceOptimizerTest.testPriceOptimizer_testOptimize" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ensf409-project-group22" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="edu.ucalgary.ensf409.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="edu.ucalgary.ensf409" />
+      <option name="MAIN_CLASS_NAME" value="edu.ucalgary.ensf409.PriceOptimizerTest" />
+      <option name="METHOD_NAME" value="testPriceOptimizer_testOptimize" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PriceOptimizerTest.testPriceOptimizer_testOptimize1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ensf409-project-group22" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="edu.ucalgary.ensf409.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="edu.ucalgary.ensf409" />
+      <option name="MAIN_CLASS_NAME" value="edu.ucalgary.ensf409.PriceOptimizerTest" />
+      <option name="METHOD_NAME" value="testPriceOptimizer_testOptimize1" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.PriceOptimizerTest" />
+        <item itemvalue="JUnit.PriceOptimizerTest.testPriceOptimizer_testOptimize1" />
+        <item itemvalue="JUnit.PriceOptimizerTest.testPriceOptimizer_testOptimize" />
+        <item itemvalue="JUnit.PriceOptimizerTest.testPriceOptimizer_compatibleValid" />
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
@@ -145,6 +224,9 @@
       <updated>1616862744262</updated>
       <workItem from="1616862747946" duration="2000" />
       <workItem from="1616863815220" duration="4442000" />
+      <workItem from="1616869049975" duration="233000" />
+      <workItem from="1616869348177" duration="28587000" />
+      <workItem from="1616899142979" duration="973000" />
     </task>
     <task id="LOCAL-00001" summary="Test">
       <created>1616864441576</created>
@@ -167,7 +249,112 @@
       <option name="project" value="LOCAL" />
       <updated>1616868007892</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Some initial implementation of UserIO">
+      <created>1616869378567</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1616869378567</updated>
+    </task>
+    <task id="LOCAL-00005" summary="UserIO implementation update">
+      <created>1616873272201</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1616873272201</updated>
+    </task>
+    <task id="LOCAL-00006" summary="PriceOptimizer">
+      <created>1616876021392</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1616876021392</updated>
+    </task>
+    <task id="LOCAL-00007" summary="FurnitureConfigurationData outline">
+      <created>1616877647998</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1616877647998</updated>
+    </task>
+    <task id="LOCAL-00008" summary="PriceOptimizer outline">
+      <created>1616878687537</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1616878687537</updated>
+    </task>
+    <task id="LOCAL-00009" summary="PriceOptimizer update">
+      <created>1616879901140</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1616879901140</updated>
+    </task>
+    <task id="LOCAL-00010" summary="PriceOptimizer update">
+      <created>1616880779602</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1616880779602</updated>
+    </task>
+    <task id="LOCAL-00011" summary="PriceOptimizer update">
+      <created>1616880791967</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1616880791967</updated>
+    </task>
+    <task id="LOCAL-00012" summary="PriceOptimizer update">
+      <created>1616893195807</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1616893195807</updated>
+    </task>
+    <task id="LOCAL-00013" summary="PriceOptimizer update">
+      <created>1616893911004</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1616893911004</updated>
+    </task>
+    <task id="LOCAL-00014" summary="PriceOptimizer update">
+      <created>1616895754941</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1616895754941</updated>
+    </task>
+    <task id="LOCAL-00015" summary="PriceOptimizer update">
+      <created>1616895790853</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1616895790853</updated>
+    </task>
+    <task id="LOCAL-00016" summary="PriceOptimizerTests">
+      <created>1616896551090</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1616896551090</updated>
+    </task>
+    <task id="LOCAL-00017" summary="PriceOptimizerTests">
+      <created>1616897344049</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1616897344049</updated>
+    </task>
+    <task id="LOCAL-00018" summary="PriceOptimizerTests">
+      <created>1616897421052</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1616897421052</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -188,6 +375,12 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Test" />
     <MESSAGE value="Some initial implementation of UserIO" />
-    <option name="LAST_COMMIT_MESSAGE" value="Some initial implementation of UserIO" />
+    <MESSAGE value="UserIO implementation update" />
+    <MESSAGE value="PriceOptimizer" />
+    <MESSAGE value="FurnitureConfigurationData outline" />
+    <MESSAGE value="PriceOptimizer outline" />
+    <MESSAGE value="PriceOptimizer update" />
+    <MESSAGE value="PriceOptimizerTests" />
+    <option name="LAST_COMMIT_MESSAGE" value="PriceOptimizerTests" />
   </component>
 </project>

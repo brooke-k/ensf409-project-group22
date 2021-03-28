@@ -68,4 +68,21 @@ public class PriceOptimizerTest {
 
         assertTrue("Output array incorrect.", Arrays.equals(expected, result) || Arrays.equals(expected2, result));
     }
+
+    @Test
+    public void testPriceOptimizer_testOptimize1() {
+        String[] id  = {"C0942", "C6748", "C8138", "C9890"};
+        int[] price = {100, 75, 75, 50};
+        boolean[][] parts = {
+                {true, false, true, true},
+                {true, false, false, false},
+                {false, false, true, false},
+                {false, false, false, true}
+        };
+        PriceOptimizer p = new PriceOptimizer(id,parts,price);
+        String[] result = p.optimize();
+
+        assertNull(result);
+    }
+
 }
