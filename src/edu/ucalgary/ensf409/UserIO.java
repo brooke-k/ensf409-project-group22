@@ -157,7 +157,8 @@ public class UserIO {
             System.out.println("Furniture category: " + furnitureCategory);
             System.out.println("Number of items: " + numberOfItems);
             checkFurniture();
-            String[] temp = priceOptimizer.optimize();
+            System.out.println(priceOptimizer.price.length);
+            String[] temp = priceOptimizer.optimize(Integer.parseInt(numberOfItems));
             System.out.println(Arrays.toString(temp));
 
         }
