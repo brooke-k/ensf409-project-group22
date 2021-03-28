@@ -96,6 +96,8 @@ public class PriceOptimizerTest {
         };
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
         String[] result = p.optimize();
+        String[] result2 = p.optimize();
         assertNull(result);
+        assertNull(result2);
     }
 }
