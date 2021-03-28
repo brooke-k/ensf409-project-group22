@@ -10,7 +10,7 @@ public class PriceOptimizer {
     private int partCount;
     private boolean[][] parts;
     private String[] id;
-    private int[] price;
+    public int[] price;
     private int[] minIndex = null;
     int partsAvailable[];
     private int currentCost = 0;
@@ -25,7 +25,9 @@ public class PriceOptimizer {
         this.id = id;
         this.parts = parts;
         this.price = price;
-        this.partCount = parts[0].length;
+        if(parts != null) {
+            this.partCount = parts[0].length;
+        }
         partsAvailable = new int[partCount];
     }
 

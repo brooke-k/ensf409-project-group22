@@ -85,6 +85,7 @@ public class DatabaseIO {
     public PriceOptimizer getChairData(String type){
         int size = getSize("chair", type);
         String [] idList = new String[size];
+        System.out.println("Size: " + size);
         int [] priceList = new int[size];
         boolean [][] partList = new boolean[size][4];
 
@@ -96,10 +97,11 @@ public class DatabaseIO {
                 if(results.getString("type").equals(type)){
                     idList[i] = results.getString("id");
                     priceList[i] = results.getInt("price");
+                    System.out.println("Part list: "+ priceList.length);
                     partList[i][0] = results.getString("legs").equals("Y");
-                    partList[i][0] = results.getString("arms").equals("Y");
-                    partList[i][0] = results.getString("seat").equals("Y");
-                    partList[i][0] = results.getString("cushion").equals("Y");
+                    partList[i][1] = results.getString("arms").equals("Y");
+                    partList[i][2] = results.getString("seat").equals("Y");
+                    partList[i][3] = results.getString("cushion").equals("Y");
                 }
             }
 
@@ -293,6 +295,7 @@ public class DatabaseIO {
             while(results.next()){
                 if(results.getString("type").equals(type)){
                     size++;
+                    System.out.println("SizeCurrent: " + size);
                 }
             }
         } catch(SQLException e){
