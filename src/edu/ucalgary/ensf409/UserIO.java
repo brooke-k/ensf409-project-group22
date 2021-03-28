@@ -44,6 +44,7 @@ public class UserIO {
     public UserIO() {
         input = new Scanner(System.in);
         databaseIO = new DatabaseIO();
+        databaseIO.createConnection();
     }
 
     /**
