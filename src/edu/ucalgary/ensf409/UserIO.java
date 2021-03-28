@@ -18,13 +18,14 @@ public class UserIO {
     private FileIO fileIO;
     private PriceOptimizer priceOptimizer;
     private String currentOutputFile = "OrderOutput.txt";
-
+    
     /**
      * int menu() will display the user menu and return the selected option
      * by the user.
      * @return int corresponding to the selected option by the user
      */
     public int menu() {
+            System.out.println();
             System.out.println("1. Input a User Request");
             System.out.println("2. View Current Output Filename");
             System.out.println("3. View Current SQL Database Credentials");
@@ -112,7 +113,7 @@ public class UserIO {
                 readLine();
                 System.out.println("\nPlease input request for furniture item in the form");
                 System.out.println("[type] [furniture category], [quantity of items]");
-                System.out.println("ex. mesh chair, 1");
+                System.out.println("ex. Mesh chair, 1");
                 System.out.println("Enter request: ");
                 String readFromScan = readLine();
                 processUserRequest(readFromScan);
@@ -153,13 +154,20 @@ public class UserIO {
             furnitureCategory = requestMatch.group(2);
             numberOfItems = requestMatch.group(3);
 
-            System.out.println("Furniture type: " + furnitureType);
-            System.out.println("Furniture category: " + furnitureCategory);
-            System.out.println("Number of items: " + numberOfItems);
+            // System.out.println("Furniture type: " + furnitureType);
+            // System.out.println("Furniture category: " + furnitureCategory);
+            // System.out.println("Number of items: " + numberOfItems);
             checkFurniture();
-            System.out.println(priceOptimizer.price.length);
             String[] temp = priceOptimizer.optimize(Integer.parseInt(numberOfItems));
-            System.out.println(Arrays.toString(temp));
+
+            if(temp!=null){
+                fileIO = new FileIO(currentOutputFile,temp,userRequest,priceOptimizer.getCurrentCost());
+            }
+            else{
+                fileIO = new FileIO(databaseIO.suggestedManufacturers(furnitureCategory));
+            }
+            //System.out.println(Arrays.toString(temp));
+
 
         }
 
