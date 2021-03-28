@@ -140,7 +140,7 @@ public class UserIO {
     }
 
     public void processUserRequest(String userRequest){
-        String requestREGEX = "([a-z]+) ([a-z]+), ([0-9]+)";
+        String requestREGEX = "([A-Z][a-z]+) ([a-z]+), ([0-9]+)";
         Pattern requestPattern = Pattern.compile(requestREGEX);
         Matcher requestMatch = requestPattern.matcher(userRequest);
         boolean matchesFound = requestMatch.find();
