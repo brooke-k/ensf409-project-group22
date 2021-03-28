@@ -37,10 +37,10 @@ public class PriceOptimizer {
         for(int p : price){
             min += p;
         }
+        System.out.println("Initial min price is " + min);
         int[] indexs = new int[parts.length];
         for (int i = 0; i < parts.length; i++) {
             indexs[i] = i;
-            System.out.println(indexs[i]);
         }
 
         for (int i = 1; i <= partCount; i++) {
@@ -59,13 +59,12 @@ public class PriceOptimizer {
 
         if (index == r) {
             if(compatible(data)){
-                for(int i: data){
-                    System.out.print(i+" ");
-                }
-                System.out.println();
                 if(getPrice(data) < min){
+                    min = getPrice(data);
                     minIndex = new int[data.length];
-                    minIndex = data;
+                    for (int i = 0; i < data.length; i++) {
+                        minIndex[i] = data[i];
+                    }
                 }
             }
             return;
