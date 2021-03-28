@@ -59,7 +59,7 @@ public class PriceOptimizerTest {
 
         };
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
-        String[] result = p.optimize();
+        String[] result = p.optimize(1);
         String[] expected = {"C9890", "C0942"};
         String[] expected2 = {"C0942", "C9890"};
         for(int i = 0; i < 2; i++) {
@@ -80,7 +80,7 @@ public class PriceOptimizerTest {
                 {false, false, false, true}
         };
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
-        String[] result = p.optimize();
+        String[] result = p.optimize(1);
         assertNull(result);
     }
 
@@ -89,16 +89,14 @@ public class PriceOptimizerTest {
         String[] id  = {"C0942", "C6748", "C8138", "C9890"};
         int[] price = {100, 75, 75, 50};
         boolean[][] parts = {
-                {true, false, true, true},
-                {true, true, false, false},
-                {false, false, true, false},
-                {false, false, false, true}
+                {true, false, false, true},
+                {false, true, true, true},
+                {false, true, false, false},
+                {true, true, true, false}
         };
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
-        String[] result = p.optimize();
-        String[] result2 = p.optimize();
-        String[] expected = {"C0942", "C6748"};
+        String[] result = p.optimize(2);
+        String[] expected = {"C0942", "C6748", "C9890"};
         assertTrue("Output array incorrect.", Arrays.equals(expected, result));
-        assertNull(result2);
     }
 }

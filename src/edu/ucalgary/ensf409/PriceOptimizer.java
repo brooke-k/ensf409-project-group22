@@ -11,10 +11,10 @@ public class PriceOptimizer {
     private boolean[][] parts;
     private String[] id;
     private int[] price;
-    private int min = 0;
-    private int[] minIndex = new int[3];
+    private int[] minIndex = null;
     int partsAvailable[];
     private int currentCost = 0;
+    private int itemCount;
     /**
      * PriceOptimizer will construct
      * the PriceOptimizer object with the given data.
@@ -42,25 +42,12 @@ public class PriceOptimizer {
      * furniture parts for the lowest price based on the
      * current FurnitureConfigurationData.
      */
-    public String[] optimize() {
-        // Store the current state of the parts array
-        boolean[][] temp;
-        temp = copyOf(parts);
-        boolean[] usedPart = new boolean[partCount];
-        // Update the boolean array based on current available parts
-        for(int i = 0; i < partCount; i++) {
-            if(partsAvailable[i] >= 1) {
-                for (int j = 0; j < partCount; j++) {
-                    parts[i][j] = true;
-                }
-                partsAvailable[i]--;
-                usedPart[i] = true;
-            }
-        }
+    public String[] optimize(int count) {
+        itemCount = count;
         // Optimize
-        min = 0;
+        currentCost = 0;
         for(int p : price){
-            min += p;
+            currentCost += p;
         }
         int[] indexs = new int[parts.length];
         for (int i = 0; i < parts.length; i++) {
@@ -74,41 +61,15 @@ public class PriceOptimizer {
         if(!compatible(indexs)) {
             return null;
         }
+        String[] ids = null;
+        if(minIndex != null){
+            ids = new String[minIndex.length];
+            for (int i = 0; i < ids.length; i++) {
+                ids[i] = id[minIndex[i]];
+            }
 
-        String[] ids = new String[minIndex.length];
-
-        for (int i = 0; i < ids.length; i++) {
-            ids[i] = id[minIndex[i]];
         }
 
-        // Restore the parts array
-        parts = temp;
-        // Update the available parts and the cost
-        currentCost += min;
-        // If it orginally had a true boolean in the spot
-        // AND there is a part available, then there will be
-        // one extra part available.
-        for(int i = 0; i < minIndex.length && i < partCount; i++) {
-            for(int j = 0; j < partCount; j++) {
-                if(parts[minIndex[i]][j] && usedPart[j]) {
-                    partsAvailable[j]++;
-                }
-            }
-        }
-        // Count the number of total parts
-        for(int i = 0; i < minIndex.length && i < partCount; i++) {
-            int count = 0;
-            for(int j = 0; j < partCount; j++) {
-                if(parts[minIndex[i]][j]) {
-                    count++;
-                    parts[minIndex[i]][j] = false;
-                }
-            }
-            count--;
-            if(count > 0) {
-                partsAvailable[i] += count;
-            }
-        }
         return ids;
     }
 
@@ -117,8 +78,8 @@ public class PriceOptimizer {
 
         if (index == r) {
             if(compatible(data)){
-                if(getPrice(data) < min){
-                    min = getPrice(data);
+                if(getPrice(data) < currentCost){
+                    currentCost = getPrice(data);
                     minIndex = new int[data.length];
                     for (int i = 0; i < data.length; i++) {
                         minIndex[i] = data[i];
@@ -152,20 +113,19 @@ public class PriceOptimizer {
      * @param list int[] of the indices to be checked together.
      * @return Boolean, true if compatible, false otherwise.
      */
+
     public boolean compatible(int[] list) {
-        boolean[] fulfilledParts = new boolean[partCount];
-        boolean ok = true;
-        for(int i = 0; i < list.length; i++) {
-            int indexNum = list[i];
-            for(int j = 0; j < partCount; j++) {
-                if(parts[indexNum][j]) {
-                    fulfilledParts[j] = true;
+        int[] fulfilledParts = new int[partCount];
+        for (int indexNum : list) {
+            for (int j = 0; j < partCount; j++) {
+                if (parts[indexNum][j]) {
+                    fulfilledParts[j]++;
                 }
             }
         }
         // Make sure whole array is true
-        for(int i = 0; i < partCount; i++) {
-            if(!fulfilledParts[i]) {
+        for (int i = 0; i < partCount; i++) {
+            if(fulfilledParts[i] < itemCount){
                 return false;
             }
         }
