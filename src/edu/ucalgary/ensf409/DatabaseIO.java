@@ -62,6 +62,22 @@ public class DatabaseIO {
     }
 
     /**
+     * Setter method sets the mySQL username
+     * @param username String variable of mySQL username
+     */
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    /**
+     * Setter method sets the mySQL password
+     * @param password String variable of mySQL password
+     */
+    public void setPassword(String password){
+        this.password = password;
+    }
+
+    /**
      * The method initializeConnection promises to create a connection to the database otherwise
      * it will output an error.
      */
