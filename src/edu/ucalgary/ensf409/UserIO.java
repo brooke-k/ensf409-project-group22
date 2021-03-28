@@ -1,6 +1,5 @@
 package edu.ucalgary.ensf409;
 
-import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -11,13 +10,13 @@ import java.util.regex.Pattern;
  */
 public class UserIO {
     private Scanner input;
-    private String furnitureType;
-    private String furnitureCategory;
-    private String numberOfItems;
+    private String furnType;
+    private String furnCategory;
+    private String numOfItems;
     private DatabaseIO databaseIO;
     private FileIO fileIO;
-    private PriceOptimizer priceOptimizer;
-    private String currentOutputFile = "OrderOutput.txt";
+    private PriceOptimizer priceOpt;
+    private String outputFile = "OrderOutput.txt";
     
     /**
      * int menu() will display the user menu and return the selected option
@@ -73,7 +72,8 @@ public class UserIO {
      * If it is not within the min and max range it will throw a
      * InputOutOfBounds Exception.
      * Note, this does NOT handle InputMismatchException
-     * @throws InputOutOfBoundsException Thrown when next user integer input is not an integer.
+     * @throws InputOutOfBoundsException Thrown when next user
+     * integer input is not an integer.
      * @return int corresponding to the int the user entered
      */
     public int readInt(int min, int max) throws InputOutOfBoundsException {
@@ -85,9 +85,9 @@ public class UserIO {
     }
 
     /**
-     * int readIntUntilAccepted(int min, int max) reads the next integer from System.in
-     * with a check between min and max, and does it in a loop until the user
-     * gives a correct integer response.
+     * int readIntUntilAccepted(int min, int max) reads the next
+     * integer from System.in with a check between min and max, and
+     * does it in a loop until the user gives a correct integer response.
      * @return int corresponding to the valid int the user entered
      */
     public int readIntUntilAccepted(int min, int max) {
@@ -111,20 +111,26 @@ public class UserIO {
         switch(inputValue){
             case 1:
                 readLine();
-                System.out.println("\nPlease input request for furniture item in the form");
-                System.out.println("[type] [furniture category], [quantity of items]");
+                System.out.println("\nPlease input request for " +
+                        "furniture item in the form");
+                System.out.println("[type] [furniture category], " +
+                        "[quantity of items]");
                 System.out.println("ex. Mesh chair, 1");
                 System.out.println("Enter request: ");
                 String readFromScan = readLine();
                 processUserRequest(readFromScan);
                 break;
             case 2:
-                System.out.println("\nCurrent output file name is: " + currentOutputFile + "\n");
+                System.out.println("\nCurrent output file name is: " +
+                        outputFile + "\n");
                 break;
             case 3:
-                System.out.println("\nCurrent database URL: " + databaseIO.getDbUrl());
-                System.out.println("Current database username: " + databaseIO.getUsername());
-                System.out.println("Current database password: " + databaseIO.getPassword());
+                System.out.println("\nCurrent database URL: "
+                        + databaseIO.getDbUrl());
+                System.out.println("Current database username: "
+                        + databaseIO.getUsername());
+                System.out.println("Current database password: "
+                        + databaseIO.getPassword());
                 break;
             case 4:
                 System.out.println("\nSelected option 4\n");
@@ -150,21 +156,26 @@ public class UserIO {
             processUserRequest(readLine());
         }
         else{
-            furnitureType = requestMatch.group(1);
-            furnitureCategory = requestMatch.group(2);
-            numberOfItems = requestMatch.group(3);
-            if(furnitureCategory.equals("chair") || furnitureCategory.equals("desk") || furnitureCategory.equals("filing") || furnitureCategory.equals("lamp")){
-                if(databaseIO.typeExists(furnitureType)){
+            furnType = requestMatch.group(1);
+            furnCategory = requestMatch.group(2);
+            numOfItems = requestMatch.group(3);
+            if(furnCategory.equals("chair") || furnCategory.equals("desk")
+                    || furnCategory.equals("filing")
+                    || furnCategory.equals("lamp")){
+                if(databaseIO.typeExists(furnType)){
                     checkFurniture();
-                    String[] temp = priceOptimizer.optimize(Integer.parseInt(numberOfItems));
+                    String[] temp = priceOpt
+                            .optimize(Integer.parseInt(numOfItems));
                     if(temp!=null){
                         for(String t: temp){
-                            databaseIO.removeItem(furnitureCategory, t);
+                            databaseIO.removeItem(furnCategory, t);
                         }
-                        fileIO = new FileIO(currentOutputFile,temp,userRequest,priceOptimizer.getCurrentCost());
+                        fileIO = new FileIO(outputFile,temp,userRequest,
+                                priceOpt.getCurrentCost());
                     }
                     else{
-                        fileIO = new FileIO(databaseIO.suggestedManufacturers(furnitureCategory));
+                        fileIO = new FileIO(databaseIO
+                                .suggestedManufacturers(furnCategory));
                     }
                 } else {
                     System.out.println("Invalid type, try again.");
@@ -180,18 +191,18 @@ public class UserIO {
     }
 
     public void checkFurniture(){
-        switch (this.furnitureCategory) {
+        switch (this.furnCategory) {
             case "chair":
-                this.priceOptimizer = databaseIO.getChairData(this.furnitureType);
+                this.priceOpt = databaseIO.getChairData(this.furnType);
                 break;
             case "desk":
-                this.priceOptimizer = databaseIO.getDeskData(this.furnitureType);
+                this.priceOpt = databaseIO.getDeskData(this.furnType);
                 break;
             case "lamp":
-                this.priceOptimizer = databaseIO.getLampData(this.furnitureType);
+                this.priceOpt = databaseIO.getLampData(this.furnType);
                 break;
             case "filing":
-                this.priceOptimizer = databaseIO.getFilingData(this.furnitureType);
+                this.priceOpt = databaseIO.getFilingData(this.furnType);
                 break;
             default:
                 System.out.println("error");
