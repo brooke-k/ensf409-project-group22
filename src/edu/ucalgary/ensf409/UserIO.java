@@ -1,5 +1,6 @@
 package edu.ucalgary.ensf409;
 
+import java.io.File;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -116,6 +117,7 @@ public class UserIO {
                 System.out.println("[type] [furniture category], " +
                         "[quantity of items]");
                 System.out.println("ex. Mesh chair, 1");
+                System.out.println("or enter \"CANCEL\" to return to the menu");
                 System.out.println("Enter request: ");
                 String readFromScan = readLine();
                 processUserRequest(readFromScan);
@@ -130,13 +132,19 @@ public class UserIO {
                 System.out.println("Current database username: "
                         + databaseIO.getUsername());
                 System.out.println("Current database password: "
-                        + databaseIO.getPassword());
+                        + hidePassword(databaseIO.getPassword()));
                 break;
             case 4:
-                System.out.println("\nSelected option 4\n");
+                readLine();
+                System.out.println("\nThe current output file name is: \"" +
+                        outputFile + "\"\n");
+                System.out.println("Please the filename for order output, or enter \"CANCEL\" to cancel the operation.");
+                System.out.println("New file name: ");
+                String readFileName = readLine();
+                updateOutputName(readFileName);
                 break;
             case 5:
-                System.out.println("\nSelected option 5\n");
+                updateSQLCredentials();
                 break;
             case 0:
                 System.out.println("\nSelected option 0. Now closing program.");
@@ -147,12 +155,21 @@ public class UserIO {
     }
 
     public void processUserRequest(String userRequest){
+        if(userRequest.equals("CANCEL")){
+            System.out.println("Returning to menu. No order has been placed.");
+            return;
+        }
         String requestREGEX = "([A-Z][a-z]+) ([a-z]+), ([0-9]+)";
         Pattern requestPattern = Pattern.compile(requestREGEX);
         Matcher requestMatch = requestPattern.matcher(userRequest);
         boolean matchesFound = requestMatch.find();
         if(!matchesFound){
             System.out.println("Invalid input provided.");
+            System.out.println("Please enter a valid input in the form");
+            System.out.println("[type] [furniture category], " +
+                    "[quantity of items]");
+            System.out.println("Or enter \"CANCEL\" to return to the menu.\n");
+            System.out.println("Enter request: ");
             processUserRequest(readLine());
         }
         else{
@@ -209,7 +226,126 @@ public class UserIO {
         }
     }
 
+    public void updateOutputName(String newFileName){
+        if(newFileName.equals("CANCEL")){
+            System.out.println("Returning to menu. Order output file name has not been updated.");
+            return;
+        }else{
+            File checkFile = new File(newFileName);
+            if(checkFile.isDirectory()){
+                System.out.println("\n\nThe provided name is not a valid file.");
+                System.out.println("Please enter a valid file name or enter \"CANCEL\" to return to the menu");
+                System.out.println("Current order output file name: " + this.outputFile);
+                System.out.println("New order output file name: ");
+                updateOutputName(readLine());
+            }
+            else{
+                String newOutputFileName = newFileName;
+                System.out.println("New order output file name is \"" + newOutputFileName + "\"");
+                System.out.println("Save update? (Y/N): ");
+                String saveResponse = readLine();
+                while(!saveResponse.equals("Y") && !saveResponse.equals("N")){
+                    System.out.println("Save update? (Y/N): ");
+                    saveResponse = readLine();
+                }
+                if(saveResponse.equals("N")){
+                    System.out.println("Returning to menu. Order output file name has not been updated.");
+                    return;
+                }
+                else{
+                    this.outputFile = newOutputFileName;
+                    System.out.println("\nOrder output file name has been updated to " + this.outputFile);
+                    return;
+                }
+            }
+        }
+    }
 
+    public void updateSQLCredentials(){
+        readLine();
+        System.out.println("\n\nWarning: Altering the current MySQL credentials" +
+                "\nmay make the database unreachable.");
+        System.out.println("\nDo you want to proceed? (Y/N):");
+        String updateString = readLine();
+        while(!updateString.equals("Y") && !updateString.equals("N")){
+            System.out.println("Do you want to proceed? (Y/N):");
+            updateString = readLine();
+        }
+        if(updateString.equals("N")){
+            System.out.println("\nReturning to menu. No changes have been made.");
+            return;
+        }
+        else{
+            String newURL;
+            System.out.println("\nEnter \"CANCEL\" at any time to return to menu " +
+                    "\nwithout updating MySQL credentials.");
+            System.out.println("Please enter the new database URL: ");
+            updateString = readLine();
+            if(updateString.equals("CANCEL")){
+                System.out.println("\nReturning to menu. No changes have been made.");
+                return;
+            }
+            else{
+                newURL = updateString;
+            }
+            String newUser;
+            System.out.println("\nPlease enter the new database username: ");
+            updateString = readLine();
+            if(updateString.equals("CANCEL")){
+                System.out.println("\nReturning to menu. No changes have been made.");
+                return;
+            } else {
+                newUser = updateString;
+            }
+            String newPassword;
+            System.out.println("Please enter the new database password: ");
+            updateString = readLine();
+            if(updateString.equals("CANCEL")) {
+                System.out.println("\nReturning to menu. " +
+                        "\nNo changes have been made.");
+                return;
+            } else {
+                newPassword = updateString;
+            }
+            System.out.println("\nOld MySQL credentials are");
+            System.out.println("  URL: " + databaseIO.getDbUrl());
+            System.out.println("  Username: " + databaseIO.getUsername());
+            System.out.println("  Password: " + hidePassword(databaseIO.getPassword()));
+            System.out.println();
+            System.out.println("New MySQL credentials are");
+            System.out.println("  URL: " + newURL);
+            System.out.println("  Username: " + newUser);
+            System.out.println("  Password: " + hidePassword(newPassword));
+            System.out.println();
+            System.out.println("Update MySQL credentials? (Y/N):");
+            updateString = readLine();
+            while(!updateString.equals("Y") && !updateString.equals("N")){
+                System.out.println("Update MySQL credentials? (Y/N):");
+                updateString = readLine();
+            }
+            if(updateString.equals("N")){
+                System.out.println("\nReturning to menu. " +
+                        "\nMySQL credentials have not been updated.");
+                return;
+            }
+            else {
+                databaseIO.updateCredentials(newURL, newUser, newPassword);
+                System.out.println("\nMySQL credentials have been " +
+                        "\nupdated successfully.");
+                System.out.println("Returning to menu.");
+                return;
+
+            }
+        }
+    }
+
+    private String hidePassword(String password){
+        StringBuilder hidden = new StringBuilder();
+        for(int i = 0; i<password.length(); i++){
+            hidden.append("*");
+        }
+        return hidden.toString();
+    }
 
     /**
      * close will close the System.in scanner object

@@ -23,8 +23,8 @@ public class DatabaseIO {
      */
     public DatabaseIO(){
         this.dbUrl = "jdbc:mysql://localhost/inventory";
-        this.username = "root";
-        this.password = "password";
+        this.username = "scm";
+        this.password = "ensf409";
     }
 
     /**
@@ -80,6 +80,26 @@ public class DatabaseIO {
      */
     public void setPassword(String password){
         this.password = password;
+    }
+
+    /**
+     * Method for updating MySQL credentials. Will close current connection,
+     * save the parameters as the new credentials, and attempt to open
+     * a new connection using the updated credentials.
+     * @param dbUrl New database URL
+     * @param username New database username
+     * @param password New database password
+     */
+    public void updateCredentials(String dbUrl, String username, String password){
+        try {
+            dbConnect.close();
+            this.dbUrl = dbUrl;
+            this.username = username;
+            this.password = password;
+            createConnection();
+        } catch (SQLException e){
+            System.out.println("Could not update MySQL credentials");
+        }
     }
 
     /**
