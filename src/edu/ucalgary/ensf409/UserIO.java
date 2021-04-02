@@ -7,7 +7,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /*
- * This class facilitates IO with the command-line interface
+ * UserIO is a class that facilitates interaction between the user and the
+ * program.
+ * Provides methods for the user to make a request, alter output file and
+ * MySQL settings, and interact with the database.
+ * Provides methods for the terminal to be used as the input and primary output
+ * that the user will receive information on the current program operations
+ * through.
  */
 public class UserIO {
     private Scanner input;
