@@ -223,6 +223,21 @@ public class SupplyChainTest {
         assertEquals(expectedConsoleOutput,fileIO.getConsoleOutputString().trim());
     }
 
+    /**
+     * testOrderOutputToTerminalFourItems asserts that the string produced by
+     * the FileIO object with a successful order and four items is correct.
+     */
+    @Test public void testOrderOutputToTerminalFourItems(){
+        String[] orderedItems = {"One1","Two2","Three3","Four4"};
+        String outputFileName = "orderOutputToTerminalTest";
+        String originalRequest = "orderOutputToTerminal request";
+        int orderCost = 89899;
+
+        FileIO fileIO = new FileIO(outputFileName,orderedItems,originalRequest,orderCost);
+
+        String expectedConsoleOutput = ("Order successful." + "\n" + "Purchased components: " +"One1" + ", " + "Two2" + ", " + "Three3" + ", " + "and " +"Four4" +" for $" + "89899");
+        assertEquals(expectedConsoleOutput,fileIO.getConsoleOutputString().trim());
+    }
 
 
 
