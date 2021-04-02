@@ -193,7 +193,7 @@ public class SupplyChainTest {
 
     /**
      * testOrderOutputToTerminalOneItem asserts that the string produced by
-     * the FileIO object with a successful order and one item is correct.
+     * the FileIO object to be printed to the terminal with a successful order and one item is correct.
      */
     @Test public void testOrderOutputToTerminalOneItem(){
         String[] orderedItems = {"OneItem"};
@@ -209,7 +209,7 @@ public class SupplyChainTest {
 
     /**
      * testOrderOutputToTerminalTwoItems asserts that the string produced by
-     * the FileIO object with a successful order and two items is correct.
+     * the FileIO object to be printed to the terminal with a successful order and two items is correct.
      */
     @Test public void testOrderOutputToTerminalTwoItems(){
         String[] orderedItems = {"One item", "two items"};
@@ -225,7 +225,7 @@ public class SupplyChainTest {
 
     /**
      * testOrderOutputToTerminalFourItems asserts that the string produced by
-     * the FileIO object with a successful order and four items is correct.
+     * the FileIO object to be printed to the terminal with a successful order and four items is correct.
      */
     @Test public void testOrderOutputToTerminalFourItems(){
         String[] orderedItems = {"One1","Two2","Three3","Four4"};
@@ -239,6 +239,74 @@ public class SupplyChainTest {
         assertEquals(expectedConsoleOutput,fileIO.getConsoleOutputString().trim());
     }
 
+    /**
+     * testOrderOutputFileStringOneItem asserts that the string produced by
+     * the FileIO object to be written to the order output file with one item is correct.
+     */
+    @Test public void testOrderOutputFileStringOneItem(){
+        String[] orderedItems = {"OneItem"};
+        String outputFileName = "orderOutputToFileTest";
+        String originalRequest = "orderOutputToFileTest request";
+        int orderCost = 3700;
+
+        FileIO fileIO = new FileIO(outputFileName,orderedItems,originalRequest,orderCost);
+
+        String expectedOutputFileString = ("SCM Order Form" +
+                "\n\n" +
+                "Faculty Name: " +
+                "\n" +
+                "Contact: " +
+                "\n" +
+                "Date: " +
+                "\n\n" +
+                "Original Request: " +
+                originalRequest +
+                "\n\n" +
+                "Items Ordered:" +
+                "\n" +
+                "  ID: " +
+                "OneItem" +
+                "\n\n" +
+                "Total price of order: $" +
+                orderCost);
+        assertEquals(expectedOutputFileString,fileIO.getOrderOutputString());
+    }
+
+    /**
+     * testOrderOutputFileStringOneItem asserts that the string produced by
+     * the FileIO object to be written to the order output file with two items is correct.
+     */
+    @Test public void testOrderOutputFileStringTwoItems(){
+        String[] orderedItems = {"One item", "two Items"};
+        String outputFileName = "orderOutputToTerminalTest";
+        String originalRequest = "orderOutputToTerminal request";
+        int orderCost = 89474;
+
+        FileIO fileIO = new FileIO(outputFileName,orderedItems,originalRequest,orderCost);
+
+        String expectedOutputFileString = ("SCM Order Form" +
+                "\n\n" +
+                "Faculty Name: " +
+                "\n" +
+                "Contact: " +
+                "\n" +
+                "Date: " +
+                "\n\n" +
+                "Original Request: " +
+                originalRequest +
+                "\n\n" +
+                "Items Ordered:" +
+                "\n" +
+                "  ID: " +
+                "One item" +
+                "\n" +
+                "  ID: " +
+                "two Items" +
+                "\n\n" +
+                "Total price of order: $" +
+                orderCost);
+        assertEquals(expectedOutputFileString,fileIO.getOrderOutputString());
+    }
 
 
 }
