@@ -339,7 +339,7 @@ public class UserIO {
     public void updateSQLCredentials(){
         readLine();
         System.out.println("\n\nWarning: Altering the current MySQL " +
-                "credentials \nmay make the database unreachable.");
+                "credentials \nmay make the database unreachable.\n");
         System.out.println("\nDo you want to proceed? (Y/N):");
         String updateString = readLine();
         while(!updateString.equals("Y") && !updateString.equals("N")){
@@ -354,7 +354,7 @@ public class UserIO {
         else{
             String newURL;
             System.out.println("\nEnter \"CANCEL\" at any time to return to " +
-                    "menu \nwithout updating MySQL credentials.");
+                    "menu \nwithout updating MySQL credentials.\n");
             System.out.println("Please enter the new database URL: ");
             updateString = readLine();
             if(updateString.equals("CANCEL")){
@@ -366,7 +366,7 @@ public class UserIO {
                 newURL = updateString;
             }
             String newUser;
-            System.out.println("\nPlease enter the new database username: ");
+            System.out.println("Please enter the new database username: ");
             updateString = readLine();
             if(updateString.equals("CANCEL")){
                 System.out.println("\nReturning to menu. " +
