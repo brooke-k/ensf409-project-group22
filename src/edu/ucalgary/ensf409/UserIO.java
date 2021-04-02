@@ -266,6 +266,19 @@ public class UserIO {
         }
     }
 
+    /**
+     * Method updateOutputName allows the user to update their preferred name of
+     * the output file that the order will be written to.
+     *
+     * Checks to ensure that the user provides a valid file name for the new
+     * output.
+     *
+     * Does not update the current output file name until the user
+     * has confirmed their changes.
+     *
+     * @param newFileName String of the new file name the user intends to
+     *                    replace the current output file name with.
+     */
     public void updateOutputName(String newFileName){
         if(newFileName.equals("CANCEL")){
             System.out.println("Returning to menu. Order output file name " +
