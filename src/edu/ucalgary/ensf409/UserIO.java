@@ -7,7 +7,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /*
- * This class facilitates IO with the command-line interface
+ * UserIO is a class that facilitates interaction between the user and the
+ * program.
+ * Provides methods for the user to make a request, alter output file and
+ * MySQL settings, and interact with the database.
+ * Provides methods for the terminal to be used as the input and primary output
+ * that the user will receive information on the current program operations
+ * through.
  */
 public class UserIO {
     private Scanner input;
@@ -20,7 +26,7 @@ public class UserIO {
     private String outputFile = "OrderOutput.txt";
     
     /**
-     * int menu() will display the user menu and return the selected option
+     * The method menu will display the user menu and return the selected option
      * by the user.
      * @return int corresponding to the selected option by the user
      */
@@ -40,7 +46,7 @@ public class UserIO {
 
     /**
      * Constructor that initializes a new System.in scanner object
-     * to input
+     * to input so the user can provide consistent input to the program.
      */
     public UserIO() {
         input = new Scanner(System.in);
@@ -108,6 +114,13 @@ public class UserIO {
         return userInput;
     }
 
+    /**
+     * Method processInput processes the menu to select an action to take from
+     * the menu. Will call appropriate methods for action selected if a valid
+     * input has been provided by the user, or will return with no action taken
+     * if the user inputs an invalid input.
+     * @param inputValue Request from the user.
+     */
     public void processInput(int inputValue){
         switch(inputValue){
             case 1:
@@ -154,6 +167,28 @@ public class UserIO {
         }
     }
 
+    /**
+     * Method processUserRequest is responsible for handling user input
+     * when the user is placing a new order for a furniture item.
+     *
+     * processUserRequest will be a recursive function if the first, or
+     * subsequent, entries by the user are in the invalid format for a request.
+     * Will stop being called when the user places a correctly formatted,
+     * valid order.
+     *
+     * Once a valid order has been placed, processUserRequests calls other
+     * methods to provide the correct data from the database needed to
+     * fulfill the order.
+     *
+     * processUserInput will not be a recursive function if the user
+     * provides a correct input the first time processUserRequest is called.
+     *
+     * Provides the user with the option to exit the order at any time without
+     * the order being processed by entering the String "CANCEL"
+     *
+     * @param userRequest String of the user's order request that is to
+     *                   be processed.
+     */
     public void processUserRequest(String userRequest){
         if(userRequest.equals("CANCEL")){
             System.out.println("Returning to menu. No order has been placed.");
@@ -207,6 +242,17 @@ public class UserIO {
         }
     }
 
+    /**
+     * Method checkFurniture checks that the furniture category that has been
+     * read by processUserInput is a valid furniture category.
+     *
+     * If the furniture category that has been read by processUserRequest is
+     * valid, the method will call the instance of PriceOptimizer, priceOpt,
+     * for provided furniture category and return.
+     *
+     * If the furniture category that has been read by processUserRequest is
+     * not valid, checkFurniture will print "error" to the terminal and return.
+     */
     public void checkFurniture(){
         switch (this.furnCategory) {
             case "chair":
@@ -226,22 +272,40 @@ public class UserIO {
         }
     }
 
+    /**
+     * Method updateOutputName allows the user to update their preferred name of
+     * the output file that the order will be written to.
+     *
+     * Checks to ensure that the user provides a valid file name for the new
+     * output.
+     *
+     * Does not update the current output file name until the user
+     * has confirmed their changes.
+     *
+     * @param newFileName String of the new file name the user intends to
+     *                    replace the current output file name with.
+     */
     public void updateOutputName(String newFileName){
         if(newFileName.equals("CANCEL")){
-            System.out.println("Returning to menu. Order output file name has not been updated.");
+            System.out.println("Returning to menu. Order output file name " +
+                    "has not been updated.");
             return;
         }else{
             File checkFile = new File(newFileName);
             if(checkFile.isDirectory()){
-                System.out.println("\n\nThe provided name is not a valid file.");
-                System.out.println("Please enter a valid file name or enter \"CANCEL\" to return to the menu");
-                System.out.println("Current order output file name: " + this.outputFile);
+                System.out.println("\n\nThe provided name is not a valid " +
+                        "file.");
+                System.out.println("Please enter a valid file name or enter " +
+                        "\"CANCEL\" to return to the menu");
+                System.out.println("Current order output file name: "
+                        + this.outputFile);
                 System.out.println("New order output file name: ");
                 updateOutputName(readLine());
             }
             else{
                 String newOutputFileName = newFileName;
-                System.out.println("New order output file name is \"" + newOutputFileName + "\"");
+                System.out.println("New order output file name is \"" +
+                        newOutputFileName + "\"");
                 System.out.println("Save update? (Y/N): ");
                 String saveResponse = readLine();
                 while(!saveResponse.equals("Y") && !saveResponse.equals("N")){
@@ -249,22 +313,33 @@ public class UserIO {
                     saveResponse = readLine();
                 }
                 if(saveResponse.equals("N")){
-                    System.out.println("Returning to menu. Order output file name has not been updated.");
+                    System.out.println("Returning to menu. Order output file " +
+                            "name has not been updated.");
                     return;
                 }
                 else{
                     this.outputFile = newOutputFileName;
-                    System.out.println("\nOrder output file name has been updated to " + this.outputFile);
+                    System.out.println("\nOrder output file name has been " +
+                            "updated to " + this.outputFile);
                     return;
                 }
             }
         }
     }
 
+    /**
+     * Method updateSQLCredentials is a method for handling updates the the
+     * MySQL credentials from the terminal by taking user inputs one at a time
+     * and saving them locally until the user makes the final decision to update
+     * the credentials.
+     *
+     * User is able to exit the method and return to the menu at any time by
+     * providing the input "CANCEL" in any line.
+     */
     public void updateSQLCredentials(){
         readLine();
-        System.out.println("\n\nWarning: Altering the current MySQL credentials" +
-                "\nmay make the database unreachable.");
+        System.out.println("\n\nWarning: Altering the current MySQL " +
+                "credentials \nmay make the database unreachable.\n");
         System.out.println("\nDo you want to proceed? (Y/N):");
         String updateString = readLine();
         while(!updateString.equals("Y") && !updateString.equals("N")){
@@ -272,27 +347,30 @@ public class UserIO {
             updateString = readLine();
         }
         if(updateString.equals("N")){
-            System.out.println("\nReturning to menu. No changes have been made.");
+            System.out.println("\nReturning to menu. " +
+                    "No changes have been made.");
             return;
         }
         else{
             String newURL;
-            System.out.println("\nEnter \"CANCEL\" at any time to return to menu " +
-                    "\nwithout updating MySQL credentials.");
+            System.out.println("\nEnter \"CANCEL\" at any time to return to " +
+                    "menu \nwithout updating MySQL credentials.\n");
             System.out.println("Please enter the new database URL: ");
             updateString = readLine();
             if(updateString.equals("CANCEL")){
-                System.out.println("\nReturning to menu. No changes have been made.");
+                System.out.println("\nReturning to menu. " +
+                        "No changes have been made.");
                 return;
             }
             else{
                 newURL = updateString;
             }
             String newUser;
-            System.out.println("\nPlease enter the new database username: ");
+            System.out.println("Please enter the new database username: ");
             updateString = readLine();
             if(updateString.equals("CANCEL")){
-                System.out.println("\nReturning to menu. No changes have been made.");
+                System.out.println("\nReturning to menu. " +
+                        "No changes have been made.");
                 return;
             } else {
                 newUser = updateString;
@@ -310,7 +388,8 @@ public class UserIO {
             System.out.println("\nOld MySQL credentials are");
             System.out.println("  URL: " + databaseIO.getDbUrl());
             System.out.println("  Username: " + databaseIO.getUsername());
-            System.out.println("  Password: " + hidePassword(databaseIO.getPassword()));
+            System.out.println("  Password: " + hidePassword(databaseIO
+                    .getPassword()));
             System.out.println();
             System.out.println("New MySQL credentials are");
             System.out.println("  URL: " + newURL);
@@ -339,6 +418,16 @@ public class UserIO {
         }
     }
 
+
+    /**
+     * Method hidePassword hides passwords by replacing all characters with a
+     * uniform substitute, intended for displaying in the terminal to the user.
+     * Returns a string of the same length as provided String password, but
+     * with each character replaced with the '*' character.
+     * @param password String password to be hidden
+     * @return String password, but with each character replaced with the '*'
+     * character.
+     */
     private String hidePassword(String password){
         StringBuilder hidden = new StringBuilder();
         for(int i = 0; i<password.length(); i++){
@@ -348,7 +437,7 @@ public class UserIO {
     }
 
     /**
-     * close will close the System.in scanner object
+     * Method close closes the scanner input.
      */
     public void close() {
         input.close();
