@@ -64,7 +64,7 @@ public class FileIO {
      * Output is provided only in the terminal.
      * No order form is created.
      */
-    private void createUnfulfilledOutput(){
+    public String createUnfulfilledOutput(){
         StringBuilder outputString = new StringBuilder();
         outputString.append("\nOrder could not be fulfilled based " +
                 "on current inventory.");
@@ -81,6 +81,7 @@ public class FileIO {
             outputString.append(manufacturer.get(0));
             outputString.append(" and ");
             outputString.append(manufacturer.get(1));
+            outputString.append(".");
             consoleOutputString = outputString.toString();
         }
         else{
@@ -91,9 +92,11 @@ public class FileIO {
             }
             outputString.append("and ");
             outputString.append(manufacturer.get(manufacturer.size()-1));
+            outputString.append(".");
             consoleOutputString = outputString.toString();
         }
         System.out.println(consoleOutputString);
+        return consoleOutputString;
     }
 
     /**
