@@ -20,7 +20,7 @@ public class UserIO {
     private String outputFile = "OrderOutput.txt";
     
     /**
-     * int menu() will display the user menu and return the selected option
+     * The method menu will display the user menu and return the selected option
      * by the user.
      * @return int corresponding to the selected option by the user
      */
@@ -40,7 +40,7 @@ public class UserIO {
 
     /**
      * Constructor that initializes a new System.in scanner object
-     * to input
+     * to input so the user can provide consistent input to the program.
      */
     public UserIO() {
         input = new Scanner(System.in);
@@ -108,6 +108,13 @@ public class UserIO {
         return userInput;
     }
 
+    /**
+     * Method for processing the menu to select an action to take from the
+     * menu. Will call appropriate methods for action selected if a valid
+     * input has been provided by the user, or will return with no action taken
+     * if the user inputs an invalid input.
+     * @param inputValue Request from the user.
+     */
     public void processInput(int inputValue){
         switch(inputValue){
             case 1:
@@ -154,6 +161,28 @@ public class UserIO {
         }
     }
 
+    /**
+     * Method processUserRequest is responsible for handling user input
+     * when the user is placing a new order for a furniture item.
+     *
+     * processUserRequest will be a recursive function if the first, or
+     * subsequent, entries by the user are in the invalid format for a request.
+     * Will stop being called when the user places a correctly formatted,
+     * valid order.
+     *
+     * Once a valid order has been placed, processUserRequests calls other
+     * methods to provide the correct data from the database needed to
+     * fulfill the order.
+     *
+     * processUserInput will not be a recursive function if the user
+     * provides a correct input the first time processUserRequest is called.
+     *
+     * Provides the user with the option to exit the order at any time without
+     * the order being processed by entering the String "CANCEL"
+     *
+     * @param userRequest String of the user's order request that is to
+     *                   be processed.
+     */
     public void processUserRequest(String userRequest){
         if(userRequest.equals("CANCEL")){
             System.out.println("Returning to menu. No order has been placed.");
@@ -207,6 +236,17 @@ public class UserIO {
         }
     }
 
+    /**
+     * Method for checking that the furniture category that has been read by
+     * processUserInput is a valid furniture category.
+     *
+     * If the furniture category that has been read by processUserRequest is
+     * valid, the method will call the instance of PriceOptimizer, priceOpt,
+     * for provided furniture category and return.
+     *
+     * If the furniture category that has been read by processUserRequest is
+     * not valid, checkFurniture will print "error" to the terminal and return.
+     */
     public void checkFurniture(){
         switch (this.furnCategory) {
             case "chair":
