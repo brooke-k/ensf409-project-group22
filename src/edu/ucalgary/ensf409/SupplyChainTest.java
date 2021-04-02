@@ -308,5 +308,47 @@ public class SupplyChainTest {
         assertEquals(expectedOutputFileString,fileIO.getOrderOutputString());
     }
 
+    /**
+     * testOrderOutputFileStringOneItem asserts that the string produced by
+     * the FileIO object to be written to the order output file with four items is correct.
+     */
+    @Test public void testOrderOutputFileStringFourItems(){
+        String[] orderedItems = {"11One","22Two","33Three","44Four"};
+        String outputFileName = "orderOutputToTerminalTest";
+        String originalRequest = "orderOutputToTerminal request";
+        int orderCost = 27722;
+
+        FileIO fileIO = new FileIO(outputFileName,orderedItems,originalRequest,orderCost);
+
+        String expectedOutputFileString = ("SCM Order Form" +
+                "\n\n" +
+                "Faculty Name: " +
+                "\n" +
+                "Contact: " +
+                "\n" +
+                "Date: " +
+                "\n\n" +
+                "Original Request: " +
+                originalRequest +
+                "\n\n" +
+                "Items Ordered:" +
+                "\n" +
+                "  ID: " +
+                "11One" +
+                "\n" +
+                "  ID: " +
+                "22Two" +
+                "\n" +
+                "  ID: " +
+                "33Three" +
+                "\n" +
+                "  ID: " +
+                "44Four" +
+                "\n\n" +
+                "Total price of order: $" +
+                orderCost);
+        assertEquals(expectedOutputFileString,fileIO.getOrderOutputString());
+    }
+
 
 }
