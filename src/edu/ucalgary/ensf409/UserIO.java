@@ -151,7 +151,8 @@ public class UserIO {
                 readLine();
                 System.out.println("\nThe current output file name is: \"" +
                         outputFile + "\"\n");
-                System.out.println("Please the filename for order output, or enter \"CANCEL\" to cancel the operation.");
+                System.out.println("Please the filename for order output, or " +
+                        "enter \"CANCEL\" to cancel the operation.");
                 System.out.println("New file name: ");
                 String readFileName = readLine();
                 updateOutputName(readFileName);
