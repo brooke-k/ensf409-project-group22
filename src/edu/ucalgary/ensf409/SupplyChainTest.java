@@ -190,4 +190,21 @@ public class SupplyChainTest {
 
         assertEquals(expectedOutput, termCont);
     }
+
+    /**
+     * testOrderOutputToTerminalOneItem asserts that the string produced by
+     * the FileIO object with a successful order and one item is correct.
+     */
+    @Test public void testOrderOutputToTerminalOneItem(){
+        String[] orderedItems = {"OneItem"};
+        String outputFileName = "orderOutputToTerminalTest";
+        String originalRequest = "orderOutputToTerminal request";
+        int orderCost = 3700;
+
+        FileIO fileIO = new FileIO(outputFileName,orderedItems,originalRequest,orderCost);
+
+        String expectedConsoleOutput = ("Order successful." + "\n" + "Purchased component: " + "OneItem" + " for $" + "3700");
+        assertEquals(expectedConsoleOutput,fileIO.getConsoleOutputString().trim());
+    }
+
 }

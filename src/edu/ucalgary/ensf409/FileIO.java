@@ -63,6 +63,8 @@ public class FileIO {
      * they requested to order.
      * Output is provided only in the terminal.
      * No order form is created.
+     *
+     * @return the String printed to the console regarding the order output
      */
     public String createUnfulfilledOutput(){
         StringBuilder outputString = new StringBuilder();
@@ -110,7 +112,7 @@ public class FileIO {
      * Calls the private method printOutputs to display console output and
      * write to the order form.
      */
-    private void createFulfilledOutput(){
+    public void createFulfilledOutput(){
         StringBuilder consoleBuilder = new StringBuilder();
         StringBuilder fileBuilder = new StringBuilder();
 
@@ -167,9 +169,6 @@ public class FileIO {
         orderOutputString = fileBuilder.toString();
 
         printOutputs();
-
-
-
     }
 
     /**
@@ -188,5 +187,21 @@ public class FileIO {
         }
 
         System.out.println(consoleOutputString);
+    }
+
+    /**
+     * Getter method for the generated consoleOutputString
+     * @return String intended to be printed to the console
+     */
+    public String getConsoleOutputString(){
+        return this.consoleOutputString;
+    }
+
+    /**
+     * Getter method for the generated orderOutputString
+     * @return String intended to be written to the order output file
+     */
+    public String getOrderOutputString(){
+        return this.orderOutputString;
     }
 }
