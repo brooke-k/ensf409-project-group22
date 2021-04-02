@@ -120,13 +120,13 @@ public class SupplyChainTest {
     }
 
     /**
-     * testUnfulfilledTerminalOutput1Manufacturer asserts that the terminal
+     * testFileIO_UnfulfilledTerminalOutput1Manufacturer asserts that the terminal
      * output written by method createUnfulfilled output is the correct output
      * for one manufacturer.
      * Tested using method trim() to check for content only, not newline
      * formatting.
      */
-    @Test public void testUnfulfilledTerminalOutput1Manufacturer(){
+    @Test public void testFileIO_UnfulfilledTerminalOutput1Manufacturer(){
         ArrayList<String> manufacturers = new ArrayList<>();
         manufacturers.add("One manufacturer");
 
@@ -144,13 +144,13 @@ public class SupplyChainTest {
     }
 
     /**
-     * testUnfulfilledTerminalOutput2Manufacturers asserts that the terminal
+     * testFileIO_UnfulfilledTerminalOutput2Manufacturers asserts that the terminal
      * output written by method createUnfulfilled output is the correct output
      * for two manufacturers.
      * Tested using method trim() to check for content only, not newline
      * formatting.
      */
-    @Test public void testUnfulfilledTerminalOutput2Manufacturers(){
+    @Test public void testFileIO_UnfulfilledTerminalOutput2Manufacturers(){
         ArrayList<String> manufacturers = new ArrayList<>();
         manufacturers.add("First company");
         manufacturers.add("Second company");
@@ -169,13 +169,13 @@ public class SupplyChainTest {
     }
 
     /**
-     * testUnfulfilledTerminalOutput2Manufacturers asserts that the terminal
+     * testFileIO_UnfulfilledTerminalOutput4Manufacturers asserts that the terminal
      * output written by method createUnfulfilled output is the correct output
      * for two manufacturers.
      * Tested using method trim() to check for content only, not newline
      * formatting.
      */
-    @Test public void testUnfulfilledTerminalOutput4Manufacturers(){
+    @Test public void testFileIO_UnfulfilledTerminalOutput4Manufacturers(){
         ArrayList<String> manufacturers = new ArrayList<>();
         manufacturers.add("First corp");
         manufacturers.add("Second corp");
