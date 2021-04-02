@@ -25,6 +25,7 @@ import java.util.Random;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 
 /**
@@ -378,7 +379,7 @@ public class SupplyChainTest {
      * Uses a randomly generated value from 0-999998 to attempt to create
      * a unique file for testing each time.
      */
-    @Test public void testOrderOutputFileWritten(){
+    @Test public void testOrderOutputFileWritten() {
         Random randValue = new Random();
         int testFileNameNumber = randValue.nextInt(999999);
         String testFileName = Integer.toString(testFileNameNumber) + ".txt";
@@ -389,25 +390,59 @@ public class SupplyChainTest {
 
         StringBuilder readFromFile = new StringBuilder();
 
-        try{
+        try {
             FileReader testFileRead = new FileReader(new File(testFileName));
             char readChar;
             int readCharInt = testFileRead.read();
-            while(readCharInt!=-1){
-                readChar = (char)readCharInt;
+            while (readCharInt != -1) {
+                readChar = (char) readCharInt;
                 readFromFile.append(readChar);
                 readCharInt = testFileRead.read();
             }
             assertEquals(fileIO.getOrderOutputString(), readFromFile.toString());
-            } catch(IOException e){
+        } catch (IOException e) {
             System.err.println("IOException: " +
                     "Could not read from the test file \"" + testFileName + "\"");
         }
+    }
 
+    /**
+     * testPriceOptimizer_compatibleValid asserts that the object PriceOptimizer
+     * recognizes that all pieces provided are compatible to create a complete
+     * furniture item.
+     */
+    @Test
+        public void testPriceOptimizer_compatibleValid() {
+            String[] id  = {};
+            int[] price = {};
+            boolean[][] parts = {
+                    {true, false, false, true},
+                    {true, false, true, false},
+                    {false, true, false, true}
+            };
+            int[] list = {0,1,2};
+            PriceOptimizer p = new PriceOptimizer(id,parts,price);
+            Assert.assertTrue(p.compatible(list));
+        }
 
-
-
+    /**
+     * testPriceOptimizer_compatibleInvalid asserts that object Price
+     * Optimizer correctly recognizes when available pieces cannot create
+     * a full furniture item.
+     */
+    @Test
+    public void testPriceOptimizer_compatibleInvalid() {
+        String[] id  = {};
+        int[] price = {};
+        boolean[][] parts = {
+                {true, false, false, true},
+                {true, false, false, false},
+                {false, true, false, true}
+        };
+        int[] list = {0,1,2};
+        PriceOptimizer p = new PriceOptimizer(id,parts,price);
+        assertFalse(p.compatible(list));
+    }
 
 
     }
-}
