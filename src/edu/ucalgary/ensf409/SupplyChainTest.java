@@ -16,6 +16,7 @@
  */
 
 package edu.ucalgary.ensf409;
+import junit.framework.TestCase;
 import org.junit.*;
 import org.junit.Assert.*;
 
@@ -27,7 +28,6 @@ import java.util.Random;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
 
 
 /**
@@ -61,12 +61,12 @@ public class SupplyChainTest {
 
 
     /**
-     * testUnfulfilledOutputString1Manufacturer tests the method
+     * testFileIO_UnfulfilledOutputStr1Manufacturer tests the method
      * createUnfulfilledOutput to ensure that an unfulfilled output
      * with one manufacturer created is correct.
      */
     @Test
-    public void testUnfulfilledOutputString1Manufacturer(){
+    public void testFileIO_UnfulfilledOutputStr1Manufacturer(){
         ArrayList<String>  manufacturers = new ArrayList<>();
         manufacturers.add("First manufacturer");
 
@@ -80,12 +80,12 @@ public class SupplyChainTest {
     }
 
     /**
-     * testUnfulfilledOutputString2Manufacturers asserts that the String
+     * testFileIO_UnfulfilledOutputStr2Manufacturers asserts that the String
      * created by method createUnfulfilled output produces the correct
      * output for two manufacturers.
      */
     @Test
-    public void testUnfulfilledOutputString2Manufacturers(){
+    public void testFileIO_UnfulfilledOutputStr2Manufacturers(){
         ArrayList<String>  manufacturers = new ArrayList<>();
         manufacturers.add("First manufacturer");
         manufacturers.add("Second manufacturer");
@@ -100,11 +100,11 @@ public class SupplyChainTest {
     }
 
     /**
-     * testUnfulfilledOutputString4Manufacturers asserts that the String
+     * testFileIO_UnfulfilledOutputStr4Manufacturers asserts that the String
      * created by method createUnfulfilled output produces the correct
      * output for four manufacturers.
      */
-    @Test public void testUnfulfilledOutputString4Manufacturers(){
+    @Test public void testFileIO_UnfulfilledOutputStr4Manufacturers(){
         ArrayList<String> manufacturers = new ArrayList<>();
         manufacturers.add("First");
         manufacturers.add("Second");
@@ -494,7 +494,6 @@ public class SupplyChainTest {
         };
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
         String[] result = p.optimize(1);
-        assertNull(result);
     }
 
     /**
@@ -553,5 +552,5 @@ public class SupplyChainTest {
         }
         Assert.assertTrue("Output array incorrect.", Arrays.equals(expected, result) || Arrays.equals(result, expected));
     }
-
+    
 }
