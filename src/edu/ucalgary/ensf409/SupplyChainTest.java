@@ -19,11 +19,12 @@ package edu.ucalgary.ensf409;
 import org.junit.*;
 import org.junit.Assert.*;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertTrue;
 
 
 /**
@@ -189,5 +190,224 @@ public class SupplyChainTest {
 
 
         assertEquals(expectedOutput, termCont);
+    }
+
+    /**
+     * testOrderOutputToTerminalOneItem asserts that the string produced by
+     * the FileIO object to be printed to the terminal with a successful order and one item is correct.
+     */
+    @Test public void testOrderOutputToTerminalOneItem(){
+        String[] orderedItems = {"OneItem"};
+        String outputFileName = "orderOutputToTerminalTest";
+        String originalRequest = "orderOutputToTerminal request";
+        int orderCost = 3700;
+
+        FileIO fileIO = new FileIO(outputFileName,orderedItems,originalRequest,orderCost);
+
+        String expectedConsoleOutput = ("Order successful." + "\n" + "Purchased component: " + "OneItem" + " for $" + "3700");
+        assertEquals(expectedConsoleOutput,fileIO.getConsoleOutputString().trim());
+    }
+
+    /**
+     * testOrderOutputToTerminalTwoItems asserts that the string produced by
+     * the FileIO object to be printed to the terminal with a successful order and two items is correct.
+     */
+    @Test public void testOrderOutputToTerminalTwoItems(){
+        String[] orderedItems = {"One item", "two items"};
+        String outputFileName = "orderOutputToTerminalTest";
+        String originalRequest = "orderOutputToTerminal request";
+        int orderCost = 7373;
+
+        FileIO fileIO = new FileIO(outputFileName,orderedItems,originalRequest,orderCost);
+
+        String expectedConsoleOutput = ("Order successful." + "\n" + "Purchased components: " + "One item" +  " and " + "two items" +" for $" + "7373");
+        assertEquals(expectedConsoleOutput,fileIO.getConsoleOutputString().trim());
+    }
+
+    /**
+     * testOrderOutputToTerminalFourItems asserts that the string produced by
+     * the FileIO object to be printed to the terminal with a successful order and four items is correct.
+     */
+    @Test public void testOrderOutputToTerminalFourItems(){
+        String[] orderedItems = {"One1","Two2","Three3","Four4"};
+        String outputFileName = "orderOutputToTerminalTest";
+        String originalRequest = "orderOutputToTerminal request";
+        int orderCost = 89899;
+
+        FileIO fileIO = new FileIO(outputFileName,orderedItems,originalRequest,orderCost);
+
+        String expectedConsoleOutput = ("Order successful." + "\n" + "Purchased components: " +"One1" + ", " + "Two2" + ", " + "Three3" + ", " + "and " +"Four4" +" for $" + "89899");
+        assertEquals(expectedConsoleOutput,fileIO.getConsoleOutputString().trim());
+    }
+
+    /**
+     * testOrderOutputFileStringOneItem asserts that the string produced by
+     * the FileIO object to be written to the order output file with one item is correct.
+     */
+    @Test public void testOrderOutputFileStringOneItem(){
+        String[] orderedItems = {"OneItem"};
+        String outputFileName = "orderOutputToFileTest";
+        String originalRequest = "orderOutputToFileTest request";
+        int orderCost = 3700;
+
+        FileIO fileIO = new FileIO(outputFileName,orderedItems,originalRequest,orderCost);
+
+        String expectedOutputFileString = ("SCM Order Form" +
+                "\n\n" +
+                "Faculty Name: " +
+                "\n" +
+                "Contact: " +
+                "\n" +
+                "Date: " +
+                "\n\n" +
+                "Original Request: " +
+                originalRequest +
+                "\n\n" +
+                "Items Ordered:" +
+                "\n" +
+                "  ID: " +
+                "OneItem" +
+                "\n\n" +
+                "Total price of order: $" +
+                orderCost);
+        assertEquals(expectedOutputFileString,fileIO.getOrderOutputString());
+    }
+
+    /**
+     * testOrderOutputFileStringOneItem asserts that the string produced by
+     * the FileIO object to be written to the order output file with two items is correct.
+     */
+    @Test public void testOrderOutputFileStringTwoItems(){
+        String[] orderedItems = {"One item", "two Items"};
+        String outputFileName = "orderOutputToTerminalTest";
+        String originalRequest = "orderOutputToTerminal request";
+        int orderCost = 89474;
+
+        FileIO fileIO = new FileIO(outputFileName,orderedItems,originalRequest,orderCost);
+
+        String expectedOutputFileString = ("SCM Order Form" +
+                "\n\n" +
+                "Faculty Name: " +
+                "\n" +
+                "Contact: " +
+                "\n" +
+                "Date: " +
+                "\n\n" +
+                "Original Request: " +
+                originalRequest +
+                "\n\n" +
+                "Items Ordered:" +
+                "\n" +
+                "  ID: " +
+                "One item" +
+                "\n" +
+                "  ID: " +
+                "two Items" +
+                "\n\n" +
+                "Total price of order: $" +
+                orderCost);
+        assertEquals(expectedOutputFileString,fileIO.getOrderOutputString());
+    }
+
+    /**
+     * testOrderOutputFileStringOneItem asserts that the string produced by
+     * the FileIO object to be written to the order output file with four items is correct.
+     */
+    @Test public void testOrderOutputFileStringFourItems(){
+        String[] orderedItems = {"11One","22Two","33Three","44Four"};
+        String outputFileName = "orderOutputToTerminalTest";
+        String originalRequest = "orderOutputToTerminal request";
+        int orderCost = 27722;
+
+        FileIO fileIO = new FileIO(outputFileName,orderedItems,originalRequest,orderCost);
+
+        String expectedOutputFileString = ("SCM Order Form" +
+                "\n\n" +
+                "Faculty Name: " +
+                "\n" +
+                "Contact: " +
+                "\n" +
+                "Date: " +
+                "\n\n" +
+                "Original Request: " +
+                originalRequest +
+                "\n\n" +
+                "Items Ordered:" +
+                "\n" +
+                "  ID: " +
+                "11One" +
+                "\n" +
+                "  ID: " +
+                "22Two" +
+                "\n" +
+                "  ID: " +
+                "33Three" +
+                "\n" +
+                "  ID: " +
+                "44Four" +
+                "\n\n" +
+                "Total price of order: $" +
+                orderCost);
+        assertEquals(expectedOutputFileString,fileIO.getOrderOutputString());
+    }
+
+    /**
+     * testOrderOutputFileCreated asserts that an order output file with
+     * the correct name was created.
+     * Uses a randomly generated value from 0-999998 to attempt to create
+     * a unique file for testing each time.
+     */
+    @Test public void testOrderOutputFileCreated(){
+        Random randValue = new Random();
+        int testFileNameNumber = randValue.nextInt(999999);
+        String testFileName = Integer.toString(testFileNameNumber) + ".txt";
+        String testRequest = "Test order request";
+        String[] testItemsOrdered = {"Item one", "Item two", "Item three", "Item four", "Item five"};
+        int testOrderCost = 345;
+
+        FileIO fileIO = new FileIO(testFileName, testItemsOrdered, testRequest, testOrderCost);
+        File testFile = new File(testFileName);
+        assertTrue(testFile.exists() && testFile.isFile());
+    }
+
+    /**
+     * testOrderOutputFileWritten asserts that an order output file was created
+     * correctly and contains the correct output string generated by the
+     * FileIO method createFulfilledOutput.
+     *
+     * Uses a randomly generated value from 0-999998 to attempt to create
+     * a unique file for testing each time.
+     */
+    @Test public void testOrderOutputFileWritten(){
+        Random randValue = new Random();
+        int testFileNameNumber = randValue.nextInt(999999);
+        String testFileName = Integer.toString(testFileNameNumber) + ".txt";
+        String testRequest = "Test order request";
+        String[] testItemsOrdered = {"Item one", "Item two", "Item three", "Item four", "Item five"};
+        int testOrderCost = 345;
+        FileIO fileIO = new FileIO(testFileName, testItemsOrdered, testRequest, testOrderCost);
+
+        StringBuilder readFromFile = new StringBuilder();
+
+        try{
+            FileReader testFileRead = new FileReader(new File(testFileName));
+            char readChar;
+            int readCharInt = testFileRead.read();
+            while(readCharInt!=-1){
+                readChar = (char)readCharInt;
+                readFromFile.append(readChar);
+                readCharInt = testFileRead.read();
+            }
+            assertEquals(fileIO.getOrderOutputString(), readFromFile.toString());
+            } catch(IOException e){
+            System.err.println("IOException: " +
+                    "Could not read from the test file \"" + testFileName + "\"");
+        }
+
+
+
+
+
+
     }
 }
