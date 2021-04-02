@@ -21,10 +21,13 @@ import org.junit.Assert.*;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 
 
 /**
@@ -378,7 +381,7 @@ public class SupplyChainTest {
      * Uses a randomly generated value from 0-999998 to attempt to create
      * a unique file for testing each time.
      */
-    @Test public void testOrderOutputFileWritten(){
+    @Test public void testOrderOutputFileWritten() {
         Random randValue = new Random();
         int testFileNameNumber = randValue.nextInt(999999);
         String testFileName = Integer.toString(testFileNameNumber) + ".txt";
@@ -389,25 +392,166 @@ public class SupplyChainTest {
 
         StringBuilder readFromFile = new StringBuilder();
 
-        try{
+        try {
             FileReader testFileRead = new FileReader(new File(testFileName));
             char readChar;
             int readCharInt = testFileRead.read();
-            while(readCharInt!=-1){
-                readChar = (char)readCharInt;
+            while (readCharInt != -1) {
+                readChar = (char) readCharInt;
                 readFromFile.append(readChar);
                 readCharInt = testFileRead.read();
             }
             assertEquals(fileIO.getOrderOutputString(), readFromFile.toString());
-            } catch(IOException e){
+        } catch (IOException e) {
             System.err.println("IOException: " +
                     "Could not read from the test file \"" + testFileName + "\"");
         }
-
-
-
-
-
-
     }
+
+    /**
+     * testPriceOptimizer_compatibleValid asserts that the object PriceOptimizer
+     * recognizes that all pieces provided are compatible to create a complete
+     * furniture item.
+     */
+    @Test
+        public void testPriceOptimizer_compatibleValid() {
+            String[] id  = {};
+            int[] price = {};
+            boolean[][] parts = {
+                    {true, false, false, true},
+                    {true, false, true, false},
+                    {false, true, false, true}
+            };
+            int[] list = {0,1,2};
+            PriceOptimizer p = new PriceOptimizer(id,parts,price);
+            Assert.assertTrue(p.compatible(list));
+        }
+
+    /**
+     * testPriceOptimizer_compatibleInvalid asserts that object Price
+     * Optimizer correctly recognizes when available pieces cannot create
+     * a full furniture item.
+     */
+    @Test
+    public void testPriceOptimizer_compatibleInvalid() {
+        String[] id  = {};
+        int[] price = {};
+        boolean[][] parts = {
+                {true, false, false, true},
+                {true, false, false, false},
+                {false, true, false, true}
+        };
+        int[] list = {0,1,2};
+        PriceOptimizer p = new PriceOptimizer(id,parts,price);
+        assertFalse(p.compatible(list));
+    }
+
+    /**
+     * testPriceOptimizer_testOptimize asserts that the object Price
+     * Optimizer can correctly produce an order with a combination of
+     * pieces that total to the lowest possible cost.
+     */
+    @Test
+    public void testPriceOptimizer_testOptimize() {
+        String[] id  = {"C0942", "C6748", "C8138", "C9890"};
+        int[] price = {100, 75, 75, 50};
+        boolean[][] parts = {
+                {true, false, true, true},
+                {true, false, false, false},
+                {false, false, true, false},
+                {false, true, false, true},
+
+        };
+        PriceOptimizer p = new PriceOptimizer(id,parts,price);
+        String[] result = p.optimize(1);
+        String[] expected = {"C9890", "C0942"};
+        String[] expected2 = {"C0942", "C9890"};
+        for(int i = 0; i < 2; i++) {
+            System.out.println(result[i] + " ");
+        }
+
+        Assert.assertTrue("Output array incorrect.", Arrays.equals(expected, result) || Arrays.equals(expected2, result));
+    }
+
+    /**
+     * testPriceOptimizer_testOptimize1 provides a second variation of
+     * testPriceOptimizer_testOptimize, using different values for the pieces
+     * available.
+     *
+     * Asserts that object Price Optimizer produces an order that completes
+     * a furniture item with a combination of pieces that has the lowest
+     * total cost.
+     */
+    @Test
+    public void testPriceOptimizer_testOptimize1() {
+        String[] id  = {"C0942", "C6748", "C8138", "C9890"};
+        int[] price = {100, 75, 75, 50};
+        boolean[][] parts = {
+                {true, false, true, true},
+                {true, false, false, false},
+                {false, false, true, false},
+                {false, false, false, true}
+        };
+        PriceOptimizer p = new PriceOptimizer(id,parts,price);
+        String[] result = p.optimize(1);
+        assertNull(result);
+    }
+
+    /**
+     * testPriceOptimizer_testOptimize2 provides a second variation of
+     * testPriceOptimizer_testOptimize, using different values for the pieces
+     * available.
+     *
+     * Asserts that object Price Optimizer produces an order that completes
+     * a furniture item with a combination of pieces that has the lowest
+     * total cost.
+     */
+    @Test
+    public void testPriceOptimizer_testOptimize2() {
+        String[] id  = {"C0942", "C6748", "C8138", "C9890"};
+        int[] price = {100, 75, 75, 50};
+        boolean[][] parts = {
+                {true, true, true, true},
+                {true, true, true, true},
+                {false, false, true, false},
+                {false, false, false, true}
+        };
+        PriceOptimizer p = new PriceOptimizer(id,parts,price);
+        String[] result = p.optimize(2);
+        String[] expected = {"C0942", "C6748"};
+        String[] expected2 = {"C6748", "C0942"};
+        for(int i = 0; i < result.length; i++) {
+            System.out.print(result[i] + " ");
+        }
+        Assert.assertTrue("Output array incorrect.", Arrays.equals(expected, result) || Arrays.equals(result, expected));
+    }
+
+    /**
+     * testPriceOptimizer_testOptimize3 provides a second variation of
+     * testPriceOptimizer_testOptimize, using different values for the pieces
+     * available.
+     *
+     * Asserts that object Price Optimizer produces an order that completes
+     * a furniture item with a combination of pieces that has the lowest
+     * total cost.
+     */
+    @Test
+    public void testPriceOptimizer_testOptimize3() {
+        String[] id  = {"C0942", "C6748", "C8138", "C9890"};
+        int[] price = {100, 75, 75, 50};
+        boolean[][] parts = {
+                {true, false, false, true},
+                {false, true, true, true},
+                {false, true, false, false},
+                {true, true, true, false}
+        };
+        PriceOptimizer p = new PriceOptimizer(id,parts,price);
+        String[] result = p.optimize(2);
+        String[] expected = {"C0942", "C6748", "C9890"};
+        for(int i = 0; i < result.length; i++) {
+            System.out.print(result[i] + " ");
+        }
+        Assert.assertTrue("Output array incorrect.", Arrays.equals(expected, result) || Arrays.equals(result, expected));
+    }
+
 }
