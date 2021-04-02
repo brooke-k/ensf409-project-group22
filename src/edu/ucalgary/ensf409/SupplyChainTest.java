@@ -196,10 +196,10 @@ public class SupplyChainTest {
     }
 
     /**
-     * testOrderOutputToTerminalOneItem asserts that the string produced by
+     * testFileIO_FulfilledOrderTerminalOutputOneItem asserts that the string produced by
      * the FileIO object to be printed to the terminal with a successful order and one item is correct.
      */
-    @Test public void testOrderOutputToTerminalOneItem(){
+    @Test public void testFileIO_FulfilledOrderTerminalOutputOneItem(){
         String[] orderedItems = {"OneItem"};
         String outputFileName = "orderOutputToTerminalTest";
         String originalRequest = "orderOutputToTerminal request";
@@ -212,10 +212,10 @@ public class SupplyChainTest {
     }
 
     /**
-     * testOrderOutputToTerminalTwoItems asserts that the string produced by
+     * testFileIO_FulfilledOrderTerminalOutputTwoItems asserts that the string produced by
      * the FileIO object to be printed to the terminal with a successful order and two items is correct.
      */
-    @Test public void testOrderOutputToTerminalTwoItems(){
+    @Test public void testFileIO_FulfilledOrderTerminalOutputTwoItems(){
         String[] orderedItems = {"One item", "two items"};
         String outputFileName = "orderOutputToTerminalTest";
         String originalRequest = "orderOutputToTerminal request";
@@ -228,10 +228,10 @@ public class SupplyChainTest {
     }
 
     /**
-     * testOrderOutputToTerminalFourItems asserts that the string produced by
+     * testFileIO_FulfilledOrderTerminalOutputFourItems asserts that the string produced by
      * the FileIO object to be printed to the terminal with a successful order and four items is correct.
      */
-    @Test public void testOrderOutputToTerminalFourItems(){
+    @Test public void testFileIO_FulfilledOrderTerminalOutputFourItems(){
         String[] orderedItems = {"One1","Two2","Three3","Four4"};
         String outputFileName = "orderOutputToTerminalTest";
         String originalRequest = "orderOutputToTerminal request";
@@ -244,10 +244,10 @@ public class SupplyChainTest {
     }
 
     /**
-     * testOrderOutputFileStringOneItem asserts that the string produced by
+     * testFileIO_FulfilledOrderOutputStringOneItem asserts that the string produced by
      * the FileIO object to be written to the order output file with one item is correct.
      */
-    @Test public void testOrderOutputFileStringOneItem(){
+    @Test public void testFileIO_FulfilledOrderOutputStringOneItem(){
         String[] orderedItems = {"OneItem"};
         String outputFileName = "orderOutputToFileTest";
         String originalRequest = "orderOutputToFileTest request";
@@ -277,10 +277,10 @@ public class SupplyChainTest {
     }
 
     /**
-     * testOrderOutputFileStringOneItem asserts that the string produced by
+     * testFileIO_FulfilledOrderOutputStringTwoItems asserts that the string produced by
      * the FileIO object to be written to the order output file with two items is correct.
      */
-    @Test public void testOrderOutputFileStringTwoItems(){
+    @Test public void testFileIO_FulfilledOrderOutputStringTwoItems(){
         String[] orderedItems = {"One item", "two Items"};
         String outputFileName = "orderOutputToTerminalTest";
         String originalRequest = "orderOutputToTerminal request";
@@ -313,10 +313,10 @@ public class SupplyChainTest {
     }
 
     /**
-     * testOrderOutputFileStringOneItem asserts that the string produced by
+     * testFileIO_FulfilledOrderOutputStringFourItems asserts that the string produced by
      * the FileIO object to be written to the order output file with four items is correct.
      */
-    @Test public void testOrderOutputFileStringFourItems(){
+    @Test public void testFileIO_FulfilledOrderOutputStringFourItems(){
         String[] orderedItems = {"11One","22Two","33Three","44Four"};
         String outputFileName = "orderOutputToTerminalTest";
         String originalRequest = "orderOutputToTerminal request";
