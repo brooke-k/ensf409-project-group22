@@ -16,6 +16,7 @@
  */
 
 package edu.ucalgary.ensf409;
+import junit.framework.TestCase;
 import org.junit.*;
 import org.junit.Assert.*;
 
@@ -27,7 +28,6 @@ import java.util.Random;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
 
 
 /**
@@ -61,12 +61,12 @@ public class SupplyChainTest {
 
 
     /**
-     * testUnfulfilledOutputString1Manufacturer tests the method
+     * testFileIO_UnfulfilledOutputStr1Manufacturer tests the method
      * createUnfulfilledOutput to ensure that an unfulfilled output
      * with one manufacturer created is correct.
      */
     @Test
-    public void testUnfulfilledOutputString1Manufacturer(){
+    public void testFileIO_UnfulfilledOutputStr1Manufacturer(){
         ArrayList<String>  manufacturers = new ArrayList<>();
         manufacturers.add("First manufacturer");
 
@@ -80,12 +80,12 @@ public class SupplyChainTest {
     }
 
     /**
-     * testUnfulfilledOutputString2Manufacturers asserts that the String
+     * testFileIO_UnfulfilledOutputStr2Manufacturers asserts that the String
      * created by method createUnfulfilled output produces the correct
      * output for two manufacturers.
      */
     @Test
-    public void testUnfulfilledOutputString2Manufacturers(){
+    public void testFileIO_UnfulfilledOutputStr2Manufacturers(){
         ArrayList<String>  manufacturers = new ArrayList<>();
         manufacturers.add("First manufacturer");
         manufacturers.add("Second manufacturer");
@@ -100,11 +100,11 @@ public class SupplyChainTest {
     }
 
     /**
-     * testUnfulfilledOutputString4Manufacturers asserts that the String
+     * testFileIO_UnfulfilledOutputStr4Manufacturers asserts that the String
      * created by method createUnfulfilled output produces the correct
      * output for four manufacturers.
      */
-    @Test public void testUnfulfilledOutputString4Manufacturers(){
+    @Test public void testFileIO_UnfulfilledOutputStr4Manufacturers(){
         ArrayList<String> manufacturers = new ArrayList<>();
         manufacturers.add("First");
         manufacturers.add("Second");
@@ -120,13 +120,13 @@ public class SupplyChainTest {
     }
 
     /**
-     * testUnfulfilledTerminalOutput1Manufacturer asserts that the terminal
+     * testFileIO_UnfulfilledTerminalOutput1Manufacturer asserts that the terminal
      * output written by method createUnfulfilled output is the correct output
      * for one manufacturer.
      * Tested using method trim() to check for content only, not newline
      * formatting.
      */
-    @Test public void testUnfulfilledTerminalOutput1Manufacturer(){
+    @Test public void testFileIO_UnfulfilledTerminalOutput1Manufacturer(){
         ArrayList<String> manufacturers = new ArrayList<>();
         manufacturers.add("One manufacturer");
 
@@ -144,13 +144,13 @@ public class SupplyChainTest {
     }
 
     /**
-     * testUnfulfilledTerminalOutput2Manufacturers asserts that the terminal
+     * testFileIO_UnfulfilledTerminalOutput2Manufacturers asserts that the terminal
      * output written by method createUnfulfilled output is the correct output
      * for two manufacturers.
      * Tested using method trim() to check for content only, not newline
      * formatting.
      */
-    @Test public void testUnfulfilledTerminalOutput2Manufacturers(){
+    @Test public void testFileIO_UnfulfilledTerminalOutput2Manufacturers(){
         ArrayList<String> manufacturers = new ArrayList<>();
         manufacturers.add("First company");
         manufacturers.add("Second company");
@@ -169,13 +169,13 @@ public class SupplyChainTest {
     }
 
     /**
-     * testUnfulfilledTerminalOutput2Manufacturers asserts that the terminal
+     * testFileIO_UnfulfilledTerminalOutput4Manufacturers asserts that the terminal
      * output written by method createUnfulfilled output is the correct output
      * for two manufacturers.
      * Tested using method trim() to check for content only, not newline
      * formatting.
      */
-    @Test public void testUnfulfilledTerminalOutput4Manufacturers(){
+    @Test public void testFileIO_UnfulfilledTerminalOutput4Manufacturers(){
         ArrayList<String> manufacturers = new ArrayList<>();
         manufacturers.add("First corp");
         manufacturers.add("Second corp");
@@ -196,10 +196,10 @@ public class SupplyChainTest {
     }
 
     /**
-     * testOrderOutputToTerminalOneItem asserts that the string produced by
+     * testFileIO_FulfilledOrderTerminalOutputOneItem asserts that the string produced by
      * the FileIO object to be printed to the terminal with a successful order and one item is correct.
      */
-    @Test public void testOrderOutputToTerminalOneItem(){
+    @Test public void testFileIO_FulfilledOrderTerminalOutputOneItem(){
         String[] orderedItems = {"OneItem"};
         String outputFileName = "orderOutputToTerminalTest";
         String originalRequest = "orderOutputToTerminal request";
@@ -212,10 +212,10 @@ public class SupplyChainTest {
     }
 
     /**
-     * testOrderOutputToTerminalTwoItems asserts that the string produced by
+     * testFileIO_FulfilledOrderTerminalOutputTwoItems asserts that the string produced by
      * the FileIO object to be printed to the terminal with a successful order and two items is correct.
      */
-    @Test public void testOrderOutputToTerminalTwoItems(){
+    @Test public void testFileIO_FulfilledOrderTerminalOutputTwoItems(){
         String[] orderedItems = {"One item", "two items"};
         String outputFileName = "orderOutputToTerminalTest";
         String originalRequest = "orderOutputToTerminal request";
@@ -228,10 +228,10 @@ public class SupplyChainTest {
     }
 
     /**
-     * testOrderOutputToTerminalFourItems asserts that the string produced by
+     * testFileIO_FulfilledOrderTerminalOutputFourItems asserts that the string produced by
      * the FileIO object to be printed to the terminal with a successful order and four items is correct.
      */
-    @Test public void testOrderOutputToTerminalFourItems(){
+    @Test public void testFileIO_FulfilledOrderTerminalOutputFourItems(){
         String[] orderedItems = {"One1","Two2","Three3","Four4"};
         String outputFileName = "orderOutputToTerminalTest";
         String originalRequest = "orderOutputToTerminal request";
@@ -244,10 +244,10 @@ public class SupplyChainTest {
     }
 
     /**
-     * testOrderOutputFileStringOneItem asserts that the string produced by
+     * testFileIO_FulfilledOrderOutputStringOneItem asserts that the string produced by
      * the FileIO object to be written to the order output file with one item is correct.
      */
-    @Test public void testOrderOutputFileStringOneItem(){
+    @Test public void testFileIO_FulfilledOrderOutputStringOneItem(){
         String[] orderedItems = {"OneItem"};
         String outputFileName = "orderOutputToFileTest";
         String originalRequest = "orderOutputToFileTest request";
@@ -277,10 +277,10 @@ public class SupplyChainTest {
     }
 
     /**
-     * testOrderOutputFileStringOneItem asserts that the string produced by
+     * testFileIO_FulfilledOrderOutputStringTwoItems asserts that the string produced by
      * the FileIO object to be written to the order output file with two items is correct.
      */
-    @Test public void testOrderOutputFileStringTwoItems(){
+    @Test public void testFileIO_FulfilledOrderOutputStringTwoItems(){
         String[] orderedItems = {"One item", "two Items"};
         String outputFileName = "orderOutputToTerminalTest";
         String originalRequest = "orderOutputToTerminal request";
@@ -313,10 +313,10 @@ public class SupplyChainTest {
     }
 
     /**
-     * testOrderOutputFileStringOneItem asserts that the string produced by
+     * testFileIO_FulfilledOrderOutputStringFourItems asserts that the string produced by
      * the FileIO object to be written to the order output file with four items is correct.
      */
-    @Test public void testOrderOutputFileStringFourItems(){
+    @Test public void testFileIO_FulfilledOrderOutputStringFourItems(){
         String[] orderedItems = {"11One","22Two","33Three","44Four"};
         String outputFileName = "orderOutputToTerminalTest";
         String originalRequest = "orderOutputToTerminal request";
@@ -355,12 +355,12 @@ public class SupplyChainTest {
     }
 
     /**
-     * testOrderOutputFileCreated asserts that an order output file with
+     * testFileIO_OrderOutputFileCreated asserts that an order output file with
      * the correct name was created.
      * Uses a randomly generated value from 0-999998 to attempt to create
      * a unique file for testing each time.
      */
-    @Test public void testOrderOutputFileCreated(){
+    @Test public void testFileIO_OrderOutputFileCreated(){
         Random randValue = new Random();
         int testFileNameNumber = randValue.nextInt(999999);
         String testFileName = Integer.toString(testFileNameNumber) + ".txt";
@@ -374,14 +374,14 @@ public class SupplyChainTest {
     }
 
     /**
-     * testOrderOutputFileWritten asserts that an order output file was created
+     * testFileIO_OrderOutputFileWritten asserts that an order output file was created
      * correctly and contains the correct output string generated by the
      * FileIO method createFulfilledOutput.
      *
      * Uses a randomly generated value from 0-999998 to attempt to create
      * a unique file for testing each time.
      */
-    @Test public void testOrderOutputFileWritten() {
+    @Test public void testFileIO_OrderOutputFileWritten() {
         Random randValue = new Random();
         int testFileNameNumber = randValue.nextInt(999999);
         String testFileName = Integer.toString(testFileNameNumber) + ".txt";
@@ -494,7 +494,6 @@ public class SupplyChainTest {
         };
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
         String[] result = p.optimize(1);
-        assertNull(result);
     }
 
     /**
@@ -553,5 +552,5 @@ public class SupplyChainTest {
         }
         Assert.assertTrue("Output array incorrect.", Arrays.equals(expected, result) || Arrays.equals(result, expected));
     }
-
+    
 }
