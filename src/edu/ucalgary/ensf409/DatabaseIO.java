@@ -382,20 +382,41 @@ public class DatabaseIO {
      * @param type The string entered by the user
      * @return Boolean check on if the type exists
      */
-    public boolean typeExists(String type){
-        boolean exists = false;
+    public boolean typeExists(String category, String type){
         try {
+
             Statement myStmt = dbConnect.createStatement();
-            results = myStmt.executeQuery("SELECT * FROM chair, desk, " +
-                    "filing, lamp");
-            while (results.next())
-                if(results.getString("type").equals(type)){
-                    exists = true;
+            results = null;
+            switch(category){
+                case "chair":
+                    results = myStmt.executeQuery("SELECT * FROM chair");
+                    break;
+                case "desk":
+                    results = myStmt.executeQuery("SELECT * FROM desk");
+                    break;
+                case "lamp":
+                    results = myStmt.executeQuery("SELECT * FROM lamp");
+                    break;
+                case "filing":
+                    results = myStmt.executeQuery("SELECT * FROM filing");
+                    break;
+            }
+
+            if(results == null){
+                return false;
+            }
+
+            while (results.next()) {
+                if (results.getString("Type").equals(type)) {
+                    return true;
                 }
+            }
+            return  false;
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return exists;
+        return false;
     }
 
     /**

@@ -218,19 +218,19 @@ public class UserIO {
             processUserRequest(readLine());
         }
         else{
-            if(matchesFound1) {
-                furnType = requestMatch1.group(1);
-                furnCategory = requestMatch1.group(2);
-                numOfItems = requestMatch1.group(3);
-            }else{
+            if(matchesFound2) {
                 furnType = requestMatch2.group(1);
                 furnCategory = requestMatch2.group(2);
                 numOfItems = requestMatch2.group(3);
+            }else{
+                furnType = requestMatch1.group(1);
+                furnCategory = requestMatch1.group(2);
+                numOfItems = requestMatch1.group(3);
             }
             if(furnCategory.equals("chair") || furnCategory.equals("desk")
                     || furnCategory.equals("filing")
                     || furnCategory.equals("lamp")){
-                if(databaseIO.typeExists(furnType)){
+                if(databaseIO.typeExists(furnCategory, furnType)){
                     checkFurniture();
                     String[] temp = priceOpt
                             .optimize(Integer.parseInt(numOfItems));
@@ -246,7 +246,7 @@ public class UserIO {
                                 .suggestedManufacturers(furnCategory));
                     }
                 } else {
-                    System.out.println("Invalid type, try again.");
+                    System.out.println("Invalid type: " + furnType + ", try again.");
                     processUserRequest(readLine());
                 }
             } else {
