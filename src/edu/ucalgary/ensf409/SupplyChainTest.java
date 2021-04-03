@@ -10,19 +10,15 @@
  *
  * @since 1.0
  *
- * @version 1.0
+ * @version 2.0
  *
  *
  */
 
 package edu.ucalgary.ensf409;
-import junit.framework.TestCase;
-import org.junit.*;
-import org.junit.Assert.*;
 
-import java.awt.*;
+import org.junit.*;
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -127,9 +123,9 @@ public class SupplyChainTest {
     }
 
     /**
-     * testFileIO_UnfulfilledTerminalOutput1Manufacturer asserts that the terminal
-     * output written by method createUnfulfilled output is the correct output
-     * for one manufacturer.
+     * testFileIO_UnfulfilledTerminalOutput1Manufacturer asserts that the
+     * terminal output written by method createUnfulfilled output is the
+     * correct output for one manufacturer.
      * Tested using method trim() to check for content only, not newline
      * formatting.
      */
@@ -152,9 +148,9 @@ public class SupplyChainTest {
     }
 
     /**
-     * testFileIO_UnfulfilledTerminalOutput2Manufacturers asserts that the terminal
-     * output written by method createUnfulfilled output is the correct output
-     * for two manufacturers.
+     * testFileIO_UnfulfilledTerminalOutput2Manufacturers asserts that the
+     * terminal output written by method createUnfulfilled output is the
+     * correct output for two manufacturers.
      * Tested using method trim() to check for content only, not newline
      * formatting.
      */
@@ -178,9 +174,9 @@ public class SupplyChainTest {
     }
 
     /**
-     * testFileIO_UnfulfilledTerminalOutput4Manufacturers asserts that the terminal
-     * output written by method createUnfulfilled output is the correct output
-     * for two manufacturers.
+     * testFileIO_UnfulfilledTerminalOutput4Manufacturers asserts that the
+     * terminal output written by method createUnfulfilled output is the
+     * correct output for two manufacturers.
      * Tested using method trim() to check for content only, not newline
      * formatting.
      */
@@ -206,8 +202,9 @@ public class SupplyChainTest {
     }
 
     /**
-     * testFileIO_FulfilledOrderTerminalOutputOneItem asserts that the string produced by
-     * the FileIO object to be printed to the terminal with a successful order and one item is correct.
+     * testFileIO_FulfilledOrderTerminalOutputOneItem asserts that the string
+     * produced by the FileIO object to be printed to the terminal with a
+     * successful order and one item is correct.
      */
     @Test
     public void testFileIO_FulfilledOrderTerminalOutputOneItem() {
@@ -216,15 +213,19 @@ public class SupplyChainTest {
         String originalRequest = "orderOutputToTerminal request";
         int orderCost = 3700;
 
-        FileIO fileIO = new FileIO(outputFileName, orderedItems, originalRequest, orderCost);
+        FileIO fileIO = new FileIO(outputFileName, orderedItems,
+                originalRequest, orderCost);
 
-        String expectedConsoleOutput = ("Order successful." + "\n" + "Purchased component: " + "OneItem" + " for $" + "3700");
-        assertEquals(expectedConsoleOutput, fileIO.getConsoleOutputString().trim());
+        String expectedConsoleOutput = ("Order successful." + "\n" +
+                "Purchased component: " + "OneItem" + " for $" + "3700");
+        assertEquals(expectedConsoleOutput,
+                fileIO.getConsoleOutputString().trim());
     }
 
     /**
-     * testFileIO_FulfilledOrderTerminalOutputTwoItems asserts that the string produced by
-     * the FileIO object to be printed to the terminal with a successful order and two items is correct.
+     * testFileIO_FulfilledOrderTerminalOutputTwoItems asserts that the string
+     * produced by the FileIO object to be printed to the terminal with a
+     * successful order and two items is correct.
      */
     @Test
     public void testFileIO_FulfilledOrderTerminalOutputTwoItems() {
@@ -233,15 +234,20 @@ public class SupplyChainTest {
         String originalRequest = "orderOutputToTerminal request";
         int orderCost = 7373;
 
-        FileIO fileIO = new FileIO(outputFileName, orderedItems, originalRequest, orderCost);
+        FileIO fileIO = new FileIO(outputFileName, orderedItems,
+                originalRequest, orderCost);
 
-        String expectedConsoleOutput = ("Order successful." + "\n" + "Purchased components: " + "One item" + " and " + "two items" + " for $" + "7373");
-        assertEquals(expectedConsoleOutput, fileIO.getConsoleOutputString().trim());
+        String expectedConsoleOutput = ("Order successful." + "\n" +
+                "Purchased components: " + "One item" + " and " + "two items"
+                + " for $" + "7373");
+        assertEquals(expectedConsoleOutput,
+                fileIO.getConsoleOutputString().trim());
     }
 
     /**
-     * testFileIO_FulfilledOrderTerminalOutputFourItems asserts that the string produced by
-     * the FileIO object to be printed to the terminal with a successful order and four items is correct.
+     * testFileIO_FulfilledOrderTerminalOutputFourItems asserts that the string
+     * produced by the FileIO object to be printed to the terminal with a
+     * successful order and four items is correct.
      */
     @Test
     public void testFileIO_FulfilledOrderTerminalOutputFourItems() {
@@ -250,15 +256,20 @@ public class SupplyChainTest {
         String originalRequest = "orderOutputToTerminal request";
         int orderCost = 89899;
 
-        FileIO fileIO = new FileIO(outputFileName, orderedItems, originalRequest, orderCost);
+        FileIO fileIO = new FileIO(outputFileName, orderedItems,
+                originalRequest, orderCost);
 
-        String expectedConsoleOutput = ("Order successful." + "\n" + "Purchased components: " + "One1" + ", " + "Two2" + ", " + "Three3" + ", " + "and " + "Four4" + " for $" + "89899");
-        assertEquals(expectedConsoleOutput, fileIO.getConsoleOutputString().trim());
+        String expectedConsoleOutput = ("Order successful." + "\n" +
+                "Purchased components: " + "One1" + ", " + "Two2" + ", " +
+                "Three3" + ", " + "and " + "Four4" + " for $" + "89899");
+        assertEquals(expectedConsoleOutput,
+                fileIO.getConsoleOutputString().trim());
     }
 
     /**
-     * testFileIO_FulfilledOrderOutputStringOneItem asserts that the string produced by
-     * the FileIO object to be written to the order output file with one item is correct.
+     * testFileIO_FulfilledOrderOutputStringOneItem asserts that the string
+     * produced by the FileIO object to be written to the order output file with
+     * one item is correct.
      */
     @Test
     public void testFileIO_FulfilledOrderOutputStringOneItem() {
@@ -267,7 +278,8 @@ public class SupplyChainTest {
         String originalRequest = "orderOutputToFileTest request";
         int orderCost = 3700;
 
-        FileIO fileIO = new FileIO(outputFileName, orderedItems, originalRequest, orderCost);
+        FileIO fileIO = new FileIO(outputFileName, orderedItems,
+                originalRequest, orderCost);
 
         String expectedOutputFileString = ("SCM Order Form" +
                 "\n\n" +
@@ -291,8 +303,9 @@ public class SupplyChainTest {
     }
 
     /**
-     * testFileIO_FulfilledOrderOutputStringTwoItems asserts that the string produced by
-     * the FileIO object to be written to the order output file with two items is correct.
+     * testFileIO_FulfilledOrderOutputStringTwoItems asserts that the string
+     * produced by the FileIO object to be written to the order output file with
+     * two items is correct.
      */
     @Test
     public void testFileIO_FulfilledOrderOutputStringTwoItems() {
@@ -301,7 +314,8 @@ public class SupplyChainTest {
         String originalRequest = "orderOutputToTerminal request";
         int orderCost = 89474;
 
-        FileIO fileIO = new FileIO(outputFileName, orderedItems, originalRequest, orderCost);
+        FileIO fileIO = new FileIO(outputFileName, orderedItems,
+                originalRequest, orderCost);
 
         String expectedOutputFileString = ("SCM Order Form" +
                 "\n\n" +
@@ -328,8 +342,9 @@ public class SupplyChainTest {
     }
 
     /**
-     * testFileIO_FulfilledOrderOutputStringFourItems asserts that the string produced by
-     * the FileIO object to be written to the order output file with four items is correct.
+     * testFileIO_FulfilledOrderOutputStringFourItems asserts that the string
+     * produced by the FileIO object to be written to the order output file with
+     * four items is correct.
      */
     @Test
     public void testFileIO_FulfilledOrderOutputStringFourItems() {
@@ -338,7 +353,8 @@ public class SupplyChainTest {
         String originalRequest = "orderOutputToTerminal request";
         int orderCost = 27722;
 
-        FileIO fileIO = new FileIO(outputFileName, orderedItems, originalRequest, orderCost);
+        FileIO fileIO = new FileIO(outputFileName, orderedItems,
+                originalRequest, orderCost);
 
         String expectedOutputFileString = ("SCM Order Form" +
                 "\n\n" +
@@ -382,17 +398,19 @@ public class SupplyChainTest {
         int testFileNameNumber = randValue.nextInt(999999);
         String testFileName = Integer.toString(testFileNameNumber) + ".txt";
         String testRequest = "Test order request";
-        String[] testItemsOrdered = {"Item one", "Item two", "Item three", "Item four", "Item five"};
+        String[] testItemsOrdered = {"Item one", "Item two", "Item three",
+                "Item four", "Item five"};
         int testOrderCost = 345;
 
-        FileIO fileIO = new FileIO(testFileName, testItemsOrdered, testRequest, testOrderCost);
+        FileIO fileIO = new FileIO(testFileName, testItemsOrdered,
+                testRequest, testOrderCost);
         File testFile = new File(testFileName);
         assertTrue(testFile.exists() && testFile.isFile());
     }
 
     /**
-     * testFileIO_OrderOutputFileWritten asserts that an order output file was created
-     * correctly and contains the correct output string generated by the
+     * testFileIO_OrderOutputFileWritten asserts that an order output file was
+     * created correctly and contains the correct output string generated by the
      * FileIO method createFulfilledOutput.
      * <p>
      * Uses a randomly generated value from 0-999998 to attempt to create
@@ -404,9 +422,11 @@ public class SupplyChainTest {
         int testFileNameNumber = randValue.nextInt(999999);
         String testFileName = Integer.toString(testFileNameNumber) + ".txt";
         String testRequest = "Test order request";
-        String[] testItemsOrdered = {"Item one", "Item two", "Item three", "Item four", "Item five"};
+        String[] testItemsOrdered = {"Item one", "Item two", "Item three",
+                "Item four", "Item five"};
         int testOrderCost = 345;
-        FileIO fileIO = new FileIO(testFileName, testItemsOrdered, testRequest, testOrderCost);
+        FileIO fileIO = new FileIO(testFileName, testItemsOrdered,
+                testRequest, testOrderCost);
 
         StringBuilder readFromFile = new StringBuilder();
 
@@ -422,7 +442,8 @@ public class SupplyChainTest {
             assertEquals(fileIO.getOrderOutputString(), readFromFile.toString());
         } catch (IOException e) {
             System.err.println("IOException: " +
-                    "Could not read from the test file \"" + testFileName + "\"");
+                    "Could not read from the test file \""
+                    + testFileName + "\"");
         }
     }
 
@@ -488,7 +509,9 @@ public class SupplyChainTest {
             System.out.println(result[i] + " ");
         }
 
-        Assert.assertTrue("Output array incorrect.", Arrays.equals(expected, result) || Arrays.equals(expected2, result));
+        Assert.assertTrue("Output array incorrect.",
+                Arrays.equals(expected, result) ||
+                        Arrays.equals(expected2, result));
     }
 
     /**
@@ -540,7 +563,9 @@ public class SupplyChainTest {
         for (int i = 0; i < result.length; i++) {
             System.out.print(result[i] + " ");
         }
-        Assert.assertTrue("Output array incorrect.", Arrays.equals(expected, result) || Arrays.equals(result, expected));
+        Assert.assertTrue("Output array incorrect.",
+                Arrays.equals(expected, result) ||
+                        Arrays.equals(result, expected));
     }
 
     /**
@@ -568,7 +593,9 @@ public class SupplyChainTest {
         for (int i = 0; i < result.length; i++) {
             System.out.print(result[i] + " ");
         }
-        Assert.assertTrue("Output array incorrect.", Arrays.equals(expected, result) || Arrays.equals(result, expected));
+        Assert.assertTrue("Output array incorrect.",
+                Arrays.equals(expected, result) ||
+                        Arrays.equals(result, expected));
     }
 
     /**
@@ -577,11 +604,13 @@ public class SupplyChainTest {
      * and saved correctly.
      *
      * @throws IOException Exception regarding the use of the input stream for
-     *                     for testing purposes only; not relevant to UserIO methods.
+     *                     for testing purposes only; not relevant to UserIO
+     *                     methods.
      */
     @Test
     public void testUserIO_validOrderReadFurnCategory() throws IOException {
-        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("1" + "\n" + "Mesh chair, 1" + "\n").getBytes());
+        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("1" +
+                "\n" + "Mesh chair, 1" + "\n").getBytes());
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
@@ -598,11 +627,13 @@ public class SupplyChainTest {
      * and saved correctly.
      *
      * @throws IOException Exception regarding the use of the input stream for
-     *                     for testing purposes only; not relevant to UserIO methods.
+     *                     for testing purposes only; not relevant to UserIO
+     *                     methods.
      */
     @Test
     public void testUserIO_validOrderReadFurnType() throws IOException {
-        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("1" + "\n" + "Mesh chair, 1" + "\n").getBytes());
+        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("1" +
+                "\n" + "Mesh chair, 1" + "\n").getBytes());
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
@@ -619,11 +650,13 @@ public class SupplyChainTest {
      * has been read and saved correctly.
      *
      * @throws IOException Exception regarding the use of the input stream for
-     *                     for testing purposes only; not relevant to UserIO methods.
+     *                     for testing purposes only; not relevant to UserIO
+     *                     methods.
      */
     @Test
     public void testUserIO_validOrderReadNumOfItems() throws IOException {
-        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("1" + "\n" + "Mesh chair, 1" + "\n").getBytes());
+        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("1" +
+                "\n" + "Mesh chair, 1" + "\n").getBytes());
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
@@ -640,11 +673,13 @@ public class SupplyChainTest {
      * has been read and saved correctly.
      *
      * @throws IOException Exception regarding the use of the input stream for
-     *                     for testing purposes only; not relevant to UserIO methods.
+     *                     for testing purposes only; not relevant to UserIO
+     *                     methods.
      */
     @Test
     public void testUserIO_validOrderRequest() throws IOException {
-        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("1" + "\n" + "Mesh chair, 1" + "\n").getBytes());
+        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("1" +
+                "\n" + "Mesh chair, 1" + "\n").getBytes());
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
@@ -656,11 +691,13 @@ public class SupplyChainTest {
     }
 
     /**
-     * testUserIO_invalidOrderReadFurnTypeFirstOrder asserts that if an invalid order
-     * is placed as the first order, the saved furniture type will be null.
+     * testUserIO_invalidOrderReadFurnTypeFirstOrder asserts that if an invalid
+     * order is placed as the first order, the saved furniture type will be
+     * null.
      */
     @Test public void testUserIO_invalidOrderReadFurnTypeFirstOrder(){
-        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("1" + "\n" + "Invalid input" + "\n" + "CANCEL" + "\n").getBytes());
+        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("1" +
+                "\n" + "Invalid input" + "\n" + "CANCEL" + "\n").getBytes());
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
@@ -672,11 +709,15 @@ public class SupplyChainTest {
     }
 
     /**
-     * testUserIO_invalidOrderReadFurnTypeAfterFirst asserts that if an invalid order
-     * is placed after a valid previous order, the saved furniture type will be null.
+     * testUserIO_invalidOrderReadFurnTypeAfterFirst asserts that if an invalid
+     * order is placed after a valid previous order, the saved furniture type
+     * will be null.
      */
     @Test public void testUserIO_invalidOrderReadFurnTypeAfterFirst(){
-        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("1" + "\n" + "Mesh chair, 1" + "\n" + "1" + "\n" + "Desk lamp, 1" + "\n" + "1" + "\n" + "Invalid order name" + "\n" + "CANCEL" +"\n").getBytes());
+        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("1" +
+                "\n" + "Mesh chair, 1" + "\n" + "1" + "\n" + "Desk lamp, 1" +
+                "\n" + "1" + "\n" + "Invalid order name" + "\n" +
+                "CANCEL" +"\n").getBytes());
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
@@ -697,11 +738,13 @@ public class SupplyChainTest {
     }
 
     /**
-     * testUserIO_invalidOrderReadCategoryFirstOrder asserts that if an invalid order
-     * is placed as the first order, the saved furniture category will be null.
+     * testUserIO_invalidOrderReadCategoryFirstOrder asserts that if an invalid
+     * order is placed as the first order, the saved furniture category will be
+     * null.
      */
     @Test public void testUserIO_invalidOrderReadCategoryFirstOrder(){
-        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("1" + "\n" + "Invalid input" + "\n" + "CANCEL" + "\n").getBytes());
+        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("1" +
+                "\n" + "Invalid input" + "\n" + "CANCEL" + "\n").getBytes());
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
@@ -713,11 +756,15 @@ public class SupplyChainTest {
     }
 
     /**
-     * testUserIO_invalidOrderReadFurnCategoryAfterFirst asserts that if an invalid order
-     * is placed after a valid previous order, the saved furniture category will be null.
+     * testUserIO_invalidOrderReadFurnCategoryAfterFirst asserts that if an
+     * invalid order is placed after a valid previous order, the saved furniture
+     * category will be null.
      */
     @Test public void testUserIO_invalidOrderReadFurnCategoryAfterFirst(){
-        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("1" + "\n" + "Mesh chair, 1" + "\n" + "1" + "\n" + "Desk lamp, 1" + "\n" + "1" + "\n" + "Invalid order" + "\n" + "CANCEL" +"\n").getBytes());
+        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("1" +
+                "\n" + "Mesh chair, 1" + "\n" + "1" + "\n" + "Desk lamp, 1" +
+                "\n" + "1" + "\n" + "Invalid order" + "\n" + "CANCEL" +
+                "\n").getBytes());
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
@@ -738,11 +785,13 @@ public class SupplyChainTest {
     }
 
     /**
-     * testUserIO_invalidOrderReadNumOfItemsFirstOrder asserts that if an invalid order
-     * is placed as the first order, the saved number of items will be null.
+     * testUserIO_invalidOrderReadNumOfItemsFirstOrder asserts that if an
+     * invalid order is placed as the first order, the saved number of items
+     * will be null.
      */
     @Test public void testUserIO_invalidOrderReadNumOfItemsFirstOrder(){
-        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("1" + "\n" + "Bad order" + "\n" + "CANCEL" + "\n").getBytes());
+        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("1" +
+                "\n" + "Bad order" + "\n" + "CANCEL" + "\n").getBytes());
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
@@ -754,11 +803,15 @@ public class SupplyChainTest {
     }
 
     /**
-     * testUserIO_invalidOrderReadNumOfItemsAfterFirst asserts that if an invalid order
-     * is placed after a valid previous order, the saved number of items will be null.
+     * testUserIO_invalidOrderReadNumOfItemsAfterFirst asserts that if an
+     * invalid order is placed after a valid previous order, the saved number
+     * of items will be null.
      */
     @Test public void testUserIO_invalidOrderReadNumOfItemsAfterFirst(){
-        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("1" + "\n" + "Mesh chair, 1" + "\n" + "1" + "\n" + "Desk lamp, 1" + "\n" + "1" + "\n" + "Meaningless order" + "\n" + "CANCEL" +"\n").getBytes());
+        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("1" +
+                "\n" + "Mesh chair, 1" + "\n" + "1" + "\n" + "Desk lamp, 1" +
+                "\n" + "1" + "\n" + "Meaningless order" + "\n" + "CANCEL" +
+                "\n").getBytes());
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
@@ -779,11 +832,13 @@ public class SupplyChainTest {
     }
 
     /**
-     * testUserIO_invalidOrderReadLatestOrderFirstOrder asserts that if an invalid order
-     * is placed as the first order, the saved record of the latest order will be null.
+     * testUserIO_invalidOrderReadLatestOrderFirstOrder asserts that if an
+     * invalid order is placed as the first order, the saved record of the
+     * latest order will be null.
      */
     @Test public void testUserIO_invalidOrderReadLatestOrderFirstOrder(){
-        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("1" + "\n" + "Invalid request" + "\n" + "CANCEL" + "\n").getBytes());
+        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("1" +
+                "\n" + "Invalid request" + "\n" + "CANCEL" + "\n").getBytes());
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
@@ -795,11 +850,15 @@ public class SupplyChainTest {
     }
 
     /**
-     * testUserIO_invalidOrderReadNumOfItemsAfterFirst asserts that if an invalid order
-     * is placed after a valid previous order, the saved number of items will be null.
+     * testUserIO_invalidOrderReadNumOfItemsAfterFirst asserts that if an
+     * invalid order is placed after a valid previous order, the saved number
+     * of items will be null.
      */
     @Test public void testUserIO_invalidOrderLatestOrderAfterFirst(){
-        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("1" + "\n" + "Mesh chair, 1" + "\n" + "1" + "\n" + "Desk lamp, 1" + "\n" + "1" + "\n" + "Bad bad order" + "\n" + "CANCEL" +"\n").getBytes());
+        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("1" +
+                "\n" + "Mesh chair, 1" + "\n" + "1" + "\n" + "Desk lamp, 1" +
+                "\n" + "1" + "\n" + "Bad bad order" + "\n" + "CANCEL"
+                +"\n").getBytes());
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
@@ -825,7 +884,8 @@ public class SupplyChainTest {
      * corrected displayed to the terminal.
      */
     @Test public void testUserIO_displaySQLCredentials(){
-        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("3" + "\n").getBytes());
+        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("3"
+                + "\n").getBytes());
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
@@ -833,9 +893,13 @@ public class SupplyChainTest {
         System.setIn(terminalInput1);
         userIO.processInput(readFromInput);
 
-        String expectedOutputREGEX = "(Current database URL: jdbc:mysql://localhost/inventory)\\R(Current database username: scm\\RCurrent database password: \\*\\*\\*\\*\\*\\*\\*)";
+        String expectedOutputREGEX = "(Current database URL: " +
+                "jdbc:mysql://localhost/inventory)" +
+                "\\R(Current database username: scm\\RCurrent database " +
+                "password: \\*\\*\\*\\*\\*\\*\\*)";
         Pattern expectedPattern = Pattern.compile(expectedOutputREGEX);
-        Matcher expectedMatch = expectedPattern.matcher(terminalContent.toString());
+        Matcher expectedMatch = expectedPattern.matcher(
+                terminalContent.toString());
 
         boolean correctOutput = expectedMatch.find();
 
@@ -849,7 +913,8 @@ public class SupplyChainTest {
      * displayed to the user in the terminal when requested
      */
     @Test public void testUserIO_displayCurrentOutputFileName(){
-        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("2" + "\n").getBytes());
+        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("2"
+                + "\n").getBytes());
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
@@ -857,9 +922,11 @@ public class SupplyChainTest {
         System.setIn(terminalInput1);
         userIO.processInput(readFromInput);
 
-        String expectedOutputREGEX = "(Current output file name is: OrderOutput.txt)";
+        String expectedOutputREGEX = "(Current output file name is: " +
+                "OrderOutput.txt)";
         Pattern expectedPattern = Pattern.compile(expectedOutputREGEX);
-        Matcher expectedMatch = expectedPattern.matcher(terminalContent.toString());
+        Matcher expectedMatch = expectedPattern.matcher(terminalContent
+                .toString());
 
         boolean correctOutput = expectedMatch.find();
 
@@ -874,31 +941,37 @@ public class SupplyChainTest {
      * on the terminal to the user.
      */
     @Test public void testUserIO_changeOutputFileName(){
-        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("4" + "\n" + "NewOutputFileName.txt" + "\n" + "Y" + "\n" + "2" + "\n").getBytes());
+        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("4"
+                + "\n" + "NewOutputFileName.txt" + "\n" + "Y" + "\n" + "2"
+                + "\n").getBytes());
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
         int readFromInput = userIO.menu();
 
         System.setIn(terminalInput1);
-        userIO.processInput(readFromInput); // Processes the input for requesting to change the current output file name
+        userIO.processInput(readFromInput); // Processes the input for
+                                            // requesting to change the
+                                            //current output file name
 
         readFromInput = userIO.menu();
-        userIO.processInput(readFromInput); // Processes the input for requesting to view the current output file name
+        userIO.processInput(readFromInput); // Processes the input for
+                                            // requesting to view the current
+                                            // output file name
 
-        String expectedOutputREGEX = "(Current output file name is: NewOutputFileName.txt)";
+        String expectedOutputREGEX = "(Current output file name is: " +
+                "NewOutputFileName.txt)";
         Pattern expectedPattern = Pattern.compile(expectedOutputREGEX);
-        Matcher expectedMatch = expectedPattern.matcher(terminalContent.toString());
+        Matcher expectedMatch = expectedPattern.matcher
+                    (terminalContent.toString());
 
         String currentOutputFileName = userIO.getOutputFile();
-        boolean fileUpdated = currentOutputFileName.equals("NewOutputFileName.txt");
+        boolean fileUpdated = currentOutputFileName.equals
+                    ("NewOutputFileName.txt");
 
 
         boolean correctOutput = expectedMatch.find();
-        System.err.println(terminalContent.toString());
-        System.err.println(fileUpdated + " " + correctOutput);
         assertTrue(fileUpdated && correctOutput);
     }
-
 
 }
