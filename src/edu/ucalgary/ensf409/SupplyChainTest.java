@@ -26,6 +26,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static junit.framework.TestCase.*;
 import static org.junit.Assert.assertFalse;
@@ -816,5 +818,55 @@ public class SupplyChainTest {
 
         assertEquals(null, userIO.getLatestRequest());
     }
+
+    /**
+     * testUserIO_displaySQLCredentials asserts that when the user requests
+     * to see the current MySQL credentials being used, they are
+     * corrected displayed to the terminal.
+     */
+    @Test public void testUserIO_displaySQLCredentials(){
+        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("3" + "\n").getBytes());
+        System.setIn(terminalInput1);
+        UserIO userIO = new UserIO();
+
+        int readFromInput = userIO.menu();
+        System.setIn(terminalInput1);
+        userIO.processInput(readFromInput);
+
+        String expectedOutputREGEX = "(Current database URL: jdbc:mysql://localhost/inventory)\\R(Current database username: scm\\RCurrent database password: \\*\\*\\*\\*\\*\\*\\*)";
+        Pattern expectedPattern = Pattern.compile(expectedOutputREGEX);
+        Matcher expectedMatch = expectedPattern.matcher(terminalContent.toString());
+
+        boolean correctOutput = expectedMatch.find();
+
+        assertTrue(correctOutput);
+
+    }
+
+    /**
+     * testUserIO_displayCurrentOutputFileName asserts that the correct and
+     * current output file name for the order output to be written to is
+     * displayed to the user in the terminal when requested
+     */
+    @Test public void testUserIO_displayCurrentOutputFileName(){
+        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("2" + "\n").getBytes());
+        System.setIn(terminalInput1);
+        UserIO userIO = new UserIO();
+
+        int readFromInput = userIO.menu();
+        System.setIn(terminalInput1);
+        userIO.processInput(readFromInput);
+
+        String expectedOutputREGEX = "(Current output file name is: OrderOutput.txt)";
+        Pattern expectedPattern = Pattern.compile(expectedOutputREGEX);
+        Matcher expectedMatch = expectedPattern.matcher(terminalContent.toString());
+
+        boolean correctOutput = expectedMatch.find();
+
+        assertTrue(correctOutput);
+    }
+
+
+
 
 }
