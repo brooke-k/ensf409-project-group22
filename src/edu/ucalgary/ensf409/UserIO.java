@@ -53,6 +53,11 @@ public class UserIO {
         input = new Scanner(System.in);
         databaseIO = new DatabaseIO();
         databaseIO.createConnection();
+
+        furnType = null;
+        furnCategory = null;
+        latestRequest = null;
+        numOfItems = null;
     }
 
     /**
@@ -125,6 +130,7 @@ public class UserIO {
     public void processInput(int inputValue){
         switch(inputValue){
             case 1:
+                setReadValuesNull();
                 readLine();
                 System.out.println("\nPlease input request for " +
                         "furniture item in the form");
@@ -135,7 +141,6 @@ public class UserIO {
                 System.out.println("Enter request: ");
                 String readFromScan = readLine();
                 processUserRequest(readFromScan);
-                latestRequest = readFromScan;
                 break;
             case 2:
                 System.out.println("\nCurrent output file name is: " +
@@ -222,10 +227,12 @@ public class UserIO {
                 furnType = requestMatch2.group(1);
                 furnCategory = requestMatch2.group(2);
                 numOfItems = requestMatch2.group(3);
+                latestRequest = userRequest;
             }else{
                 furnType = requestMatch1.group(1);
                 furnCategory = requestMatch1.group(2);
                 numOfItems = requestMatch1.group(3);
+                latestRequest = userRequest;
             }
             if(furnCategory.equals("chair") || furnCategory.equals("desk")
                     || furnCategory.equals("filing")
@@ -497,5 +504,19 @@ public class UserIO {
      */
     public void close() {
         input.close();
+    }
+
+    /**
+     * Private method setReadValuesNull sets the values for
+     * furnType, furnCategory, latestRequest, and numofItems to
+     * null.
+     *
+     * Used in the case of an invalid order being placed.
+     */
+    private void setReadValuesNull(){
+        furnType = null;
+        furnCategory = null;
+        latestRequest = null;
+        numOfItems = null;
     }
 }
