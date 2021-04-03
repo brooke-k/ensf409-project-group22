@@ -653,4 +653,168 @@ public class SupplyChainTest {
         assertEquals("Mesh chair, 1", userIO.getLatestRequest());
     }
 
+    /**
+     * testUserIO_invalidOrderReadFurnTypeFirstOrder asserts that if an invalid order
+     * is placed as the first order, the saved furniture type will be null.
+     */
+    @Test public void testUserIO_invalidOrderReadFurnTypeFirstOrder(){
+        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("1" + "\n" + "Invalid input" + "\n" + "CANCEL" + "\n").getBytes());
+        System.setIn(terminalInput1);
+        UserIO userIO = new UserIO();
+
+        int readFromInput = userIO.menu();
+        System.setIn(terminalInput1);
+        userIO.processInput(readFromInput);
+
+        assertEquals(null, userIO.getFurnType());
+    }
+
+    /**
+     * testUserIO_invalidOrderReadFurnTypeAfterFirst asserts that if an invalid order
+     * is placed after a valid previous order, the saved furniture type will be null.
+     */
+    @Test public void testUserIO_invalidOrderReadFurnTypeAfterFirst(){
+        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("1" + "\n" + "Mesh chair, 1" + "\n" + "1" + "\n" + "Desk lamp, 1" + "\n" + "1" + "\n" + "Invalid order name" + "\n" + "CANCEL" +"\n").getBytes());
+        System.setIn(terminalInput1);
+        UserIO userIO = new UserIO();
+
+        int readFromInput = userIO.menu();
+        System.setIn(terminalInput1); // Fulfills valid order "Mesh chair, 1"
+        userIO.processInput(readFromInput);
+
+        readFromInput = userIO.menu();
+        userIO.processInput(readFromInput); // Fulfills the valid order
+                                            // "Desk lamp, 1"
+
+        readFromInput = userIO.menu();
+        userIO.processInput(readFromInput); // Attempts to fulfill the invalid
+                                            // order "Invalid order name"
+
+
+        assertEquals(null, userIO.getFurnType());
+    }
+
+    /**
+     * testUserIO_invalidOrderReadCategoryFirstOrder asserts that if an invalid order
+     * is placed as the first order, the saved furniture category will be null.
+     */
+    @Test public void testUserIO_invalidOrderReadCategoryFirstOrder(){
+        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("1" + "\n" + "Invalid input" + "\n" + "CANCEL" + "\n").getBytes());
+        System.setIn(terminalInput1);
+        UserIO userIO = new UserIO();
+
+        int readFromInput = userIO.menu();
+        System.setIn(terminalInput1);
+        userIO.processInput(readFromInput);
+
+        assertEquals(null, userIO.getFurnCategory());
+    }
+
+    /**
+     * testUserIO_invalidOrderReadFurnCategoryAfterFirst asserts that if an invalid order
+     * is placed after a valid previous order, the saved furniture category will be null.
+     */
+    @Test public void testUserIO_invalidOrderReadFurnCategoryAfterFirst(){
+        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("1" + "\n" + "Mesh chair, 1" + "\n" + "1" + "\n" + "Desk lamp, 1" + "\n" + "1" + "\n" + "Invalid order" + "\n" + "CANCEL" +"\n").getBytes());
+        System.setIn(terminalInput1);
+        UserIO userIO = new UserIO();
+
+        int readFromInput = userIO.menu();
+        System.setIn(terminalInput1); // Fulfills valid order "Mesh chair, 1"
+        userIO.processInput(readFromInput);
+
+        readFromInput = userIO.menu();
+        userIO.processInput(readFromInput); // Fulfills the valid order
+        // "Desk lamp, 1"
+
+        readFromInput = userIO.menu();
+        userIO.processInput(readFromInput); // Attempts to fulfill the invalid
+        // order "Invalid order"
+
+
+        assertEquals(null, userIO.getFurnCategory());
+    }
+
+    /**
+     * testUserIO_invalidOrderReadNumOfItemsFirstOrder asserts that if an invalid order
+     * is placed as the first order, the saved number of items will be null.
+     */
+    @Test public void testUserIO_invalidOrderReadNumOfItemsFirstOrder(){
+        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("1" + "\n" + "Bad order" + "\n" + "CANCEL" + "\n").getBytes());
+        System.setIn(terminalInput1);
+        UserIO userIO = new UserIO();
+
+        int readFromInput = userIO.menu();
+        System.setIn(terminalInput1);
+        userIO.processInput(readFromInput);
+
+        assertEquals(null, userIO.getNumOfItems());
+    }
+
+    /**
+     * testUserIO_invalidOrderReadNumOfItemsAfterFirst asserts that if an invalid order
+     * is placed after a valid previous order, the saved number of items will be null.
+     */
+    @Test public void testUserIO_invalidOrderReadNumOfItemsAfterFirst(){
+        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("1" + "\n" + "Mesh chair, 1" + "\n" + "1" + "\n" + "Desk lamp, 1" + "\n" + "1" + "\n" + "Meaningless order" + "\n" + "CANCEL" +"\n").getBytes());
+        System.setIn(terminalInput1);
+        UserIO userIO = new UserIO();
+
+        int readFromInput = userIO.menu();
+        System.setIn(terminalInput1); // Fulfills valid order "Mesh chair, 1"
+        userIO.processInput(readFromInput);
+
+        readFromInput = userIO.menu();
+        userIO.processInput(readFromInput); // Fulfills the valid order
+        // "Desk lamp, 1"
+
+        readFromInput = userIO.menu();
+        userIO.processInput(readFromInput); // Attempts to fulfill the invalid
+        // order "Meaningless order"
+
+
+        assertEquals(null, userIO.getNumOfItems());
+    }
+
+    /**
+     * testUserIO_invalidOrderReadLatestOrderFirstOrder asserts that if an invalid order
+     * is placed as the first order, the saved record of the latest order will be null.
+     */
+    @Test public void testUserIO_invalidOrderReadLatestOrderFirstOrder(){
+        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("1" + "\n" + "Invalid request" + "\n" + "CANCEL" + "\n").getBytes());
+        System.setIn(terminalInput1);
+        UserIO userIO = new UserIO();
+
+        int readFromInput = userIO.menu();
+        System.setIn(terminalInput1);
+        userIO.processInput(readFromInput);
+
+        assertEquals(null, userIO.getLatestRequest());
+    }
+
+    /**
+     * testUserIO_invalidOrderReadNumOfItemsAfterFirst asserts that if an invalid order
+     * is placed after a valid previous order, the saved number of items will be null.
+     */
+    @Test public void testUserIO_invalidOrderLatestOrderAfterFirst(){
+        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("1" + "\n" + "Mesh chair, 1" + "\n" + "1" + "\n" + "Desk lamp, 1" + "\n" + "1" + "\n" + "Bad bad order" + "\n" + "CANCEL" +"\n").getBytes());
+        System.setIn(terminalInput1);
+        UserIO userIO = new UserIO();
+
+        int readFromInput = userIO.menu();
+        System.setIn(terminalInput1); // Fulfills valid order "Mesh chair, 1"
+        userIO.processInput(readFromInput);
+
+        readFromInput = userIO.menu();
+        userIO.processInput(readFromInput); // Fulfills the valid order
+        // "Desk lamp, 1"
+
+        readFromInput = userIO.menu();
+        userIO.processInput(readFromInput); // Attempts to fulfill the invalid
+        // order "Bad bad order"
+
+
+        assertEquals(null, userIO.getLatestRequest());
+    }
+
 }
