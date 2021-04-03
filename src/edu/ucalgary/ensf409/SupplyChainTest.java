@@ -866,7 +866,39 @@ public class SupplyChainTest {
         assertTrue(correctOutput);
     }
 
+    /**
+     * testUserIO_changeOutputFileName asserts that the user request to change
+     * the current output file name the order output will be written into is
+     * fulfilled by changing the stored order output file name in this instance
+     * of UserIO, as well as having the updated name correctly display
+     * on the terminal to the user.
+     */
+    @Test public void testUserIO_changeOutputFileName(){
+        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("4" + "\n" + "NewOutputFileName.txt" + "\n" + "Y" + "\n" + "2" + "\n").getBytes());
+        System.setIn(terminalInput1);
+        UserIO userIO = new UserIO();
 
+        int readFromInput = userIO.menu();
+
+        System.setIn(terminalInput1);
+        userIO.processInput(readFromInput); // Processes the input for requesting to change the current output file name
+
+        readFromInput = userIO.menu();
+        userIO.processInput(readFromInput); // Processes the input for requesting to view the current output file name
+
+        String expectedOutputREGEX = "(Current output file name is: NewOutputFileName.txt)";
+        Pattern expectedPattern = Pattern.compile(expectedOutputREGEX);
+        Matcher expectedMatch = expectedPattern.matcher(terminalContent.toString());
+
+        String currentOutputFileName = userIO.getOutputFile();
+        boolean fileUpdated = currentOutputFileName.equals("NewOutputFileName.txt");
+
+
+        boolean correctOutput = expectedMatch.find();
+        System.err.println(terminalContent.toString());
+        System.err.println(fileUpdated + " " + correctOutput);
+        assertTrue(fileUpdated && correctOutput);
+    }
 
 
 }
