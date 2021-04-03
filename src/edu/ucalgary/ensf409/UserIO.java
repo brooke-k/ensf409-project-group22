@@ -197,11 +197,18 @@ public class UserIO {
             System.out.println("Returning to menu. No order has been placed.");
             return;
         }
-        String requestREGEX = "([A-Z][a-z]+) ([a-z]+), ([0-9]+)";
-        Pattern requestPattern = Pattern.compile(requestREGEX);
-        Matcher requestMatch = requestPattern.matcher(userRequest);
-        boolean matchesFound = requestMatch.find();
-        if(!matchesFound){
+        String requestREGEX1 = "([A-Z][a-z]+) ([a-z]+), ([0-9]+)";
+        String requestREGEX2 = "([A-Z][a-z]+ [A-Z][a-z]+) ([a-z]+), ([0-9]+)";
+
+        Pattern requestPattern1 = Pattern.compile(requestREGEX1);
+        Matcher requestMatch1 = requestPattern1.matcher(userRequest);
+        boolean matchesFound1 = requestMatch1.find();
+
+        Pattern requestPattern2 = Pattern.compile(requestREGEX2);
+        Matcher requestMatch2 = requestPattern2.matcher(userRequest);
+        boolean matchesFound2 = requestMatch2.find();
+        if(!matchesFound1 && !matchesFound2){
+
             System.out.println("Invalid input provided.");
             System.out.println("Please enter a valid input in the form");
             System.out.println("[type] [furniture category], " +
@@ -211,9 +218,15 @@ public class UserIO {
             processUserRequest(readLine());
         }
         else{
-            furnType = requestMatch.group(1);
-            furnCategory = requestMatch.group(2);
-            numOfItems = requestMatch.group(3);
+            if(matchesFound1) {
+                furnType = requestMatch1.group(1);
+                furnCategory = requestMatch1.group(2);
+                numOfItems = requestMatch1.group(3);
+            }else{
+                furnType = requestMatch2.group(1);
+                furnCategory = requestMatch2.group(2);
+                numOfItems = requestMatch2.group(3);
+            }
             if(furnCategory.equals("chair") || furnCategory.equals("desk")
                     || furnCategory.equals("filing")
                     || furnCategory.equals("lamp")){
