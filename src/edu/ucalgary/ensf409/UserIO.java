@@ -22,6 +22,7 @@ public class UserIO {
     private String numOfItems;
     private DatabaseIO databaseIO;
     private FileIO fileIO;
+    private String latestRequest;
     private PriceOptimizer priceOpt;
     private String outputFile = "OrderOutput.txt";
     
@@ -134,6 +135,7 @@ public class UserIO {
                 System.out.println("Enter request: ");
                 String readFromScan = readLine();
                 processUserRequest(readFromScan);
+                latestRequest = readFromScan;
                 break;
             case 2:
                 System.out.println("\nCurrent output file name is: " +
@@ -195,11 +197,18 @@ public class UserIO {
             System.out.println("Returning to menu. No order has been placed.");
             return;
         }
-        String requestREGEX = "([A-Z][a-z]+) ([a-z]+), ([0-9]+)";
-        Pattern requestPattern = Pattern.compile(requestREGEX);
-        Matcher requestMatch = requestPattern.matcher(userRequest);
-        boolean matchesFound = requestMatch.find();
-        if(!matchesFound){
+        String requestREGEX1 = "([A-Z][a-z]+) ([a-z]+), ([0-9]+)";
+        String requestREGEX2 = "([A-Z][a-z]+ [A-Z][a-z]+) ([a-z]+), ([0-9]+)";
+
+        Pattern requestPattern1 = Pattern.compile(requestREGEX1);
+        Matcher requestMatch1 = requestPattern1.matcher(userRequest);
+        boolean matchesFound1 = requestMatch1.find();
+
+        Pattern requestPattern2 = Pattern.compile(requestREGEX2);
+        Matcher requestMatch2 = requestPattern2.matcher(userRequest);
+        boolean matchesFound2 = requestMatch2.find();
+        if(!matchesFound1 && !matchesFound2){
+
             System.out.println("Invalid input provided.");
             System.out.println("Please enter a valid input in the form");
             System.out.println("[type] [furniture category], " +
@@ -209,13 +218,19 @@ public class UserIO {
             processUserRequest(readLine());
         }
         else{
-            furnType = requestMatch.group(1);
-            furnCategory = requestMatch.group(2);
-            numOfItems = requestMatch.group(3);
+            if(matchesFound2) {
+                furnType = requestMatch2.group(1);
+                furnCategory = requestMatch2.group(2);
+                numOfItems = requestMatch2.group(3);
+            }else{
+                furnType = requestMatch1.group(1);
+                furnCategory = requestMatch1.group(2);
+                numOfItems = requestMatch1.group(3);
+            }
             if(furnCategory.equals("chair") || furnCategory.equals("desk")
                     || furnCategory.equals("filing")
                     || furnCategory.equals("lamp")){
-                if(databaseIO.typeExists(furnType)){
+                if(databaseIO.typeExists(furnCategory, furnType)){
                     checkFurniture();
                     String[] temp = priceOpt
                             .optimize(Integer.parseInt(numOfItems));
@@ -231,7 +246,7 @@ public class UserIO {
                                 .suggestedManufacturers(furnCategory));
                     }
                 } else {
-                    System.out.println("Invalid type, try again.");
+                    System.out.println("Invalid type: " + furnType + ", try again.");
                     processUserRequest(readLine());
                 }
             } else {
@@ -435,6 +450,46 @@ public class UserIO {
             hidden.append("*");
         }
         return hidden.toString();
+    }
+
+    /**
+     * Getter method for the latest user request made for an order
+     * @return Most recent valid order request from user
+     */
+    public String getLatestRequest(){
+        return latestRequest;
+    }
+
+    /**
+     * Getter method for the furniture type of the latest valid order request
+     * @return Latest valid order furniture type
+     */
+    public String getFurnType(){
+        return furnType;
+    }
+
+    /**
+     * Getter method for the number of items of the latest valid order request
+     * @return Latest valid order request number of items
+     */
+    public String getNumOfItems(){
+        return numOfItems;
+    }
+
+    /**
+     * Getter method for the furniture category of the latest valid order request
+     * @return Latest valid order request furniture category
+     */
+    public String getFurnCategory(){
+        return furnCategory;
+    }
+
+    /**
+     * Getter method for the current output file the order will be written to
+     * @return Currently set order output file
+     */
+    public String getOutputFile(){
+        return outputFile;
     }
 
     /**

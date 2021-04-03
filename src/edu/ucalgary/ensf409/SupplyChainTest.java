@@ -20,13 +20,14 @@ import junit.framework.TestCase;
 import org.junit.*;
 import org.junit.Assert.*;
 
+import java.awt.*;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertTrue;
+import static junit.framework.TestCase.*;
 import static org.junit.Assert.assertFalse;
 
 
@@ -38,6 +39,8 @@ public class SupplyChainTest {
     private final ByteArrayOutputStream terminalContent
             = new ByteArrayOutputStream();
     private final PrintStream originalTermContent = System.out;
+    private final InputStream originalTerminalInput = System.in;
+
 
     /**
      * readTerminalOutputSetup is a method
@@ -46,8 +49,9 @@ public class SupplyChainTest {
      * terminal output is as expected.
      */
     @Before
-    public void readTerminalOutputSetup(){
+    public void readTerminalOutputSetup() {
         System.setOut(new PrintStream(terminalContent));
+        System.setIn(originalTerminalInput);
     }
 
     /**
@@ -55,7 +59,7 @@ public class SupplyChainTest {
      * stream System.out to the terminal.
      */
     @After
-    public void restoreTerminalOutputStream(){
+    public void restoreTerminalOutputStream() {
         System.setOut(originalTermContent);
     }
 
@@ -66,13 +70,13 @@ public class SupplyChainTest {
      * with one manufacturer created is correct.
      */
     @Test
-    public void testFileIO_UnfulfilledOutputStr1Manufacturer(){
-        ArrayList<String>  manufacturers = new ArrayList<>();
+    public void testFileIO_UnfulfilledOutputStr1Manufacturer() {
+        ArrayList<String> manufacturers = new ArrayList<>();
         manufacturers.add("First manufacturer");
 
         FileIO fileOutput = new FileIO(manufacturers);
 
-        assertEquals(fileOutput.createUnfulfilledOutput(),("\nOrder could " +
+        assertEquals(fileOutput.createUnfulfilledOutput(), ("\nOrder could " +
                 "not be fulfilled based " +
                 "on current inventory." + "\nThe suggested " +
                 "manufacturer for this " +
@@ -85,8 +89,8 @@ public class SupplyChainTest {
      * output for two manufacturers.
      */
     @Test
-    public void testFileIO_UnfulfilledOutputStr2Manufacturers(){
-        ArrayList<String>  manufacturers = new ArrayList<>();
+    public void testFileIO_UnfulfilledOutputStr2Manufacturers() {
+        ArrayList<String> manufacturers = new ArrayList<>();
         manufacturers.add("First manufacturer");
         manufacturers.add("Second manufacturer");
 
@@ -104,7 +108,8 @@ public class SupplyChainTest {
      * created by method createUnfulfilled output produces the correct
      * output for four manufacturers.
      */
-    @Test public void testFileIO_UnfulfilledOutputStr4Manufacturers(){
+    @Test
+    public void testFileIO_UnfulfilledOutputStr4Manufacturers() {
         ArrayList<String> manufacturers = new ArrayList<>();
         manufacturers.add("First");
         manufacturers.add("Second");
@@ -126,7 +131,8 @@ public class SupplyChainTest {
      * Tested using method trim() to check for content only, not newline
      * formatting.
      */
-    @Test public void testFileIO_UnfulfilledTerminalOutput1Manufacturer(){
+    @Test
+    public void testFileIO_UnfulfilledTerminalOutput1Manufacturer() {
         ArrayList<String> manufacturers = new ArrayList<>();
         manufacturers.add("One manufacturer");
 
@@ -150,7 +156,8 @@ public class SupplyChainTest {
      * Tested using method trim() to check for content only, not newline
      * formatting.
      */
-    @Test public void testFileIO_UnfulfilledTerminalOutput2Manufacturers(){
+    @Test
+    public void testFileIO_UnfulfilledTerminalOutput2Manufacturers() {
         ArrayList<String> manufacturers = new ArrayList<>();
         manufacturers.add("First company");
         manufacturers.add("Second company");
@@ -175,7 +182,8 @@ public class SupplyChainTest {
      * Tested using method trim() to check for content only, not newline
      * formatting.
      */
-    @Test public void testFileIO_UnfulfilledTerminalOutput4Manufacturers(){
+    @Test
+    public void testFileIO_UnfulfilledTerminalOutput4Manufacturers() {
         ArrayList<String> manufacturers = new ArrayList<>();
         manufacturers.add("First corp");
         manufacturers.add("Second corp");
@@ -187,8 +195,8 @@ public class SupplyChainTest {
         String expectedOutput = ("Order could not be fulfilled based " +
                 "on current inventory." + "\n" + "Suggested manufacturers " +
                 "for this " +
-                "order are " + "First corp" +  ", " + "Second corp" + ", " +
-                "Third corp" + ", " + "and "+ "Fourth corp"  + ".");
+                "order are " + "First corp" + ", " + "Second corp" + ", " +
+                "Third corp" + ", " + "and " + "Fourth corp" + ".");
         String termCont = terminalContent.toString().trim();
 
 
@@ -199,61 +207,65 @@ public class SupplyChainTest {
      * testFileIO_FulfilledOrderTerminalOutputOneItem asserts that the string produced by
      * the FileIO object to be printed to the terminal with a successful order and one item is correct.
      */
-    @Test public void testFileIO_FulfilledOrderTerminalOutputOneItem(){
+    @Test
+    public void testFileIO_FulfilledOrderTerminalOutputOneItem() {
         String[] orderedItems = {"OneItem"};
         String outputFileName = "orderOutputToTerminalTest";
         String originalRequest = "orderOutputToTerminal request";
         int orderCost = 3700;
 
-        FileIO fileIO = new FileIO(outputFileName,orderedItems,originalRequest,orderCost);
+        FileIO fileIO = new FileIO(outputFileName, orderedItems, originalRequest, orderCost);
 
         String expectedConsoleOutput = ("Order successful." + "\n" + "Purchased component: " + "OneItem" + " for $" + "3700");
-        assertEquals(expectedConsoleOutput,fileIO.getConsoleOutputString().trim());
+        assertEquals(expectedConsoleOutput, fileIO.getConsoleOutputString().trim());
     }
 
     /**
      * testFileIO_FulfilledOrderTerminalOutputTwoItems asserts that the string produced by
      * the FileIO object to be printed to the terminal with a successful order and two items is correct.
      */
-    @Test public void testFileIO_FulfilledOrderTerminalOutputTwoItems(){
+    @Test
+    public void testFileIO_FulfilledOrderTerminalOutputTwoItems() {
         String[] orderedItems = {"One item", "two items"};
         String outputFileName = "orderOutputToTerminalTest";
         String originalRequest = "orderOutputToTerminal request";
         int orderCost = 7373;
 
-        FileIO fileIO = new FileIO(outputFileName,orderedItems,originalRequest,orderCost);
+        FileIO fileIO = new FileIO(outputFileName, orderedItems, originalRequest, orderCost);
 
-        String expectedConsoleOutput = ("Order successful." + "\n" + "Purchased components: " + "One item" +  " and " + "two items" +" for $" + "7373");
-        assertEquals(expectedConsoleOutput,fileIO.getConsoleOutputString().trim());
+        String expectedConsoleOutput = ("Order successful." + "\n" + "Purchased components: " + "One item" + " and " + "two items" + " for $" + "7373");
+        assertEquals(expectedConsoleOutput, fileIO.getConsoleOutputString().trim());
     }
 
     /**
      * testFileIO_FulfilledOrderTerminalOutputFourItems asserts that the string produced by
      * the FileIO object to be printed to the terminal with a successful order and four items is correct.
      */
-    @Test public void testFileIO_FulfilledOrderTerminalOutputFourItems(){
-        String[] orderedItems = {"One1","Two2","Three3","Four4"};
+    @Test
+    public void testFileIO_FulfilledOrderTerminalOutputFourItems() {
+        String[] orderedItems = {"One1", "Two2", "Three3", "Four4"};
         String outputFileName = "orderOutputToTerminalTest";
         String originalRequest = "orderOutputToTerminal request";
         int orderCost = 89899;
 
-        FileIO fileIO = new FileIO(outputFileName,orderedItems,originalRequest,orderCost);
+        FileIO fileIO = new FileIO(outputFileName, orderedItems, originalRequest, orderCost);
 
-        String expectedConsoleOutput = ("Order successful." + "\n" + "Purchased components: " +"One1" + ", " + "Two2" + ", " + "Three3" + ", " + "and " +"Four4" +" for $" + "89899");
-        assertEquals(expectedConsoleOutput,fileIO.getConsoleOutputString().trim());
+        String expectedConsoleOutput = ("Order successful." + "\n" + "Purchased components: " + "One1" + ", " + "Two2" + ", " + "Three3" + ", " + "and " + "Four4" + " for $" + "89899");
+        assertEquals(expectedConsoleOutput, fileIO.getConsoleOutputString().trim());
     }
 
     /**
      * testFileIO_FulfilledOrderOutputStringOneItem asserts that the string produced by
      * the FileIO object to be written to the order output file with one item is correct.
      */
-    @Test public void testFileIO_FulfilledOrderOutputStringOneItem(){
+    @Test
+    public void testFileIO_FulfilledOrderOutputStringOneItem() {
         String[] orderedItems = {"OneItem"};
         String outputFileName = "orderOutputToFileTest";
         String originalRequest = "orderOutputToFileTest request";
         int orderCost = 3700;
 
-        FileIO fileIO = new FileIO(outputFileName,orderedItems,originalRequest,orderCost);
+        FileIO fileIO = new FileIO(outputFileName, orderedItems, originalRequest, orderCost);
 
         String expectedOutputFileString = ("SCM Order Form" +
                 "\n\n" +
@@ -273,20 +285,21 @@ public class SupplyChainTest {
                 "\n\n" +
                 "Total price of order: $" +
                 orderCost);
-        assertEquals(expectedOutputFileString,fileIO.getOrderOutputString());
+        assertEquals(expectedOutputFileString, fileIO.getOrderOutputString());
     }
 
     /**
      * testFileIO_FulfilledOrderOutputStringTwoItems asserts that the string produced by
      * the FileIO object to be written to the order output file with two items is correct.
      */
-    @Test public void testFileIO_FulfilledOrderOutputStringTwoItems(){
+    @Test
+    public void testFileIO_FulfilledOrderOutputStringTwoItems() {
         String[] orderedItems = {"One item", "two Items"};
         String outputFileName = "orderOutputToTerminalTest";
         String originalRequest = "orderOutputToTerminal request";
         int orderCost = 89474;
 
-        FileIO fileIO = new FileIO(outputFileName,orderedItems,originalRequest,orderCost);
+        FileIO fileIO = new FileIO(outputFileName, orderedItems, originalRequest, orderCost);
 
         String expectedOutputFileString = ("SCM Order Form" +
                 "\n\n" +
@@ -309,20 +322,21 @@ public class SupplyChainTest {
                 "\n\n" +
                 "Total price of order: $" +
                 orderCost);
-        assertEquals(expectedOutputFileString,fileIO.getOrderOutputString());
+        assertEquals(expectedOutputFileString, fileIO.getOrderOutputString());
     }
 
     /**
      * testFileIO_FulfilledOrderOutputStringFourItems asserts that the string produced by
      * the FileIO object to be written to the order output file with four items is correct.
      */
-    @Test public void testFileIO_FulfilledOrderOutputStringFourItems(){
-        String[] orderedItems = {"11One","22Two","33Three","44Four"};
+    @Test
+    public void testFileIO_FulfilledOrderOutputStringFourItems() {
+        String[] orderedItems = {"11One", "22Two", "33Three", "44Four"};
         String outputFileName = "orderOutputToTerminalTest";
         String originalRequest = "orderOutputToTerminal request";
         int orderCost = 27722;
 
-        FileIO fileIO = new FileIO(outputFileName,orderedItems,originalRequest,orderCost);
+        FileIO fileIO = new FileIO(outputFileName, orderedItems, originalRequest, orderCost);
 
         String expectedOutputFileString = ("SCM Order Form" +
                 "\n\n" +
@@ -351,7 +365,7 @@ public class SupplyChainTest {
                 "\n\n" +
                 "Total price of order: $" +
                 orderCost);
-        assertEquals(expectedOutputFileString,fileIO.getOrderOutputString());
+        assertEquals(expectedOutputFileString, fileIO.getOrderOutputString());
     }
 
     /**
@@ -360,7 +374,8 @@ public class SupplyChainTest {
      * Uses a randomly generated value from 0-999998 to attempt to create
      * a unique file for testing each time.
      */
-    @Test public void testFileIO_OrderOutputFileCreated(){
+    @Test
+    public void testFileIO_OrderOutputFileCreated() {
         Random randValue = new Random();
         int testFileNameNumber = randValue.nextInt(999999);
         String testFileName = Integer.toString(testFileNameNumber) + ".txt";
@@ -377,11 +392,12 @@ public class SupplyChainTest {
      * testFileIO_OrderOutputFileWritten asserts that an order output file was created
      * correctly and contains the correct output string generated by the
      * FileIO method createFulfilledOutput.
-     *
+     * <p>
      * Uses a randomly generated value from 0-999998 to attempt to create
      * a unique file for testing each time.
      */
-    @Test public void testFileIO_OrderOutputFileWritten() {
+    @Test
+    public void testFileIO_OrderOutputFileWritten() {
         Random randValue = new Random();
         int testFileNameNumber = randValue.nextInt(999999);
         String testFileName = Integer.toString(testFileNameNumber) + ".txt";
@@ -414,18 +430,18 @@ public class SupplyChainTest {
      * furniture item.
      */
     @Test
-        public void testPriceOptimizer_compatibleValid() {
-            String[] id  = {};
-            int[] price = {};
-            boolean[][] parts = {
-                    {true, false, false, true},
-                    {true, false, true, false},
-                    {false, true, false, true}
-            };
-            int[] list = {0,1,2};
-            PriceOptimizer p = new PriceOptimizer(id,parts,price);
-            Assert.assertTrue(p.compatible(list));
-        }
+    public void testPriceOptimizer_compatibleValid() {
+        String[] id = {};
+        int[] price = {};
+        boolean[][] parts = {
+                {true, false, false, true},
+                {true, false, true, false},
+                {false, true, false, true}
+        };
+        int[] list = {0, 1, 2};
+        PriceOptimizer p = new PriceOptimizer(id, parts, price);
+        Assert.assertTrue(p.compatible(list));
+    }
 
     /**
      * testPriceOptimizer_compatibleInvalid asserts that object Price
@@ -434,15 +450,15 @@ public class SupplyChainTest {
      */
     @Test
     public void testPriceOptimizer_compatibleInvalid() {
-        String[] id  = {};
+        String[] id = {};
         int[] price = {};
         boolean[][] parts = {
                 {true, false, false, true},
                 {true, false, false, false},
                 {false, true, false, true}
         };
-        int[] list = {0,1,2};
-        PriceOptimizer p = new PriceOptimizer(id,parts,price);
+        int[] list = {0, 1, 2};
+        PriceOptimizer p = new PriceOptimizer(id, parts, price);
         assertFalse(p.compatible(list));
     }
 
@@ -453,7 +469,7 @@ public class SupplyChainTest {
      */
     @Test
     public void testPriceOptimizer_testOptimize() {
-        String[] id  = {"C0942", "C6748", "C8138", "C9890"};
+        String[] id = {"C0942", "C6748", "C8138", "C9890"};
         int[] price = {100, 75, 75, 50};
         boolean[][] parts = {
                 {true, false, true, true},
@@ -462,11 +478,11 @@ public class SupplyChainTest {
                 {false, true, false, true},
 
         };
-        PriceOptimizer p = new PriceOptimizer(id,parts,price);
+        PriceOptimizer p = new PriceOptimizer(id, parts, price);
         String[] result = p.optimize(1);
         String[] expected = {"C9890", "C0942"};
         String[] expected2 = {"C0942", "C9890"};
-        for(int i = 0; i < 2; i++) {
+        for (int i = 0; i < 2; i++) {
             System.out.println(result[i] + " ");
         }
 
@@ -477,14 +493,14 @@ public class SupplyChainTest {
      * testPriceOptimizer_testOptimize1 provides a second variation of
      * testPriceOptimizer_testOptimize, using different values for the pieces
      * available.
-     *
+     * <p>
      * Asserts that object Price Optimizer produces an order that completes
      * a furniture item with a combination of pieces that has the lowest
      * total cost.
      */
     @Test
     public void testPriceOptimizer_testOptimize1() {
-        String[] id  = {"C0942", "C6748", "C8138", "C9890"};
+        String[] id = {"C0942", "C6748", "C8138", "C9890"};
         int[] price = {100, 75, 75, 50};
         boolean[][] parts = {
                 {true, false, true, true},
@@ -492,7 +508,7 @@ public class SupplyChainTest {
                 {false, false, true, false},
                 {false, false, false, true}
         };
-        PriceOptimizer p = new PriceOptimizer(id,parts,price);
+        PriceOptimizer p = new PriceOptimizer(id, parts, price);
         String[] result = p.optimize(1);
     }
 
@@ -500,14 +516,14 @@ public class SupplyChainTest {
      * testPriceOptimizer_testOptimize2 provides a second variation of
      * testPriceOptimizer_testOptimize, using different values for the pieces
      * available.
-     *
+     * <p>
      * Asserts that object Price Optimizer produces an order that completes
      * a furniture item with a combination of pieces that has the lowest
      * total cost.
      */
     @Test
     public void testPriceOptimizer_testOptimize2() {
-        String[] id  = {"C0942", "C6748", "C8138", "C9890"};
+        String[] id = {"C0942", "C6748", "C8138", "C9890"};
         int[] price = {100, 75, 75, 50};
         boolean[][] parts = {
                 {true, true, true, true},
@@ -515,11 +531,11 @@ public class SupplyChainTest {
                 {false, false, true, false},
                 {false, false, false, true}
         };
-        PriceOptimizer p = new PriceOptimizer(id,parts,price);
+        PriceOptimizer p = new PriceOptimizer(id, parts, price);
         String[] result = p.optimize(2);
         String[] expected = {"C0942", "C6748"};
         String[] expected2 = {"C6748", "C0942"};
-        for(int i = 0; i < result.length; i++) {
+        for (int i = 0; i < result.length; i++) {
             System.out.print(result[i] + " ");
         }
         Assert.assertTrue("Output array incorrect.", Arrays.equals(expected, result) || Arrays.equals(result, expected));
@@ -529,14 +545,14 @@ public class SupplyChainTest {
      * testPriceOptimizer_testOptimize3 provides a second variation of
      * testPriceOptimizer_testOptimize, using different values for the pieces
      * available.
-     *
+     * <p>
      * Asserts that object Price Optimizer produces an order that completes
      * a furniture item with a combination of pieces that has the lowest
      * total cost.
      */
     @Test
     public void testPriceOptimizer_testOptimize3() {
-        String[] id  = {"C0942", "C6748", "C8138", "C9890"};
+        String[] id = {"C0942", "C6748", "C8138", "C9890"};
         int[] price = {100, 75, 75, 50};
         boolean[][] parts = {
                 {true, false, false, true},
@@ -544,13 +560,97 @@ public class SupplyChainTest {
                 {false, true, false, false},
                 {true, true, true, false}
         };
-        PriceOptimizer p = new PriceOptimizer(id,parts,price);
+        PriceOptimizer p = new PriceOptimizer(id, parts, price);
         String[] result = p.optimize(2);
         String[] expected = {"C0942", "C6748", "C9890"};
-        for(int i = 0; i < result.length; i++) {
+        for (int i = 0; i < result.length; i++) {
             System.out.print(result[i] + " ");
         }
         Assert.assertTrue("Output array incorrect.", Arrays.equals(expected, result) || Arrays.equals(result, expected));
     }
-    
+
+    /**
+     * testUserIO_validOrderReadFurnCategory asserts that a valid order has been
+     * placed and the user's requested furniture category has been read
+     * and saved correctly.
+     *
+     * @throws IOException Exception regarding the use of the input stream for
+     *                     for testing purposes only; not relevant to UserIO methods.
+     */
+    @Test
+    public void testUserIO_validOrderReadFurnCategory() throws IOException {
+        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("1" + "\n" + "Mesh chair, 1" + "\n").getBytes());
+        System.setIn(terminalInput1);
+        UserIO userIO = new UserIO();
+
+        int readFromInput = userIO.menu();
+        System.setIn(terminalInput1);
+        userIO.processInput(readFromInput);
+
+        assertEquals("chair", userIO.getFurnCategory());
+    }
+
+    /**
+     * testUserIO_validOrderReadFurnType asserts that a valid order has been
+     * placed and the user's requested furniture type has been read
+     * and saved correctly.
+     *
+     * @throws IOException Exception regarding the use of the input stream for
+     *                     for testing purposes only; not relevant to UserIO methods.
+     */
+    @Test
+    public void testUserIO_validOrderReadFurnType() throws IOException {
+        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("1" + "\n" + "Mesh chair, 1" + "\n").getBytes());
+        System.setIn(terminalInput1);
+        UserIO userIO = new UserIO();
+
+        int readFromInput = userIO.menu();
+        System.setIn(terminalInput1);
+        userIO.processInput(readFromInput);
+
+        assertEquals("Mesh", userIO.getFurnType());
+    }
+
+    /**
+     * testUserIO_validOrderReadNumOfItems asserts that a valid order has been
+     * placed and the user's requested number of items
+     * has been read and saved correctly.
+     *
+     * @throws IOException Exception regarding the use of the input stream for
+     *                     for testing purposes only; not relevant to UserIO methods.
+     */
+    @Test
+    public void testUserIO_validOrderReadNumOfItems() throws IOException {
+        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("1" + "\n" + "Mesh chair, 1" + "\n").getBytes());
+        System.setIn(terminalInput1);
+        UserIO userIO = new UserIO();
+
+        int readFromInput = userIO.menu();
+        System.setIn(terminalInput1);
+        userIO.processInput(readFromInput);
+
+        assertEquals("1", userIO.getNumOfItems());
+    }
+
+    /**
+     * testUserIO_validOrderRequest asserts that a valid order has been
+     * placed and the user's order request
+     * has been read and saved correctly.
+     *
+     * @throws IOException Exception regarding the use of the input stream for
+     *                     for testing purposes only; not relevant to UserIO methods.
+     */
+    @Test
+    public void testUserIO_validOrderRequest() throws IOException {
+        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("1" + "\n" + "Mesh chair, 1" + "\n").getBytes());
+        System.setIn(terminalInput1);
+        UserIO userIO = new UserIO();
+
+        int readFromInput = userIO.menu();
+        System.setIn(terminalInput1);
+        userIO.processInput(readFromInput);
+
+        assertEquals("Mesh chair, 1", userIO.getLatestRequest());
+    }
+
 }
