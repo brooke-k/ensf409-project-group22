@@ -20,13 +20,14 @@ import junit.framework.TestCase;
 import org.junit.*;
 import org.junit.Assert.*;
 
+import java.awt.*;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertTrue;
+import static junit.framework.TestCase.*;
 import static org.junit.Assert.assertFalse;
 
 
@@ -38,6 +39,9 @@ public class SupplyChainTest {
     private final ByteArrayOutputStream terminalContent
             = new ByteArrayOutputStream();
     private final PrintStream originalTermContent = System.out;
+    private final InputStream originalTerminalInput = System.in;
+
+
 
     /**
      * readTerminalOutputSetup is a method
@@ -48,6 +52,7 @@ public class SupplyChainTest {
     @Before
     public void readTerminalOutputSetup(){
         System.setOut(new PrintStream(terminalContent));
+        System.setIn(originalTerminalInput);
     }
 
     /**
@@ -552,5 +557,19 @@ public class SupplyChainTest {
         }
         Assert.assertTrue("Output array incorrect.", Arrays.equals(expected, result) || Arrays.equals(result, expected));
     }
-    
+
+    @Test public void testUserIO_menuInput1() throws IOException {
+        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("1" + "\n" + "CANCEL" + "\n").getBytes());
+        System.setIn(terminalInput1);
+        UserIO userIO = new UserIO();
+
+        int readFromInput = userIO.menu();
+        System.err.println(readFromInput);
+        System.setIn(terminalInput1);
+        userIO.processInput(readFromInput);
+
+
+
+    }
+
 }

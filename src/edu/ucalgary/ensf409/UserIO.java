@@ -22,6 +22,7 @@ public class UserIO {
     private String numOfItems;
     private DatabaseIO databaseIO;
     private FileIO fileIO;
+    private String latestRequest;
     private PriceOptimizer priceOpt;
     private String outputFile = "OrderOutput.txt";
     
@@ -134,6 +135,7 @@ public class UserIO {
                 System.out.println("Enter request: ");
                 String readFromScan = readLine();
                 processUserRequest(readFromScan);
+                latestRequest = readFromScan;
                 break;
             case 2:
                 System.out.println("\nCurrent output file name is: " +
@@ -435,6 +437,46 @@ public class UserIO {
             hidden.append("*");
         }
         return hidden.toString();
+    }
+
+    /**
+     * Getter method for the latest user request made for an order
+     * @return Most recent valid order request from user
+     */
+    public String getLatestRequest(){
+        return latestRequest;
+    }
+
+    /**
+     * Getter method for the furniture type of the latest valid order request
+     * @return Latest valid order furniture type
+     */
+    public String getFurnType(){
+        return furnType;
+    }
+
+    /**
+     * Getter method for the number of items of the latest valid order request
+     * @return Latest valid order request number of items
+     */
+    public String getNumOfItems(){
+        return numOfItems;
+    }
+
+    /**
+     * Getter method for the furniture category of the latest valid order request
+     * @return Latest valid order request furniture category
+     */
+    public String getFurnCategory(){
+        return furnCategory;
+    }
+
+    /**
+     * Getter method for the current output file the order will be written to
+     * @return Currently set order output file
+     */
+    public String getOutputFile(){
+        return outputFile;
     }
 
     /**
