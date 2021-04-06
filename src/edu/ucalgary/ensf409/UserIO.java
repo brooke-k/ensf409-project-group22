@@ -234,26 +234,75 @@ public class UserIO {
         Matcher requestMatch2 = requestPattern2.matcher(userRequest);
         boolean matchesFound2 = requestMatch2.find();
         if(!matchesFound1 && !matchesFound2){
+            String spellingCapErrREGEX ="([A-Za-z]+[ ]){0,2}" +
+                                         "([A-Za-z]+), ([0-9]+)";
+            Pattern spellingCapErrPat = Pattern.compile(spellingCapErrREGEX);
+            Matcher spelCapErrMat = spellingCapErrPat.matcher(userRequest);
+            boolean spelCapErrMatFound = spelCapErrMat.find();
+            if(!spelCapErrMatFound){
+                System.out.println();
+                System.out.println("Order could not be recognized.");
+            } else if (spelCapErrMat.group(0).length() != (userRequest.length())){
+                System.out.println();
+                System.out.println("Order could not be recognized.");
+            }
+            else {
+                System.out.println();
+                System.out.println("Please make sure that your capitalization");
+                System.out.println("matches that of the provided examples.");
+                System.out.println("Example One: Mesh chair, 3");
+                System.out.println("Example Two: Swing Arm lamp, 1");
+                pressEnterToContinue();
+            }
 
-            System.out.println("Invalid input provided.");
-            System.out.println("Please enter a valid input in the form");
+            System.out.println();
+            System.out.println("Please enter your order in the form");
             System.out.println("[type] [furniture category], " +
                     "[quantity of items]");
             System.out.println("Or enter \"CANCEL\" to return to the menu.\n");
-            System.out.println("Enter request: ");
+            System.out.println("Enter order: ");
             processUserRequest(readLine());
+            return;
         }
+
+
         else{
             if(matchesFound2) {
-                furnType = requestMatch2.group(1);
-                furnCategory = requestMatch2.group(2);
-                numOfItems = requestMatch2.group(3);
-                latestRequest = userRequest;
+                if(requestMatch2.group(0).length()!=userRequest.length()){
+                    System.out.println();
+                    System.out.println("Order could not be recognized.");
+                    System.out.println();
+                    System.out.println("Please enter your order in the form");
+                    System.out.println("[type] [furniture category], " +
+                                       "[quantity of items]");
+                    System.out.println("Or enter \"CANCEL\" to return to the menu.\n");
+                    System.out.println("Enter order: ");
+                    processUserRequest(readLine());
+                    return;
+                } else {
+                    furnType = requestMatch2.group(1);
+                    furnCategory = requestMatch2.group(2);
+                    numOfItems = requestMatch2.group(3);
+                    latestRequest = userRequest;
+                }
             }else{
-                furnType = requestMatch1.group(1);
-                furnCategory = requestMatch1.group(2);
-                numOfItems = requestMatch1.group(3);
-                latestRequest = userRequest;
+                if(matchesFound1 && requestMatch1.group(0).length()!=userRequest.length()){
+                    System.out.println();
+                    System.out.println("Order could not be recognized.");
+                    System.out.println();
+                    System.out.println("Please enter your order in the form");
+                    System.out.println("[type] [furniture category], " +
+                                       "[quantity of items]");
+                    System.out.println("Or enter \"CANCEL\" to return to the menu.\n");
+                    System.out.println("Enter order: ");
+                    processUserRequest(readLine());
+                    return;
+                } else {
+                    furnType = requestMatch1.group(1);
+                    furnCategory = requestMatch1.group(2);
+                    numOfItems = requestMatch1.group(3);
+                    latestRequest = userRequest;
+                }
             }
             if(furnCategory.equals("chair") || furnCategory.equals("desk")
                     || furnCategory.equals("filing")
@@ -274,16 +323,41 @@ public class UserIO {
                                 .suggestedManufacturers(furnCategory));
                     }
                 } else {
-                    System.out.println("Invalid type: " + furnType + ", try again.");
+                    System.out.println();
+                    System.out.println("The furniture type " + furnType  +
+                                       "could ");
+                    System.out.println("not be found in the " +
+                                       "current database.");
+                    pressEnterToContinue();
+                    System.out.println();
+                    System.out.println("Please enter your order in the form");
+                    System.out.println("[type] [furniture category], " +
+                                       "[quantity of items]");
+                    System.out.println("Or enter \"CANCEL\" to return to the menu.\n");
+                    System.out.println("Enter order: ");
                     processUserRequest(readLine());
+                    return;
                 }
             } else {
-                System.out.println("Invalid category, try again.");
+                System.out.println();
+                System.out.println("The category " + furnCategory  +
+                                   "could ");
+                System.out.println("not be found in the " +
+                                   "current database.");
+                pressEnterToContinue();
+                System.out.println();
+                System.out.println("Please enter your order in the form");
+                System.out.println("[type] [furniture category], " +
+                                   "[quantity of items]");
+                System.out.println("Or enter \"CANCEL\" to return to the menu.\n");
+                System.out.println("Enter order: ");
                 processUserRequest(readLine());
+                return;
             }
 
 
         }
+        return;
     }
 
     /**
