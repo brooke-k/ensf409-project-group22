@@ -37,7 +37,12 @@ public class Main {
     public static void main(String[] args) {
         UserIO input = new UserIO();
         int selection = input.menu();
-        while(true) {
+        while(true) {                   // Runs in an infinite loop until
+                                        // input.processInput(selection)
+                                        // receives a value of selection = 0
+                                        // After all streams are closed
+                                        // and the program is terminated
+                                        // as expected (termination code 0)
             input.processInput(selection);
             selection = input.menu();
         }

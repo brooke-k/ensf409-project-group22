@@ -10,7 +10,7 @@
  *
  * @since 1.0
  *
- * @version 2.0
+ * @version 2.5
  *
  *
  */
@@ -74,10 +74,11 @@ public class SupplyChainTest {
 
         FileIO fileOutput = new FileIO(manufacturers);
 
-        assertEquals(fileOutput.createUnfulfilledOutput(), ("""
-
-                Order could not be fulfilled based on current inventory.
-                The suggested manufacturer for this order is First manufacturer."""));
+        assertEquals(fileOutput.createUnfulfilledOutput(),
+                ("\n" +
+                 "Order could not be fulfilled based on current inventory.\n" +
+                 "The suggested manufacturer for this order " +
+                 "is First manufacturer."));
     }
 
     /**
@@ -93,10 +94,11 @@ public class SupplyChainTest {
 
         FileIO fileIO = new FileIO(manufacturers);
 
-        assertEquals(fileIO.createUnfulfilledOutput(), ("""
-
-                Order could not be fulfilled based on current inventory.
-                Suggested manufacturers for this order are First manufacturer and Second manufacturer."""));
+        assertEquals(fileIO.createUnfulfilledOutput(),
+                ("\n" +
+                 "Order could not be fulfilled based on current inventory.\n" +
+                 "Suggested manufacturers for this order are First " +
+                 "manufacturer and Second manufacturer."));
     }
 
     /**
@@ -113,10 +115,11 @@ public class SupplyChainTest {
         manufacturers.add("Fourth");
 
         FileIO fileIO = new FileIO(manufacturers);
-        assertEquals(fileIO.createUnfulfilledOutput(), ("""
-
-                Order could not be fulfilled based on current inventory.
-                Suggested manufacturers for this order are First, Second, Third, and Fourth."""));
+        assertEquals(fileIO.createUnfulfilledOutput(),
+                ("\n" +
+                 "Order could not be fulfilled based on current inventory.\n" +
+                 "Suggested manufacturers for this " +
+                 "order are First, Second, Third, and Fourth."));
     }
 
     /**
@@ -601,10 +604,9 @@ public class SupplyChainTest {
      */
     @Test
     public void testUserIO_validOrderReadFurnCategory() {
-        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("""
-                1
-                Mesh chair, 1
-                """).getBytes());
+        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(
+                ("1\n" +
+                 "Mesh chair, 1\n").getBytes());
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
@@ -623,10 +625,9 @@ public class SupplyChainTest {
      */
     @Test
     public void testUserIO_validOrderReadFurnType() {
-        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("""
-                1
-                Mesh chair, 1
-                """).getBytes());
+        ByteArrayInputStream terminalInput1 =
+                new ByteArrayInputStream(("1\n" +
+                                          "Mesh chair, 1\n").getBytes());
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
@@ -645,10 +646,9 @@ public class SupplyChainTest {
      */
     @Test
     public void testUserIO_validOrderReadNumOfItems() {
-        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("""
-                1
-                Mesh chair, 1
-                """).getBytes());
+        ByteArrayInputStream terminalInput1 =
+                new ByteArrayInputStream(("1\n" +
+                                          "Mesh chair, 1\n").getBytes());
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
@@ -667,10 +667,9 @@ public class SupplyChainTest {
      */
     @Test
     public void testUserIO_validOrderRequest() {
-        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("""
-                1
-                Mesh chair, 1
-                """).getBytes());
+        ByteArrayInputStream terminalInput1 =
+                new ByteArrayInputStream(("1\n" +
+                                          "Mesh chair, 1\n").getBytes());
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
@@ -687,11 +686,10 @@ public class SupplyChainTest {
      * null.
      */
     @Test public void testUserIO_invalidOrderReadFurnTypeFirstOrder(){
-        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("""
-                1
-                Invalid input
-                CANCEL
-                """).getBytes());
+        ByteArrayInputStream terminalInput1 =
+                new ByteArrayInputStream(("1\n" +
+                                          "Invalid input\n" +
+                                          "CANCEL\n").getBytes());
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
@@ -708,15 +706,14 @@ public class SupplyChainTest {
      * will be null.
      */
     @Test public void testUserIO_invalidOrderReadFurnTypeAfterFirst(){
-        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("""
-                1
-                Mesh chair, 1
-                1
-                Desk lamp, 1
-                1
-                Invalid order name
-                CANCEL
-                """).getBytes());
+        ByteArrayInputStream terminalInput1 =
+                new ByteArrayInputStream(("1\n" +
+                                          "Mesh chair, 1\n" +
+                                          "1\n" +
+                                          "Desk lamp, 1\n" +
+                                          "1\n" +
+                                          "Invalid order name\n" +
+                                          "CANCEL\n").getBytes());
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
@@ -742,11 +739,10 @@ public class SupplyChainTest {
      * null.
      */
     @Test public void testUserIO_invalidOrderReadCategoryFirstOrder(){
-        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("""
-                1
-                Invalid input
-                CANCEL
-                """).getBytes());
+        ByteArrayInputStream terminalInput1 =
+                new ByteArrayInputStream(("1\n" +
+                                          "Invalid input\n" +
+                                          "CANCEL\n").getBytes());
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
@@ -763,15 +759,14 @@ public class SupplyChainTest {
      * category will be null.
      */
     @Test public void testUserIO_invalidOrderReadFurnCategoryAfterFirst(){
-        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("""
-                1
-                Mesh chair, 1
-                1
-                Desk lamp, 1
-                1
-                Invalid order
-                CANCEL
-                """).getBytes());
+        ByteArrayInputStream terminalInput1 =
+                new ByteArrayInputStream(("1\n" +
+                                          "Mesh chair, 1\n" +
+                                          "1\n" +
+                                          "Desk lamp, 1\n" +
+                                          "1\n" +
+                                          "Invalid order\n" +
+                                          "CANCEL\n").getBytes());
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
@@ -797,11 +792,10 @@ public class SupplyChainTest {
      * will be null.
      */
     @Test public void testUserIO_invalidOrderReadNumOfItemsFirstOrder(){
-        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("""
-                1
-                Bad order
-                CANCEL
-                """).getBytes());
+        ByteArrayInputStream terminalInput1 =
+                new ByteArrayInputStream(("1\n" +
+                                          "Bad order\n" +
+                                          "CANCEL\n").getBytes());
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
@@ -818,15 +812,14 @@ public class SupplyChainTest {
      * of items will be null.
      */
     @Test public void testUserIO_invalidOrderReadNumOfItemsAfterFirst(){
-        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("""
-                1
-                Mesh chair, 1
-                1
-                Desk lamp, 1
-                1
-                Meaningless order
-                CANCEL
-                """).getBytes());
+        ByteArrayInputStream terminalInput1 =
+                new ByteArrayInputStream(("1\n" +
+                                          "Mesh chair, 1\n" +
+                                          "1\n" +
+                                          "Desk lamp, 1\n" +
+                                          "1\n" +
+                                          "Meaningless order\n" +
+                                          "CANCEL\n").getBytes());
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
@@ -852,11 +845,10 @@ public class SupplyChainTest {
      * latest order will be null.
      */
     @Test public void testUserIO_invalidOrderReadLatestOrderFirstOrder(){
-        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("""
-                1
-                Invalid request
-                CANCEL
-                """).getBytes());
+        ByteArrayInputStream terminalInput1 =
+                new ByteArrayInputStream(("1\n" +
+                                          "Invalid request\n" +
+                                          "CANCEL\n").getBytes());
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
@@ -873,15 +865,14 @@ public class SupplyChainTest {
      * of items will be null.
      */
     @Test public void testUserIO_invalidOrderLatestOrderAfterFirst(){
-        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("""
-                1
-                Mesh chair, 1
-                1
-                Desk lamp, 1
-                1
-                Bad bad order
-                CANCEL
-                """).getBytes());
+        ByteArrayInputStream terminalInput1 =
+                new ByteArrayInputStream(("1\n" +
+                                          "Mesh chair, 1\n" +
+                                          "1\n" +
+                                          "Desk lamp, 1\n" +
+                                          "1\n" +
+                                          "Bad bad order\n" +
+                                          "CANCEL\n").getBytes());
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
@@ -964,12 +955,11 @@ public class SupplyChainTest {
      * on the terminal to the user.
      */
     @Test public void testUserIO_changeOutputFileName(){
-        ByteArrayInputStream terminalInput1 = new ByteArrayInputStream(("""
-                4
-                NewOutputFileName.txt
-                Y
-                2
-                """).getBytes());
+        ByteArrayInputStream terminalInput1 =
+                new ByteArrayInputStream(("4\n" +
+                                          "NewOutputFileName.txt\n" +
+                                          "Y\n" +
+                                          "2\n").getBytes());
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
