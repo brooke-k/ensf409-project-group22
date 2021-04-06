@@ -111,7 +111,13 @@ public class DatabaseIO {
             this.dbConnect = DriverManager.getConnection(this.dbUrl,
                     this.username, this.password);
         } catch (SQLException e){
-            System.out.println("Unable to create a connection.");
+            System.out.println();
+            System.out.println("Unable to create a connection with");
+            System.out.println("the current credentials: ");
+            System.out.println("     DbURL: " + this.dbUrl);
+            System.out.println("  Username: " + this.username);
+            System.out.println("  Password: " + this.password);
+            System.out.println();
             e.printStackTrace();
         }
     }

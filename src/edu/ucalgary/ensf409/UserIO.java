@@ -32,6 +32,7 @@ public class UserIO {
      * @return int corresponding to the selected option by the user
      */
     public int menu() {
+            pressEnterToContinue();
             System.out.println();
             System.out.println("1. Input a User Request");
             System.out.println("2. View Current Output Filename");
@@ -43,6 +44,22 @@ public class UserIO {
             System.out.print("Enter your selection: ");
             return readIntUntilAccepted(0, 5);
     }
+
+    /**
+     * Method for loading the introduction to the program, before
+     * giving the user the option to pick through the menu.
+     * giving the user the option to pick through the menu.
+     */
+    public void firstMenu(){
+        System.out.println();
+        System.out.println("Welcome to the Supply Chain Manager for");
+        System.out.println("recycled and second hand furniture.");
+        System.out.println();
+        System.out.println("Press ENTER after every prompted entry ");
+        System.out.println("and type \"CANCEL\" in any operation ");
+        System.out.println("to return to the main menu.");
+    }
+
 
 
     /**
@@ -127,7 +144,7 @@ public class UserIO {
      * if the user inputs an invalid input.
      * @param inputValue Request from the user.
      */
-    public void processInput(int inputValue){
+    public boolean processInput(int inputValue){
         switch(inputValue){
             case 1:
                 setReadValuesNull();
@@ -141,11 +158,12 @@ public class UserIO {
                 System.out.println("Enter request: ");
                 String readFromScan = readLine();
                 processUserRequest(readFromScan);
-                break;
+                return true;
             case 2:
                 System.out.println("\nCurrent output file name is: " +
                         outputFile + "\n");
-                break;
+                readLine();
+                return true;
             case 3:
                 System.out.println("\nCurrent database URL: "
                         + databaseIO.getDbUrl());
@@ -153,26 +171,29 @@ public class UserIO {
                         + databaseIO.getUsername());
                 System.out.println("Current database password: "
                         + hidePassword(databaseIO.getPassword()));
-                break;
+                readLine();
+                return true;
             case 4:
                 readLine();
                 System.out.println("\nThe current output file name is: \"" +
                         outputFile + "\"\n");
                 System.out.println("Please the filename for order output, or " +
                         "enter \"CANCEL\" to cancel the operation.");
-                System.out.println("New file name: ");
-                String readFileName = readLine();
+                    System.out.println("New file name: ");
+                    String readFileName = readLine();
                 updateOutputName(readFileName);
-                break;
+                return true;
             case 5:
                 updateSQLCredentials();
-                break;
+                return true;
             case 0:
-                System.out.println("\nSelected option 0. Now closing program.");
-                input.close();
-                System.exit(0);
+                System.out.println();
+                System.out.println("Thank you for using Supply Chain Manager.");
+                System.out.println("Now closing the program.");
+                return false;
 
         }
+        return true;
     }
 
     /**
@@ -213,26 +234,75 @@ public class UserIO {
         Matcher requestMatch2 = requestPattern2.matcher(userRequest);
         boolean matchesFound2 = requestMatch2.find();
         if(!matchesFound1 && !matchesFound2){
+            String spellingCapErrREGEX ="([A-Za-z]+[ ]){0,2}" +
+                                         "([A-Za-z]+), ([0-9]+)";
+            Pattern spellingCapErrPat = Pattern.compile(spellingCapErrREGEX);
+            Matcher spelCapErrMat = spellingCapErrPat.matcher(userRequest);
+            boolean spelCapErrMatFound = spelCapErrMat.find();
+            if(!spelCapErrMatFound){
+                System.out.println();
+                System.out.println("Order could not be recognized.");
+            } else if (spelCapErrMat.group(0).length() != (userRequest.length())){
+                System.out.println();
+                System.out.println("Order could not be recognized.");
+            }
+            else {
+                System.out.println();
+                System.out.println("Please make sure that your capitalization");
+                System.out.println("matches that of the provided examples.");
+                System.out.println("Example One: Mesh chair, 3");
+                System.out.println("Example Two: Swing Arm lamp, 1");
+                pressEnterToContinue();
+            }
 
-            System.out.println("Invalid input provided.");
-            System.out.println("Please enter a valid input in the form");
+            System.out.println();
+            System.out.println("Please enter your order in the form");
             System.out.println("[type] [furniture category], " +
                     "[quantity of items]");
             System.out.println("Or enter \"CANCEL\" to return to the menu.\n");
-            System.out.println("Enter request: ");
+            System.out.println("Enter order: ");
             processUserRequest(readLine());
+            return;
         }
+
+
         else{
             if(matchesFound2) {
-                furnType = requestMatch2.group(1);
-                furnCategory = requestMatch2.group(2);
-                numOfItems = requestMatch2.group(3);
-                latestRequest = userRequest;
+                if(requestMatch2.group(0).length()!=userRequest.length()){
+                    System.out.println();
+                    System.out.println("Order could not be recognized.");
+                    System.out.println();
+                    System.out.println("Please enter your order in the form");
+                    System.out.println("[type] [furniture category], " +
+                                       "[quantity of items]");
+                    System.out.println("Or enter \"CANCEL\" to return to the menu.\n");
+                    System.out.println("Enter order: ");
+                    processUserRequest(readLine());
+                    return;
+                } else {
+                    furnType = requestMatch2.group(1);
+                    furnCategory = requestMatch2.group(2);
+                    numOfItems = requestMatch2.group(3);
+                    latestRequest = userRequest;
+                }
             }else{
-                furnType = requestMatch1.group(1);
-                furnCategory = requestMatch1.group(2);
-                numOfItems = requestMatch1.group(3);
-                latestRequest = userRequest;
+                if(matchesFound1 && requestMatch1.group(0).length()!=userRequest.length()){
+                    System.out.println();
+                    System.out.println("Order could not be recognized.");
+                    System.out.println();
+                    System.out.println("Please enter your order in the form");
+                    System.out.println("[type] [furniture category], " +
+                                       "[quantity of items]");
+                    System.out.println("Or enter \"CANCEL\" to return to the menu.\n");
+                    System.out.println("Enter order: ");
+                    processUserRequest(readLine());
+                    return;
+                } else {
+                    furnType = requestMatch1.group(1);
+                    furnCategory = requestMatch1.group(2);
+                    numOfItems = requestMatch1.group(3);
+                    latestRequest = userRequest;
+                }
             }
             if(furnCategory.equals("chair") || furnCategory.equals("desk")
                     || furnCategory.equals("filing")
@@ -253,16 +323,41 @@ public class UserIO {
                                 .suggestedManufacturers(furnCategory));
                     }
                 } else {
-                    System.out.println("Invalid type: " + furnType + ", try again.");
+                    System.out.println();
+                    System.out.println("The furniture type " + furnType  +
+                                       "could ");
+                    System.out.println("not be found in the " +
+                                       "current database.");
+                    pressEnterToContinue();
+                    System.out.println();
+                    System.out.println("Please enter your order in the form");
+                    System.out.println("[type] [furniture category], " +
+                                       "[quantity of items]");
+                    System.out.println("Or enter \"CANCEL\" to return to the menu.\n");
+                    System.out.println("Enter order: ");
                     processUserRequest(readLine());
+                    return;
                 }
             } else {
-                System.out.println("Invalid category, try again.");
+                System.out.println();
+                System.out.println("The category " + furnCategory  +
+                                   "could ");
+                System.out.println("not be found in the " +
+                                   "current database.");
+                pressEnterToContinue();
+                System.out.println();
+                System.out.println("Please enter your order in the form");
+                System.out.println("[type] [furniture category], " +
+                                   "[quantity of items]");
+                System.out.println("Or enter \"CANCEL\" to return to the menu.\n");
+                System.out.println("Enter order: ");
                 processUserRequest(readLine());
+                return;
             }
 
 
         }
+        return;
     }
 
     /**
@@ -433,7 +528,7 @@ public class UserIO {
             else {
                 databaseIO.updateCredentials(newURL, newUser, newPassword);
                 System.out.println("\nMySQL credentials have been " +
-                        "\nupdated successfully.");
+                        "\nupdated.");
                 System.out.println("Returning to menu.");
                 return;
 
@@ -505,6 +600,29 @@ public class UserIO {
     public void close() {
         input.close();
     }
+
+
+    /**
+     * Method for creating a space in terminal for the user to press enter
+     * before continuing the program.
+     * Intended to allow the user a chance to look at the loaded data
+     * before the menu is loaded again and moving the information away
+     * from the user's focus.
+     */
+    private void pressEnterToContinue(){
+        boolean pressed = false;
+        String returned = null;
+        while(!pressed) {
+            System.out.println();
+            System.out.println("Press ENTER to continue");
+            returned = readLine();
+            if (returned != null) {
+                pressed = true;
+            }
+        }
+    }
+
+
 
     /**
      * Private method setReadValuesNull sets the values for
