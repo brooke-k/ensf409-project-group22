@@ -162,6 +162,7 @@ public class UserIO {
             case 2:
                 System.out.println("\nCurrent output file name is: " +
                         outputFile + "\n");
+                readLine();
                 return true;
             case 3:
                 System.out.println("\nCurrent database URL: "
@@ -170,6 +171,7 @@ public class UserIO {
                         + databaseIO.getUsername());
                 System.out.println("Current database password: "
                         + hidePassword(databaseIO.getPassword()));
+                readLine();
                 return true;
             case 4:
                 readLine();
@@ -452,7 +454,7 @@ public class UserIO {
             else {
                 databaseIO.updateCredentials(newURL, newUser, newPassword);
                 System.out.println("\nMySQL credentials have been " +
-                        "\nupdated successfully.");
+                        "\nupdated.");
                 System.out.println("Returning to menu.");
                 return;
 

@@ -990,4 +990,36 @@ public class SupplyChainTest {
         assertTrue(fileUpdated && correctOutput);
     }
 
+    /**
+     * The alteration of the MySQL credentials cannot be tested reasonably
+     * without knowledge of all other accounts on the system Supply Chain
+     * Manager is being run on because the test may be rendered incorrectly if
+     * the values used for testing to not represent an existing MySQL database
+     * and respective user does not exist on the current machine.
+     *
+     * The choice to have the database credentials' validity tested immediately
+     * after the user has changed them intends to alert the user of a problem
+     * with their current credentials before they continue to program and
+     * attempt to access and manipulate data they do not have access to.
+     */
+
+    @Test public void testUserIO_QuitMenu(){
+        UserIO ioTest = new UserIO();
+        boolean returnedFromIO = ioTest.processInput(0);
+        assertFalse(returnedFromIO);
+    }
+
+    @Test public void testUserIO_ContinueMenu(){
+        ByteArrayInputStream terminalInput
+                = new ByteArrayInputStream(
+                        ("Mesh chair, 1\n"
+                        + "NewOutputFileName.txt\n" +
+                         "Y\n").getBytes());
+        UserIO testIO = new UserIO();
+        boolean fromOption1 = testIO.processInput(1);
+        boolean fromOption2 = testIO.processInput(2);
+        boolean fromOption3 = testIO.processInput(3);
+        assertTrue(fromOption2 && fromOption3);
+    }
+
 }
