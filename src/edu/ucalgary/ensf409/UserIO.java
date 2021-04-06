@@ -32,6 +32,7 @@ public class UserIO {
      * @return int corresponding to the selected option by the user
      */
     public int menu() {
+            pressEnterToContinue();
             System.out.println();
             System.out.println("1. Input a User Request");
             System.out.println("2. View Current Output Filename");
@@ -43,6 +44,22 @@ public class UserIO {
             System.out.print("Enter your selection: ");
             return readIntUntilAccepted(0, 5);
     }
+
+    /**
+     * Method for loading the introduction to the program, before
+     * giving the user the option to pick through the menu.
+     * giving the user the option to pick through the menu.
+     */
+    public void firstMenu(){
+        System.out.println();
+        System.out.println("Welcome to the Supply Chain Manager for");
+        System.out.println("recycled and second hand furniture.");
+        System.out.println();
+        System.out.println("Press ENTER after every prompted entry ");
+        System.out.println("and type \"CANCEL\" in any operation ");
+        System.out.println("to return to the main menu.");
+    }
+
 
 
     /**
@@ -127,7 +144,7 @@ public class UserIO {
      * if the user inputs an invalid input.
      * @param inputValue Request from the user.
      */
-    public void processInput(int inputValue){
+    public boolean processInput(int inputValue){
         switch(inputValue){
             case 1:
                 setReadValuesNull();
@@ -141,11 +158,11 @@ public class UserIO {
                 System.out.println("Enter request: ");
                 String readFromScan = readLine();
                 processUserRequest(readFromScan);
-                break;
+                return true;
             case 2:
                 System.out.println("\nCurrent output file name is: " +
                         outputFile + "\n");
-                break;
+                return true;
             case 3:
                 System.out.println("\nCurrent database URL: "
                         + databaseIO.getDbUrl());
@@ -153,7 +170,7 @@ public class UserIO {
                         + databaseIO.getUsername());
                 System.out.println("Current database password: "
                         + hidePassword(databaseIO.getPassword()));
-                break;
+                return true;
             case 4:
                 readLine();
                 System.out.println("\nThe current output file name is: \"" +
@@ -163,16 +180,18 @@ public class UserIO {
                     System.out.println("New file name: ");
                     String readFileName = readLine();
                 updateOutputName(readFileName);
-                break;
+                return true;
             case 5:
                 updateSQLCredentials();
-                break;
+                return true;
             case 0:
-                System.out.println("\nSelected option 0. Now closing program.");
-                input.close();
-                System.exit(0);
+                System.out.println();
+                System.out.println("Thank you for using Supply Chain Manager.");
+                System.out.println("Now closing the program.");
+                return false;
 
         }
+        return true;
     }
 
     /**
@@ -505,6 +524,29 @@ public class UserIO {
     public void close() {
         input.close();
     }
+
+
+    /**
+     * Method for creating a space in terminal for the user to press enter
+     * before continuing the program.
+     * Intended to allow the user a chance to look at the loaded data
+     * before the menu is loaded again and moving the information away
+     * from the user's focus.
+     */
+    private void pressEnterToContinue(){
+        boolean pressed = false;
+        String returned = null;
+        while(!pressed) {
+            System.out.println();
+            System.out.println("Press ENTER to continue");
+            returned = readLine();
+            if (returned != null) {
+                pressed = true;
+            }
+        }
+    }
+
+
 
     /**
      * Private method setReadValuesNull sets the values for

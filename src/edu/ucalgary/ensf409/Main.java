@@ -28,24 +28,27 @@ public class Main {
      * Main method for the program. Uses an infinite loop for calling
      * the UserIO input menu method, which provides interaction with
      * the user.
-     * Infinite loop will be stopped if the user makes the appropriate
-     * selection in the menu, where the program will end sucessfully.
+     * Loop will continue to run until the user opts to end the program
+     * through a selection in the menu, after which the main method will
+     * end the program.
      *
      * @param args Unused inputs from the command line when program
      *             is executed.
      */
     public static void main(String[] args) {
+        boolean continueLoop = true;
         UserIO input = new UserIO();
+        input.firstMenu();
         int selection = input.menu();
-        while(true) {                   // Runs in an infinite loop until
-                                        // input.processInput(selection)
-                                        // receives a value of selection = 0
-                                        // After all streams are closed
-                                        // and the program is terminated
-                                        // as expected (termination code 0)
-            input.processInput(selection);
+        continueLoop = input.processInput(selection);
+        while(continueLoop) { // Will continue to run the program through
+                                // the UserIO menu until the user opts to end
+                                // the program and continueLoop is set as false.
             selection = input.menu();
+            continueLoop = input.processInput(selection);
+
         }
+        System.exit(0);
 
     }
 }
