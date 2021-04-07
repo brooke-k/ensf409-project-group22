@@ -185,4 +185,12 @@ public class PriceOptimizer {
         }
         return newArray;
     }
+
+    /**
+     * setter for itemCount
+     * @param itemCount for the variable to be set in itemCount
+     */
+    public void setItemCount(int itemCount) {
+        this.itemCount = itemCount;
+    }
 }

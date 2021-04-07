@@ -472,15 +472,16 @@ public class SupplyChainTest {
      */
     @Test
     public void testPriceOptimizer_compatibleInvalid() {
-        String[] id = {};
+        String[] id  = {};
         int[] price = {};
         boolean[][] parts = {
                 {true, false, false, true},
                 {true, false, false, false},
                 {false, true, false, true}
         };
-        int[] list = {0, 1, 2};
-        PriceOptimizer p = new PriceOptimizer(id, parts, price);
+        int[] list = {0,1,2};
+        PriceOptimizer p = new PriceOptimizer(id,parts,price);
+        p.setItemCount(1);
         assertFalse(p.compatible(list));
     }
 

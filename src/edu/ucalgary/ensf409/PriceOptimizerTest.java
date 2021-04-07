@@ -19,8 +19,40 @@ public class PriceOptimizerTest {
         };
         int[] list = {0,1,2};
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
+        p.setItemCount(1);
         assertTrue(p.compatible(list));
     }
+
+    @Test
+    public void testPriceOptimizer_compatibleValid2Items() {
+        String[] id  = {};
+        int[] price = {};
+        boolean[][] parts = {
+                {true, true, false, true},
+                {true, false, true, false},
+                {false, true, true, true}
+        };
+        int[] list = {0,1,2};
+        PriceOptimizer p = new PriceOptimizer(id,parts,price);
+        p.setItemCount(2);
+        assertTrue(p.compatible(list));
+    }
+
+    @Test
+    public void testPriceOptimizer_compatibleInvalid2Items() {
+        String[] id  = {};
+        int[] price = {};
+        boolean[][] parts = {
+                {true, true, false, true},
+                {true, false, true, false},
+                {false, true, false, true}
+        };
+        int[] list = {0,1,2};
+        PriceOptimizer p = new PriceOptimizer(id,parts,price);
+        p.setItemCount(2);
+        assertFalse(p.compatible(list));
+    }
+
 
     @Test
     public void testPriceOptimizer_compatibleInvalid() {
@@ -33,6 +65,7 @@ public class PriceOptimizerTest {
         };
         int[] list = {0,1,2};
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
+        p.setItemCount(1);
         assertFalse(p.compatible(list));
     }
 
@@ -45,6 +78,7 @@ public class PriceOptimizerTest {
         };
         int[] list = {0};
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
+        p.setItemCount(1);
         assertFalse(p.compatible(list));
     }
 
