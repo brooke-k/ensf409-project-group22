@@ -21,7 +21,6 @@ import org.junit.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,8 +32,9 @@ import static org.junit.Assert.assertTrue;
 
 
 /**
- * Class SupplyChainTest provides Junit 4 tests for Supply Chain Manager to ensure the
- * correct outputs and results are produced by Supply Chain Manager methods.
+ * Class SupplyChainTest provides Junit 4 tests for Supply Chain Manager to
+ * ensure the correct outputs and results are produced by the methods from
+ * the program Supply Chain Manager
  */
 public class SupplyChainTest {
     private final ByteArrayOutputStream terminalContent
@@ -66,6 +66,14 @@ public class SupplyChainTest {
      */
     @After
     public void restoreTerminalOutputStream() {
+        File checkFile = new File("TESTFILEOUTPUT.txt");
+        if (checkFile.exists()) {
+            checkFile.delete();
+        }
+        checkFile = new File("OrderOutput.txt");
+        if (checkFile.exists()){
+            checkFile.delete();
+    }
         System.setOut(originalTermContent);
         System.setErr(originalErrStream);
     }
@@ -200,9 +208,19 @@ public class SupplyChainTest {
         FileIO fileIO = new FileIO(manufacturers);
 
         String expectedOutput = ("Order could not be fulfilled based " +
-                "on current inventory." + "\n" + "Suggested manufacturers " +
-                "for this order are " + "First corp" + ", " + "Second corp" + ", " +
-                "Third corp" + ", " + "and " + "Fourth corp" + ".");
+                "on current inventory." +
+                "\n" +
+                "Suggested manufacturers " +
+                "for this order are " +
+                "First corp" +
+                ", " +
+                "Second corp" +
+                ", " +
+                "Third corp" +
+                ", " +
+                "and " +
+                "Fourth corp" +
+                ".");
         String termCont = terminalContent.toString().trim();
 
 
@@ -217,7 +235,7 @@ public class SupplyChainTest {
     @Test
     public void testFileIO_FulfilledOrderTerminalOutputOneItem() {
         String[] orderedItems = {"OneItem"};
-        String outputFileName = "orderOutputToTerminalTest";
+        String outputFileName = "TESTFILEOUTPUT.txt";
         String originalRequest = "orderOutputToTerminal request";
         int orderCost = 3700;
 
@@ -238,7 +256,7 @@ public class SupplyChainTest {
     @Test
     public void testFileIO_FulfilledOrderTerminalOutputTwoItems() {
         String[] orderedItems = {"One item", "two items"};
-        String outputFileName = "orderOutputToTerminalTest";
+        String outputFileName = "TESTFILEOUTPUT.txt";
         String originalRequest = "orderOutputToTerminal request";
         int orderCost = 7373;
 
@@ -260,7 +278,7 @@ public class SupplyChainTest {
     @Test
     public void testFileIO_FulfilledOrderTerminalOutputFourItems() {
         String[] orderedItems = {"One1", "Two2", "Three3", "Four4"};
-        String outputFileName = "orderOutputToTerminalTest";
+        String outputFileName = "TESTFILEOUTPUT.txt";
         String originalRequest = "orderOutputToTerminal request";
         int orderCost = 89899;
 
@@ -282,7 +300,7 @@ public class SupplyChainTest {
     @Test
     public void testFileIO_FulfilledOrderOutputStringOneItem() {
         String[] orderedItems = {"OneItem"};
-        String outputFileName = "orderOutputToFileTest";
+        String outputFileName = "TESTFILEOUTPUT.txt";
         String originalRequest = "orderOutputToFileTest request";
         int orderCost = 3700;
 
@@ -318,7 +336,7 @@ public class SupplyChainTest {
     @Test
     public void testFileIO_FulfilledOrderOutputStringTwoItems() {
         String[] orderedItems = {"One item", "two Items"};
-        String outputFileName = "orderOutputToTerminalTest";
+        String outputFileName = "TESTFILEOUTPUT.txt";
         String originalRequest = "orderOutputToTerminal request";
         int orderCost = 89474;
 
@@ -357,7 +375,7 @@ public class SupplyChainTest {
     @Test
     public void testFileIO_FulfilledOrderOutputStringFourItems() {
         String[] orderedItems = {"11One", "22Two", "33Three", "44Four"};
-        String outputFileName = "orderOutputToTerminalTest";
+        String outputFileName = "TESTFILEOUTPUT.txt";
         String originalRequest = "orderOutputToTerminal request";
         int orderCost = 27722;
 
@@ -402,9 +420,7 @@ public class SupplyChainTest {
      */
     @Test
     public void testFileIO_OrderOutputFileCreated() {
-        Random randValue = new Random();
-        int testFileNameNumber = randValue.nextInt(999999);
-        String testFileName = testFileNameNumber + ".txt";
+        String testFileName = "TESTFILEOUTPUT.txt";
         String testRequest = "Test order request";
         String[] testItemsOrdered = {"Item one", "Item two", "Item three",
                 "Item four", "Item five"};
@@ -426,9 +442,7 @@ public class SupplyChainTest {
      */
     @Test
     public void testFileIO_OrderOutputFileWritten() {
-        Random randValue = new Random();
-        int testFileNameNumber = randValue.nextInt(999999);
-        String testFileName = testFileNameNumber + ".txt";
+        String testFileName = "TESTFILEOUTPUT.txt";
         String testRequest = "Test order request";
         String[] testItemsOrdered = {"Item one", "Item two", "Item three",
                 "Item four", "Item five"};
@@ -447,7 +461,8 @@ public class SupplyChainTest {
                 readFromFile.append(readChar);
                 readCharInt = testFileRead.read();
             }
-            assertEquals(fileIO.getOrderOutputString(), readFromFile.toString());
+            assertEquals(fileIO.getOrderOutputString(),
+                    readFromFile.toString());
         } catch (IOException e) {
             System.err.println("IOException: " +
                     "Could not read from the test file \""
@@ -716,7 +731,8 @@ public class SupplyChainTest {
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
-        userIO.processInput(1); // Fulfills valid order "Mesh chair, 1"
+        userIO.processInput(1); // Fulfills valid
+        // order "Mesh chair, 1"
 
         userIO.processInput(1); // Fulfills the valid order
                                             // "Desk lamp, 1"
@@ -986,7 +1002,11 @@ public class SupplyChainTest {
         // a new order using the invalid MySQL Credentials
 
 
-        String expectedOutputREGEX = "(Unable to create a connection with\\Rthe credentials:\\R[ ]{5}DbURL: invalidURL\\R[ ]{2}Username: invalidUsername\\R[ ]{2}Password: invalidPassword)";
+        String expectedOutputREGEX = "(Unable to create a connection " +
+                "with\\Rthe credentials:\\R[ ]{5}DbURL: " +
+                "invalidURL\\R[ ]{2}Username: " +
+                "invalidUsername\\R[ ]{2}Password: " +
+                "invalidPassword)";
         Pattern expectedPattern = Pattern.compile(expectedOutputREGEX);
         Matcher expectedMatch = expectedPattern.matcher
                 (terminalContent.toString());
@@ -1020,7 +1040,8 @@ public class SupplyChainTest {
         userIO.processInput(1); // Process the input for requesting
         // a new order using the valid MySQL Credentials
 
-        String expectedOutputREGEX = "(Please input request for furniture item)";
+        String expectedOutputREGEX
+                = "(Please input request for furniture item)";
         Pattern expectedPattern = Pattern.compile(expectedOutputREGEX);
         Matcher expectedMatch = expectedPattern.matcher
                 (terminalContent.toString());
@@ -1301,9 +1322,9 @@ public class SupplyChainTest {
 
         /**
          * testDatabaseIO_testSuggestedManufacturersChair asserts
-         * that the String ArrayList created by the method suggestedManufacturers
-         * produces the correct String ArrayList of the suggested
-         * manufacturers for chairs.
+         * that the String ArrayList created by the method
+         * suggestedManufacturers produces the correct String ArrayList
+         * of the suggested manufacturers for chairs.
          */
         @Test
         public void testDatabaseIO_testSuggestedManufacturersChair(){
@@ -1312,7 +1333,8 @@ public class SupplyChainTest {
 
             String[] checkChair = {"Office Furnishings", "Chairs R Us",
                     "Furniture Goods", "Fine Office Supplies"};
-            ArrayList<String> test = database.suggestedManufacturers("chair");
+            ArrayList<String> test
+                    = database.suggestedManufacturers("chair");
             String[] testArray = test.toArray(new String[0]);
 
             assertArrayEquals(checkChair, testArray);
@@ -1320,9 +1342,9 @@ public class SupplyChainTest {
 
         /**
          * testDatabaseIO_testSuggestedManufacturersLamp asserts
-         * that the String ArrayList created by the method suggestedManufacturers
-         * produces the correct String ArrayList of the suggested
-         * manufacturers for lamps.
+         * that the String ArrayList created by the method
+         * suggestedManufacturers produces the correct String ArrayList of
+         * the suggested manufacturers for lamps.
          */
         @Test
         public void testDatabaseIO_testSuggestedManufacturersLamp(){
@@ -1331,7 +1353,8 @@ public class SupplyChainTest {
 
             String[] checkChair = {"Office Furnishings", "Furniture Goods",
                     "Fine Office Supplies"};
-            ArrayList<String> test = database.suggestedManufacturers("lamp");
+            ArrayList<String> test
+                    = database.suggestedManufacturers("lamp");
             String[] testArray = test.toArray(new String[0]);
 
             assertArrayEquals(checkChair, testArray);
@@ -1361,7 +1384,8 @@ public class SupplyChainTest {
             DatabaseIO database = new DatabaseIO();
             database.createConnection();
 
-            assertEquals(5, database.getSize("desk", "Standing"));
+            assertEquals(5, database.getSize("desk",
+                    "Standing"));
         }
 
         /**
@@ -1374,7 +1398,8 @@ public class SupplyChainTest {
             DatabaseIO database = new DatabaseIO();
             database.createConnection();
 
-            assertEquals(7, database.getSize("lamp", "Desk"));
+            assertEquals(7, database.getSize("lamp",
+                    "Desk"));
         }
 
         /**
@@ -1387,7 +1412,8 @@ public class SupplyChainTest {
             DatabaseIO database = new DatabaseIO();
             database.createConnection();
 
-            assertEquals(0, database.getSize("filing", "invalid"));
+            assertEquals(0, database.getSize("filing",
+                    "invalid"));
         }
 
         /**
@@ -1400,7 +1426,8 @@ public class SupplyChainTest {
             DatabaseIO database = new DatabaseIO();
             database.createConnection();
 
-            assertTrue(database.typeExists("filing", "Medium"));
+            assertTrue(database.typeExists("filing",
+                    "Medium"));
         }
 
         /**
@@ -1413,7 +1440,8 @@ public class SupplyChainTest {
             DatabaseIO database = new DatabaseIO();
             database.createConnection();
 
-            assertTrue(database.typeExists("desk", "Adjustable"));
+            assertTrue(database.typeExists("desk",
+                    "Adjustable"));
         }
 
         /**
@@ -1426,7 +1454,7 @@ public class SupplyChainTest {
             DatabaseIO database = new DatabaseIO();
             database.createConnection();
 
-            assertFalse(database.typeExists("chair", "invalid"));
+            assertFalse(database.typeExists("chair",
+                    "invalid"));
         }
     }
-
