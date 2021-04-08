@@ -34,6 +34,8 @@ public class UserIO {
     public int menu() {
             pressEnterToContinue();
             System.out.println();
+            System.out.println("--------------------------------------------");
+            System.out.println();
             System.out.println("1. Input a User Request");
             System.out.println("2. View Current Output Filename");
             System.out.println("3. View Current SQL Database Credentials");
@@ -41,6 +43,7 @@ public class UserIO {
             System.out.println("5. Change SQL Database Credentials");
 
             System.out.println("0. Exit Program");
+            System.out.println();
             System.out.print("Enter your selection: ");
             return readIntUntilAccepted(0, 5);
     }
@@ -129,7 +132,17 @@ public class UserIO {
                 userInput = readInt(min, max);
             } catch (InputOutOfBoundsException | InputMismatchException e) {
                 input.nextLine();
-                System.out.print("That is not a valid input. Enter again: ");
+                System.out.println();
+                System.out.print("Please only enter a number from 0 to 5.");
+                System.out.println();
+                System.out.println("1. Input a User Request");
+                System.out.println("2. View Current Output Filename");
+                System.out.println("3. View Current SQL Database Credentials");
+                System.out.println("4. Change Output Filename");
+                System.out.println("5. Change SQL Database Credentials");
+                System.out.println("0. Exit Program");
+                System.out.println();
+                System.out.println("Selection:");
                 inputOK = false;
             }
         }while(!inputOK);
@@ -145,10 +158,20 @@ public class UserIO {
      * @param inputValue Request from the user.
      */
     public boolean processInput(int inputValue){
+        System.out.println();
+        System.out.println("--------------------------------------------");
+        System.out.println();
         switch(inputValue){
             case 1:
                 setReadValuesNull();
                 readLine();
+               boolean connectionMade = databaseIO.createConnection();
+               if(!connectionMade) {
+                   System.out.println("Returning to menu. " +
+                           "No order has been placed.");
+                   return true;
+               }
+
                 System.out.println("\nPlease input request for " +
                         "furniture item in the form");
                 System.out.println("[type] [furniture category], " +
@@ -223,6 +246,7 @@ public class UserIO {
             System.out.println("Returning to menu. No order has been placed.");
             return;
         }
+
         String requestREGEX1 = "([A-Z][a-z]+) ([a-z]+), ([0-9]+)";
         String requestREGEX2 = "([A-Z][a-z]+ [A-Z][a-z]+) ([a-z]+), ([0-9]+)";
 
