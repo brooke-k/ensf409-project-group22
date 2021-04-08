@@ -399,5 +399,56 @@ public class PriceOptimizerTest {
         assertNull(result);
     }
 
+    /**
+     *testPriceOptimizer_testConstructor1 assets if the Constructor is working
+     * as intended. It sets the getParts, getID and the getPrice methods.
+     */
+    @Test
+    public void testPriceOptimizer_testConstructor1() {
+        String[] id = {"C0942", "C6748", "C8138", "C9890"};
+        boolean[][] parts = {
+                {true, false, false, true},
+                {false, true, true, true},
+                {false, true, false, false},
+                {true, true, true, false}
+        };
+        int[] price = {100, 75, 75, 50};
+        PriceOptimizer p = new PriceOptimizer (id,parts,price);
+        assertTrue("Constructor failed.", Arrays.equals(id, p.getId()) &&
+                Arrays.equals(parts, p.getParts()) && Arrays.equals(price, p.getPrice()));
+    }
+
+
+    /**
+     * testPriceOptimizer_testSortOnPrice asserts that after the arrays are
+     * sorted by price all the linked arrays changed as well. This method
+     * primarily tests the constructor and the sortOnPrice method.
+     */
+    @Test
+    public void testPriceOptimizer_testSortOnPrice() {
+        String[] id = {"C0942", "C6748", "C8138", "C9890"};
+        boolean[][] parts = {
+                {true, false, false, true},
+                {false, true, true, true},
+                {false, true, false, false},
+                {true, true, true, false}
+        };
+        int[] price = {100, 75, 75, 50};
+        String[] sortedID = {"C9890", "C8138","C6748","C0942" };
+        boolean [][] sortedParts =  {
+                {true, true, true, false},
+                {false, true, false, false},
+                {false, true, true, true},
+                {true, false, false, true}
+        };
+        int[] sortedPrice = {50, 75, 75, 100};
+        PriceOptimizer p = new PriceOptimizer (id,parts,price);
+        p.sortOnPrice();
+
+        assertTrue("Sort failed.", Arrays.equals(sortedID, p.getId()) &&
+                Arrays.equals(sortedParts[0], p.getParts()[0]) && Arrays.equals(sortedParts[1], p.getParts()[1]) &&
+                Arrays.equals(sortedParts[2], p.getParts()[2]) && Arrays.equals(sortedParts[3], p.getParts()[3]) &&
+                Arrays.equals(sortedPrice, p.getPrice()));
+    }
 }
 
