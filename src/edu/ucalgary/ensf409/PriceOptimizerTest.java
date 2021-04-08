@@ -157,4 +157,19 @@ public class PriceOptimizerTest {
         }
         assertTrue("Output array incorrect.", Arrays.equals(expected, result) || Arrays.equals(result, expected));
     }
+
+    @Test
+    public void testPriceOptimizer_testConstructor1() {
+        String[] id = {"C0942", "C6748", "C8138", "C9890"};
+        boolean[][] parts = {
+                {true, false, false, true},
+                {false, true, true, true},
+                {false, true, false, false},
+                {true, true, true, false}
+        };
+        int[] price = {100, 75, 75, 50};
+        PriceOptimizer p = new PriceOptimizer (id,parts,price);
+        assertTrue("Constructor failed.", Arrays.equals(id, p.getId()) &&
+                Arrays.equals(parts, p.getParts()) && Arrays.equals(price, p.getPrice()));
+    }
 }

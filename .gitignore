@@ -5,3 +5,6 @@
 *.xml
 *.class
 *.xml
+*.class
+*.iml
+*.xml
