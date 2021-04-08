@@ -3,11 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="4b7c912a-1edd-40d3-9bac-b125c2feab06" name="Default Changelist" comment="PriceOptimizerTests">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ensf409-project-group22/edu/ucalgary/ensf409/DatabaseIO.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ensf409-project-group22/edu/ucalgary/ensf409/DatabaseIO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ensf409-project-group22/edu/ucalgary/ensf409/FileIO.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ensf409-project-group22/edu/ucalgary/ensf409/FileIO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ensf409-project-group22/edu/ucalgary/ensf409/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ensf409-project-group22/edu/ucalgary/ensf409/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ensf409-project-group22/edu/ucalgary/ensf409/PriceOptimizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ensf409-project-group22/edu/ucalgary/ensf409/PriceOptimizer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ensf409-project-group22/edu/ucalgary/ensf409/UserIO.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ensf409-project-group22/edu/ucalgary/ensf409/UserIO.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/edu/ucalgary/ensf409/PriceOptimizerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/edu/ucalgary/ensf409/PriceOptimizerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -116,7 +111,7 @@
       <recent name="C:\Users\Neeraj\Documents\GitHub\ensf409-project-group22" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.PriceOptimizerTest.testPriceOptimizer_testConstructor1">
+  <component name="RunManager" selected="JUnit.PriceOptimizerTest.testPriceOptimizer_testSortOnPrice">
     <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -159,22 +154,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="PriceOptimizerTest.testPriceOptimizer_testOptimize1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="ensf409-project-group22" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="edu.ucalgary.ensf409.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="edu.ucalgary.ensf409" />
-      <option name="MAIN_CLASS_NAME" value="edu.ucalgary.ensf409.PriceOptimizerTest" />
-      <option name="METHOD_NAME" value="testPriceOptimizer_testOptimize1" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="PriceOptimizerTest.testPriceOptimizer_testOptimize2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ensf409-project-group22" />
       <extension name="coverage">
@@ -207,13 +186,29 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="PriceOptimizerTest.testPriceOptimizer_testSortOnPrice" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ensf409-project-group22" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="edu.ucalgary.ensf409.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="edu.ucalgary.ensf409" />
+      <option name="MAIN_CLASS_NAME" value="edu.ucalgary.ensf409.PriceOptimizerTest" />
+      <option name="METHOD_NAME" value="testPriceOptimizer_testSortOnPrice" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.PriceOptimizerTest.testPriceOptimizer_testConstructor1" />
+        <item itemvalue="JUnit.PriceOptimizerTest.testPriceOptimizer_testSortOnPrice" />
         <item itemvalue="JUnit.PriceOptimizerTest" />
+        <item itemvalue="JUnit.PriceOptimizerTest.testPriceOptimizer_testConstructor1" />
         <item itemvalue="JUnit.PriceOptimizerTest.testPriceOptimizer_testOptimize3" />
         <item itemvalue="JUnit.PriceOptimizerTest.testPriceOptimizer_testOptimize2" />
-        <item itemvalue="JUnit.PriceOptimizerTest.testPriceOptimizer_testOptimize1" />
       </list>
     </recent_temporary>
   </component>

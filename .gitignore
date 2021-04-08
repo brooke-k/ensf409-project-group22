@@ -8,3 +8,5 @@
 *.class
 *.iml
 *.xml
+.idea/workspace.xml
+*.xml
