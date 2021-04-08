@@ -403,7 +403,8 @@ public class DatabaseIOTest {
 
 
         try{
-            Connection dbConnect = DriverManager.getConnection(database.getDbUrl(),
+            Connection dbConnect =
+                    DriverManager.getConnection(database.getDbUrl(),
                     database.getUsername(), database.getPassword());
             String query = "INSERT INTO chair " +
                     "(ID, Type, Legs, Arms, Seat, Cushion, Price, ManuID) " +
@@ -456,7 +457,8 @@ public class DatabaseIOTest {
 
 
         try{
-            Connection dbConnect = DriverManager.getConnection(database.getDbUrl(),
+            Connection dbConnect =
+                    DriverManager.getConnection(database.getDbUrl(),
                     database.getUsername(), database.getPassword());
             String query = "INSERT INTO lamp " +
                     "(ID, Type, Base, Bulb, Price, ManuID) " +
