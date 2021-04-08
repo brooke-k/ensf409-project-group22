@@ -30,6 +30,33 @@ public class PriceOptimizer {
     }
 
     /**
+     * Getter method for the available furniture parts
+     * of a certain type
+     * @return boolean 2D array of available furniture parts
+     */
+    public boolean[][] getParts() {
+        return parts;
+    }
+
+    /**
+     * Getter method for the ID of furniture of
+     * a certain type
+     * @return String array of furniture ID
+     */
+    public String[] getId() {
+        return id;
+    }
+
+    /**
+     * Getter method for the price of furniture of
+     * a certain type
+     * @return int array of furniture price
+     */
+    public int[] getPrice() {
+        return price;
+    }
+
+    /**
      * getCurrentCost returns the minimum price in the object
      * @return minimum price as an integer
      */
