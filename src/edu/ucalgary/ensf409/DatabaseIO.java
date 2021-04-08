@@ -135,9 +135,12 @@ public class DatabaseIO {
     public PriceOptimizer getChairData(String type){
         int size = getSize("chair", type);
         String [] idList = new String[size];
-
         int [] priceList = new int[size];
         boolean [][] partList = new boolean[size][4];
+
+        if(!typeExists("chair", type)){
+            return null;
+        }
 
         try{
             Statement myStmt = dbConnect.createStatement();
@@ -165,7 +168,6 @@ public class DatabaseIO {
         } catch (SQLException e){
             System.out.println("Database error");
             e.printStackTrace();
-            return null;
         }
 
         return new PriceOptimizer(idList, partList, priceList);
@@ -185,6 +187,10 @@ public class DatabaseIO {
         String [] idList = new String[size];
         int [] priceList = new int[size];
         boolean [][] partList = new boolean[size][3];
+
+        if(!typeExists("desk", type)){
+            return null;
+        }
 
         try{
             Statement myStmt = dbConnect.createStatement();
@@ -208,7 +214,6 @@ public class DatabaseIO {
         } catch (SQLException e){
             System.out.println("Database error");
             e.printStackTrace();
-            return null;
         }
 
         return new PriceOptimizer(idList, partList, priceList);
@@ -228,6 +233,10 @@ public class DatabaseIO {
         String [] idList = new String[size];
         int [] priceList = new int[size];
         boolean [][] partList = new boolean[size][2];
+
+        if(!typeExists("lamp", type)){
+            return null;
+        }
 
         try{
             Statement myStmt = dbConnect.createStatement();
@@ -249,7 +258,6 @@ public class DatabaseIO {
         } catch (SQLException e){
             System.out.println("Database error");
             e.printStackTrace();
-            return null;
         }
 
         return new PriceOptimizer(idList, partList, priceList);
@@ -270,6 +278,10 @@ public class DatabaseIO {
         String [] idList = new String[size];
         int [] priceList = new int[size];
         boolean [][] partList = new boolean[size][3];
+
+        if(!typeExists("filing", type)){
+            return null;
+        }
 
         try{
             Statement myStmt = dbConnect.createStatement();
@@ -293,7 +305,6 @@ public class DatabaseIO {
         } catch (SQLException e){
             System.out.println("Database error");
             e.printStackTrace();
-            return null;
         }
 
         return new PriceOptimizer(idList, partList, priceList);
