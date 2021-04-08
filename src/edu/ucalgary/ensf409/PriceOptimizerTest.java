@@ -53,6 +53,60 @@ public class PriceOptimizerTest {
         assertFalse(p.compatible(list));
     }
 
+    @Test
+    public void testPriceOptimizer_compatibleValid3Items() {
+        String[] id  = {};
+        int[] price = {};
+        boolean[][] parts = {
+                {true, true, false, true},
+                {true, false, true, true},
+                {false, true, true, true},
+                {true, false, false, false},
+                {true, true, true, false}
+        };
+        int[] list = {0,1,2,4};
+        PriceOptimizer p = new PriceOptimizer(id,parts,price);
+        p.setItemCount(3);
+        assertTrue(p.compatible(list));
+    }
+
+    @Test
+    public void testPriceOptimizer_compatibleInvalid3Items() {
+        String[] id  = {};
+        int[] price = {};
+        boolean[][] parts = {
+                {true, true, false, true},
+                {true, false, true, true},
+                {false, true, true, true},
+                {true, false, false, false},
+                {true, true, true, false}
+        };
+        int[] list = {0,1,2,3};
+        PriceOptimizer p = new PriceOptimizer(id,parts,price);
+        p.setItemCount(3);
+        assertFalse(p.compatible(list));
+    }
+
+    @Test
+    public void testPriceOptimizer_compatibleValid3ItemsSimple() {
+        String[] id  = {};
+        int[] price = {};
+        boolean[][] parts = {
+                {true, true, false, true},
+                {true, false, true, true},
+                {false, true, true, true},
+                {true, false, false, false},
+                {true, true, true, true},
+                {true, true, true, false},
+                {true, true, true, true},
+                {true, true, true, true}
+        };
+        int[] list = {4,6,7};
+        PriceOptimizer p = new PriceOptimizer(id,parts,price);
+        p.setItemCount(3);
+        assertTrue(p.compatible(list));
+    }
+
 
     @Test
     public void testPriceOptimizer_compatibleInvalid() {
@@ -105,7 +159,7 @@ public class PriceOptimizerTest {
     }
 
     @Test
-    public void testPriceOptimizer_testOptimize1() {
+    public void testPriceOptimizer_testOptimizeImpossible() {
         String[] id  = {"C0942", "C6748", "C8138", "C9890"};
         int[] price = {100, 75, 75, 50};
         boolean[][] parts = {
@@ -156,5 +210,38 @@ public class PriceOptimizerTest {
             System.out.print(result[i] + " ");
         }
         assertTrue("Output array incorrect.", Arrays.equals(expected, result) || Arrays.equals(result, expected));
+    }
+
+    @Test
+    public void testPriceOptimizer_testOptimizeImpossibleLarge() {
+        String[] id  = {"1","2","3","4","5","6","7","8"};
+        int[] price = {100, 75, 75, 50, 75, 75, 100, 50};
+        boolean[][] parts = {
+                {true, true, false, true},
+                {true, false, false, true},
+                {false, true, true, true},
+                {true, false, false, false},
+                {true, true, false, true},
+                {true, true, false, false},
+                {true, true, false, true},
+                {true, true, true, true}
+        };
+        PriceOptimizer p = new PriceOptimizer(id,parts,price);
+        assertNull(p.optimize(3));
+    }
+
+    @Test
+    public void testPriceOptimizer_testOptimizeImpossibleSmall() {
+        String[] id  = {"C0942", "C6748", "C8138", "C9890"};
+        int[] price = {100, 75, 75, 50};
+        boolean[][] parts = {
+                {true, false, false, true},
+                {false, true, false, true},
+                {false, true, false, false},
+                {true, true, true, false}
+        };
+        PriceOptimizer p = new PriceOptimizer(id,parts,price);
+        String[] result = p.optimize(2);
+        assertNull(result);
     }
 }
