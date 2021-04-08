@@ -82,7 +82,8 @@ public class PriceOptimizer {
         }
 
         for (int i = 1; i <= partCount; i++) {
-            combination(indexs, indexs.length, i);
+            int[] data = new int[i];
+            recursion(indexs, data, 0, indexs.length-1, 0, i);
         }
 
         if(!compatible(indexs)) {
@@ -100,6 +101,21 @@ public class PriceOptimizer {
         return ids;
     }
 
+    /**
+     * The main recursive function of price optimizer, searches through all the
+     * combination to find which set of parts are the cheapest.
+     *
+     * @param arr Stores the indexs of all the parts from inventory
+     * @param data Holds the array to check with compatible and getPrice method
+     *             to check if the current combination is the cheapest.
+     * @param start Holds the starting index of the recursion.
+     * @param end Hold the end index for the current combination loop, AKA
+     *            the size of the parts list.
+     * @param index Holds the current starting index of the recursion as it,
+     *              iterates trough all the possible combination.
+     * @param r R sets the combination length for all the possibilities,
+     *          it starts at 1 and goes until inventory length - 1.
+     */
     private void recursion(int[] arr, int[] data, int start,
                            int end, int index, int r) {
         if (index == r) {
@@ -107,9 +123,7 @@ public class PriceOptimizer {
                 if(getPrice(data) < currentCost){
                     currentCost = getPrice(data);
                     minIndex = new int[data.length];
-                    for (int i = 0; i < data.length; i++) {
-                        minIndex[i] = data[i];
-                    }
+                    System.arraycopy(data, 0, minIndex, 0, data.length);
                 }
             }
             return;
@@ -118,14 +132,7 @@ public class PriceOptimizer {
             data[index] = arr[i];
             recursion(arr, data, i + 1, end, index + 1, r);
         }
-
     }
-
-    private void combination(int arr[], int n, int r) {
-        int[] data = new int[r];
-        recursion(arr, data, 0, n - 1, 0, r);
-    }
-
 
     /**
      * Compatible checks if a specified list of indices for the boolean
@@ -158,7 +165,6 @@ public class PriceOptimizer {
         return true;
     }
 
-
     /**
      * getPrice will return the int of a given series of indices
      * in the list
@@ -167,8 +173,8 @@ public class PriceOptimizer {
      */
     private int getPrice(int[] index){
         int sum = 0;
-        for(int i = 0; i < index.length; i++) {
-            sum += price[index[i]];
+        for (int j : index) {
+            sum += price[j];
         }
         return sum;
     }
@@ -206,9 +212,7 @@ public class PriceOptimizer {
     private boolean[][] copyOf(boolean[][] array){
         boolean[][] newArray = new boolean[array.length][array[0].length];
         for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array[0].length; j++) {
-                newArray[i][j] = array[i][j];
-            }
+            System.arraycopy(array[i], 0, newArray[i], 0, array[0].length);
         }
         return newArray;
     }
