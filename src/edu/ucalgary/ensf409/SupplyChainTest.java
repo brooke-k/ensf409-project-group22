@@ -647,9 +647,9 @@ public class SupplyChainTest {
         String[] result = p.optimize(1);
         String[] expected = {"C9890", "C0942"};
         String[] expected2 = {"C0942", "C9890"};
-        for (int i = 0; i < 2; i++) {
+        /*for (int i = 0; i < 2; i++) {
             System.out.println(result[i] + " ");
-        }
+        }*/
 
         Assert.assertTrue("Output array incorrect.",
                 Arrays.equals(expected, result) ||
@@ -722,9 +722,10 @@ public class SupplyChainTest {
         PriceOptimizer p = new PriceOptimizer(id, parts, price);
         String[] result = p.optimize(2);
         String[] expected = {"C0942", "C6748"};
+        /*
         for (String s : result) {
             System.out.print(s + " ");
-        }
+        }*/
         Assert.assertTrue("Output array incorrect.",
                 Arrays.equals(expected, result) ||
                         Arrays.equals(result, expected));
@@ -748,9 +749,10 @@ public class SupplyChainTest {
         PriceOptimizer p = new PriceOptimizer(id, parts, price);
         String[] result = p.optimize(2);
         String[] expected = {"C0942", "C6748"};
+        /*
         for (String s : result) {
             System.out.print(s + " ");
-        }
+        } */
         int priceResult = p.getCurrentCost();
         Assert.assertEquals(175, priceResult);
     }
@@ -777,9 +779,10 @@ public class SupplyChainTest {
         PriceOptimizer p = new PriceOptimizer(id, parts, price);
         String[] result = p.optimize(2);
         String[] expected = {"C0942", "C6748", "C9890"};
+        /*
         for (String s : result) {
             System.out.print(s + " ");
-        }
+        } */
         Assert.assertTrue("Output array incorrect.",
                 Arrays.equals(expected, result) ||
                         Arrays.equals(result, expected));
