@@ -165,6 +165,7 @@ public class DatabaseIO {
         } catch (SQLException e){
             System.out.println("Database error");
             e.printStackTrace();
+            return null;
         }
 
         return new PriceOptimizer(idList, partList, priceList);
@@ -207,6 +208,7 @@ public class DatabaseIO {
         } catch (SQLException e){
             System.out.println("Database error");
             e.printStackTrace();
+            return null;
         }
 
         return new PriceOptimizer(idList, partList, priceList);
@@ -247,6 +249,7 @@ public class DatabaseIO {
         } catch (SQLException e){
             System.out.println("Database error");
             e.printStackTrace();
+            return null;
         }
 
         return new PriceOptimizer(idList, partList, priceList);
@@ -290,6 +293,7 @@ public class DatabaseIO {
         } catch (SQLException e){
             System.out.println("Database error");
             e.printStackTrace();
+            return null;
         }
 
         return new PriceOptimizer(idList, partList, priceList);
@@ -350,6 +354,7 @@ public class DatabaseIO {
         } catch(SQLException e){
             System.out.println("Database error");
             e.printStackTrace();
+            return null;
         }
 
         return suggestList;
