@@ -7,6 +7,12 @@ import java.util.Optional;
 
 import static org.junit.Assert.*;
 
+/**
+ * PriceOptimizerTest contains all of the JUnit tests related to testing
+ * the PriceOptimizer method including construction, testing helper methods
+ * that are used for optimization, then testing optimization itself using
+ * a variety of scenarios.
+ */
 public class PriceOptimizerTest {
     /**
      * testPriceOptimizer_compatibleValid asserts that the object PriceOptimizer
