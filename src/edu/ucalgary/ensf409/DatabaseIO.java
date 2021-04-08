@@ -113,7 +113,7 @@ public class DatabaseIO {
         } catch (SQLException e){
             System.out.println();
             System.out.println("Unable to create a connection with");
-            System.out.println("the credentials: ");
+            System.out.println("the credentials:");
             System.out.println("     DbURL: " + this.dbUrl);
             System.out.println("  Username: " + this.username);
             System.out.println("  Password: " + this.password);

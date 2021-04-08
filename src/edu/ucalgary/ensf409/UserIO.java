@@ -163,14 +163,13 @@ public class UserIO {
             case 1:
                 databaseIO.createConnection();
                 setReadValuesNull();
-                readLine();
+
                boolean connectionMade = databaseIO.createConnection();
                if(!connectionMade) {
                    System.out.println("Returning to menu. " +
                            "No order has been placed.");
                    return true;
                }
-
                 System.out.println("\nPlease input request for " +
                         "furniture item in the form");
                 System.out.println("[type] [furniture category], " +
@@ -178,6 +177,7 @@ public class UserIO {
                 System.out.println("ex. Mesh chair, 1");
                 System.out.println("or enter \"CANCEL\" to return to the menu");
                 System.out.println("Enter request: ");
+                readLine();
                 String readFromScan = readLine();
                 processUserRequest(readFromScan);
                 return true;
@@ -335,7 +335,7 @@ public class UserIO {
                             .optimize(Integer.parseInt(numOfItems));
                     if(temp!=null){
                         for(String t: temp){
-                            databaseIO.removeItem(furnCategory, t);
+                            //databaseIO.removeItem(furnCategory, t);
                         }
                         fileIO = new FileIO(outputFile,temp,userRequest,
                                 priceOpt.getCurrentCost());
