@@ -22,7 +22,8 @@ public class DatabaseIOTest {
 
         String[] id = {"C0914", "C1148", "C3405"};
         int[] price = {50, 125, 100};
-        boolean [][] parts = {{false, false, true, true}, {true, false, true, true} ,{true, true, false, false}};
+        boolean [][] parts = {{false, false, true, true},
+                {true, false, true, true} ,{true, true, false, false}};
 
         PriceOptimizer arrays = database.getChairData("Task");
 
@@ -45,8 +46,9 @@ public class DatabaseIOTest {
 
         String[] id = {"C0942", "C6748", "C8138", "C9890"};
         int[] price = {175, 75, 75, 50};
-        boolean [][] parts = {{true, false, true, true}, {true, false, false, false}
-                ,{false, false, true, false}, {false, true, false, true}};
+        boolean [][] parts = {{true, false, true, true},
+                {true, false, false, false} ,{false, false, true, false},
+                {false, true, false, true}};
 
         PriceOptimizer arrays = database.getChairData("Mesh");
 
@@ -82,7 +84,8 @@ public class DatabaseIOTest {
         String[] id = {"D1927", "D2341", "D3820", "D4438", "D9387"};
         int[] price = {200, 100, 150, 150, 250};
         boolean [][] parts = {{true, false, true}, {false, true, false}
-                ,{true, false, false}, {false, true, true}, {true, true, false}};
+                ,{true, false, false}, {false, true, true},
+                {true, true, false}};
 
         PriceOptimizer arrays = database.getDeskData("Standing");
 
@@ -200,7 +203,8 @@ public class DatabaseIOTest {
         String[] id = {"F003", "F010", "F011", "F012", "F015"};
         int[] price = {150, 225, 225, 75, 75};
         boolean [][] parts = {{false, false, true}, {true, false, true}
-                ,{false, true, true}, {false, true, false}, {true, false, false}};
+                ,{false, true, true}, {false, true, false},
+                {true, false, false}};
 
         PriceOptimizer arrays = database.getFilingData("Large");
 
@@ -223,7 +227,8 @@ public class DatabaseIOTest {
         String[] id = {"F001", "F004", "F005", "F006", "F013"};
         int[] price = {50, 75, 75, 50, 50};
         boolean [][] parts = {{true, true, false}, {false, true, true}
-                ,{true, false, true}, {true, true, false}, {false, false, true}};
+                ,{true, false, true}, {true, true, false},
+                {false, false, true}};
 
         PriceOptimizer arrays = database.getFilingData("Small");
 
@@ -233,12 +238,12 @@ public class DatabaseIOTest {
     }
 
     /**
-     * testDatabaseIO_testInvalidFilingDataData asserts that if an
+     * testDatabaseIO_testInvalidFilingData asserts that if an
      * invalid type is entered into the method getLampData,
      * the PriceOptimizer container created is null.
      */
     @Test
-    public void testDatabaseIO_testInvalidFilingDataData(){
+    public void testDatabaseIO_testInvalidFilingData(){
         DatabaseIO database = new DatabaseIO();
         database.createConnection();
 
@@ -256,7 +261,8 @@ public class DatabaseIOTest {
         DatabaseIO database = new DatabaseIO();
         database.createConnection();
 
-        String[] checkChair = {"Office Furnishings", "Chairs R Us", "Furniture Goods", "Fine Office Supplies"};
+        String[] checkChair = {"Office Furnishings", "Chairs R Us",
+                "Furniture Goods", "Fine Office Supplies"};
         ArrayList<String> test = database.suggestedManufacturers("chair");
         String[] testArray = test.toArray(new String[0]);
 
@@ -274,7 +280,8 @@ public class DatabaseIOTest {
         DatabaseIO database = new DatabaseIO();
         database.createConnection();
 
-        String[] checkChair = {"Office Furnishings", "Furniture Goods", "Fine Office Supplies"};
+        String[] checkChair = {"Office Furnishings", "Furniture Goods",
+                "Fine Office Supplies"};
         ArrayList<String> test = database.suggestedManufacturers("lamp");
         String[] testArray = test.toArray(new String[0]);
 
@@ -360,7 +367,7 @@ public class DatabaseIOTest {
     }
 
     /**
-     * testDatabaseIO_testTypeAdjustableOfDesk asserts that
+     * testDatabaseIO_testTypeInvalidOfChair asserts that
      * the correct table name "Chair" but incorrect furniture
      * type "invalid" is entered into the method typeExists.
      */
