@@ -158,6 +158,10 @@ public class PriceOptimizerTest {
         assertTrue("Output array incorrect.", Arrays.equals(expected, result) || Arrays.equals(result, expected));
     }
 
+    /**
+     *testPriceOptimizer_testConstructor1 assets if the Constructor is working
+     * as intended. It sets the getParts, getID and the getPrice methods.
+     */
     @Test
     public void testPriceOptimizer_testConstructor1() {
         String[] id = {"C0942", "C6748", "C8138", "C9890"};
@@ -173,6 +177,12 @@ public class PriceOptimizerTest {
                 Arrays.equals(parts, p.getParts()) && Arrays.equals(price, p.getPrice()));
     }
 
+
+    /**
+     * testPriceOptimizer_testSortOnPrice asserts that after the arrays are
+     * sorted by price all the linked arrays changed as well. This method
+     * primarily tests the constructor and the sortOnPrice method.
+     */
     @Test
     public void testPriceOptimizer_testSortOnPrice() {
         String[] id = {"C0942", "C6748", "C8138", "C9890"};

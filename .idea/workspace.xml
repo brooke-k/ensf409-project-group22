@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="4b7c912a-1edd-40d3-9bac-b125c2feab06" name="Default Changelist" comment="PriceOptimizerTests">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ensf409-project-group22/edu/ucalgary/ensf409/DatabaseIO.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ensf409-project-group22/edu/ucalgary/ensf409/DatabaseIO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ensf409-project-group22/edu/ucalgary/ensf409/UserIO.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ensf409-project-group22/edu/ucalgary/ensf409/UserIO.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/edu/ucalgary/ensf409/PriceOptimizerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/edu/ucalgary/ensf409/PriceOptimizerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
