@@ -1,4 +1,18 @@
 /**
+ * INSTRUCTIONS FOR OPERATION:
+ * 1. Run the Supply Chain program in the command line, using
+ * the class Main as the class containing the main method.
+ * Ensure that the driver for operating the database,
+ * "mysql_connector_java_8_0_23.jar"
+ * is included in the classpath at execution.
+ * Ensure the database "inventory.sql" exists and is set up
+ * to be used.
+ *
+ * 2. Follow instructions in the command line for each desired action.
+ * The Supply Chain program will continue to run under normal operation
+ * until the user explicitly commands it to end.
+ *
+ *
  * ENSF 409 Winter 2021 Final Group Project
  * Program designed with the intention of allowing a sustainable
  * supply chain furniture company to provide methods of purchasing
