@@ -4,3 +4,11 @@
 *.xml
 *.xml
 *.class
+*.xml
+*.class
+*.iml
+*.xml
+.idea/workspace.xml
+*.xml
+*.class
+*.xml

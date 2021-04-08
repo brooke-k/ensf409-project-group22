@@ -72,8 +72,6 @@ public class UserIO {
     public UserIO() {
         input = new Scanner(System.in);
         databaseIO = new DatabaseIO();
-        databaseIO.createConnection();
-
         furnType = null;
         furnCategory = null;
         latestRequest = null;
@@ -163,6 +161,7 @@ public class UserIO {
         System.out.println();
         switch(inputValue){
             case 1:
+                databaseIO.createConnection();
                 setReadValuesNull();
 
                boolean connectionMade = databaseIO.createConnection();
@@ -286,7 +285,6 @@ public class UserIO {
             System.out.println("Or enter \"CANCEL\" to return to the menu.\n");
             System.out.println("Enter order: ");
             processUserRequest(readLine());
-            return;
         }
 
 
@@ -360,7 +358,6 @@ public class UserIO {
                     System.out.println("Or enter \"CANCEL\" to return to the menu.\n");
                     System.out.println("Enter order: ");
                     processUserRequest(readLine());
-                    return;
                 }
             } else {
                 System.out.println();
@@ -376,12 +373,8 @@ public class UserIO {
                 System.out.println("Or enter \"CANCEL\" to return to the menu.\n");
                 System.out.println("Enter order: ");
                 processUserRequest(readLine());
-                return;
             }
-
-
         }
-        return;
     }
 
     /**
@@ -445,9 +438,8 @@ public class UserIO {
                 updateOutputName(readLine());
             }
             else{
-                String newOutputFileName = newFileName;
                 System.out.println("New order output file name is \"" +
-                        newOutputFileName + "\"");
+                        newFileName + "\"");
                 System.out.println("Save update? (Y/N): ");
                 String saveResponse = readLine();
                 while(!saveResponse.equals("Y") && !saveResponse.equals("N")){
@@ -457,13 +449,11 @@ public class UserIO {
                 if(saveResponse.equals("N")){
                     System.out.println("Returning to menu. Order output file " +
                             "name has not been updated.");
-                    return;
                 }
                 else{
-                    this.outputFile = newOutputFileName;
+                    this.outputFile = newFileName;
                     System.out.println("\nOrder output file name has been " +
                             "updated to " + this.outputFile);
-                    return;
                 }
             }
         }
@@ -491,7 +481,6 @@ public class UserIO {
         if(updateString.equals("N")){
             System.out.println("\nReturning to menu. " +
                     "No changes have been made.");
-            return;
         }
         else{
             String newURL;
@@ -547,15 +536,12 @@ public class UserIO {
             if(updateString.equals("N")){
                 System.out.println("\nReturning to menu. " +
                         "\nMySQL credentials have not been updated.");
-                return;
             }
             else {
                 databaseIO.updateCredentials(newURL, newUser, newPassword);
                 System.out.println("\nMySQL credentials have been " +
                         "\nupdated.");
                 System.out.println("Returning to menu.");
-                return;
-
             }
         }
     }
