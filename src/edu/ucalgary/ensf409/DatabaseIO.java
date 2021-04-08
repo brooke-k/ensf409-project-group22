@@ -92,7 +92,9 @@ public class DatabaseIO {
      */
     public void updateCredentials(String dbUrl, String username, String password){
         try {
-            dbConnect.close();
+            if(this.dbConnect !=null) {
+                dbConnect.close();
+            }
             this.dbUrl = dbUrl;
             this.username = username;
             this.password = password;

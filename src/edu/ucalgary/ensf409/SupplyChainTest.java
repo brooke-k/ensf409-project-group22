@@ -21,23 +21,27 @@ import org.junit.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static junit.framework.TestCase.*;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 
 /**
- * Class SupplyChainTest provides Junit 4 tests for Supply Chain Manager to ensure the
- * correct outputs and results are produced by Supply Chain Manager methods.
+ * Class SupplyChainTest provides Junit 4 tests for Supply Chain Manager to
+ * ensure the correct outputs and results are produced by the methods from
+ * the program Supply Chain Manager
  */
 public class SupplyChainTest {
     private final ByteArrayOutputStream terminalContent
             = new ByteArrayOutputStream();
+    private final ByteArrayOutputStream errContent
+            = new ByteArrayOutputStream();
+    private final PrintStream originalErrStream = System.err;
     private final PrintStream originalTermContent = System.out;
     private final InputStream originalTerminalInput = System.in;
 
@@ -52,6 +56,8 @@ public class SupplyChainTest {
     public void readTerminalOutputSetup() {
         System.setOut(new PrintStream(terminalContent));
         System.setIn(originalTerminalInput);
+        System.setErr(new PrintStream(errContent));
+
     }
 
     /**
@@ -60,7 +66,16 @@ public class SupplyChainTest {
      */
     @After
     public void restoreTerminalOutputStream() {
+        File checkFile = new File("TESTFILEOUTPUT.txt");
+        if (checkFile.exists()) {
+            checkFile.delete();
+        }
+        checkFile = new File("OrderOutput.txt");
+        if (checkFile.exists()){
+            checkFile.delete();
+    }
         System.setOut(originalTermContent);
+        System.setErr(originalErrStream);
     }
 
 
@@ -193,9 +208,19 @@ public class SupplyChainTest {
         FileIO fileIO = new FileIO(manufacturers);
 
         String expectedOutput = ("Order could not be fulfilled based " +
-                "on current inventory." + "\n" + "Suggested manufacturers " +
-                "for this order are " + "First corp" + ", " + "Second corp" + ", " +
-                "Third corp" + ", " + "and " + "Fourth corp" + ".");
+                "on current inventory." +
+                "\n" +
+                "Suggested manufacturers " +
+                "for this order are " +
+                "First corp" +
+                ", " +
+                "Second corp" +
+                ", " +
+                "Third corp" +
+                ", " +
+                "and " +
+                "Fourth corp" +
+                ".");
         String termCont = terminalContent.toString().trim();
 
 
@@ -210,7 +235,7 @@ public class SupplyChainTest {
     @Test
     public void testFileIO_FulfilledOrderTerminalOutputOneItem() {
         String[] orderedItems = {"OneItem"};
-        String outputFileName = "orderOutputToTerminalTest";
+        String outputFileName = "TESTFILEOUTPUT.txt";
         String originalRequest = "orderOutputToTerminal request";
         int orderCost = 3700;
 
@@ -231,7 +256,7 @@ public class SupplyChainTest {
     @Test
     public void testFileIO_FulfilledOrderTerminalOutputTwoItems() {
         String[] orderedItems = {"One item", "two items"};
-        String outputFileName = "orderOutputToTerminalTest";
+        String outputFileName = "TESTFILEOUTPUT.txt";
         String originalRequest = "orderOutputToTerminal request";
         int orderCost = 7373;
 
@@ -253,7 +278,7 @@ public class SupplyChainTest {
     @Test
     public void testFileIO_FulfilledOrderTerminalOutputFourItems() {
         String[] orderedItems = {"One1", "Two2", "Three3", "Four4"};
-        String outputFileName = "orderOutputToTerminalTest";
+        String outputFileName = "TESTFILEOUTPUT.txt";
         String originalRequest = "orderOutputToTerminal request";
         int orderCost = 89899;
 
@@ -275,7 +300,7 @@ public class SupplyChainTest {
     @Test
     public void testFileIO_FulfilledOrderOutputStringOneItem() {
         String[] orderedItems = {"OneItem"};
-        String outputFileName = "orderOutputToFileTest";
+        String outputFileName = "TESTFILEOUTPUT.txt";
         String originalRequest = "orderOutputToFileTest request";
         int orderCost = 3700;
 
@@ -311,7 +336,7 @@ public class SupplyChainTest {
     @Test
     public void testFileIO_FulfilledOrderOutputStringTwoItems() {
         String[] orderedItems = {"One item", "two Items"};
-        String outputFileName = "orderOutputToTerminalTest";
+        String outputFileName = "TESTFILEOUTPUT.txt";
         String originalRequest = "orderOutputToTerminal request";
         int orderCost = 89474;
 
@@ -350,7 +375,7 @@ public class SupplyChainTest {
     @Test
     public void testFileIO_FulfilledOrderOutputStringFourItems() {
         String[] orderedItems = {"11One", "22Two", "33Three", "44Four"};
-        String outputFileName = "orderOutputToTerminalTest";
+        String outputFileName = "TESTFILEOUTPUT.txt";
         String originalRequest = "orderOutputToTerminal request";
         int orderCost = 27722;
 
@@ -395,9 +420,7 @@ public class SupplyChainTest {
      */
     @Test
     public void testFileIO_OrderOutputFileCreated() {
-        Random randValue = new Random();
-        int testFileNameNumber = randValue.nextInt(999999);
-        String testFileName = testFileNameNumber + ".txt";
+        String testFileName = "TESTFILEOUTPUT.txt";
         String testRequest = "Test order request";
         String[] testItemsOrdered = {"Item one", "Item two", "Item three",
                 "Item four", "Item five"};
@@ -419,9 +442,7 @@ public class SupplyChainTest {
      */
     @Test
     public void testFileIO_OrderOutputFileWritten() {
-        Random randValue = new Random();
-        int testFileNameNumber = randValue.nextInt(999999);
-        String testFileName = testFileNameNumber + ".txt";
+        String testFileName = "TESTFILEOUTPUT.txt";
         String testRequest = "Test order request";
         String[] testItemsOrdered = {"Item one", "Item two", "Item three",
                 "Item four", "Item five"};
@@ -440,7 +461,8 @@ public class SupplyChainTest {
                 readFromFile.append(readChar);
                 readCharInt = testFileRead.read();
             }
-            assertEquals(fileIO.getOrderOutputString(), readFromFile.toString());
+            assertEquals(fileIO.getOrderOutputString(),
+                    readFromFile.toString());
         } catch (IOException e) {
             System.err.println("IOException: " +
                     "Could not read from the test file \""
@@ -488,146 +510,6 @@ public class SupplyChainTest {
     }
 
     /**
-     * testPriceOptimizer_compataibleInvalidSmall asserts that a Price
-     * Optimizer object recognizes the available pieces for one full
-     * furniture item based on a very limited size of parts (1).
-     */
-    @Test
-    public void testPriceOptimizer_compatibleInvalidSmall() {
-        String[] id  = {};
-        int[] price = {};
-        boolean[][] parts = {
-                {true, false, true}
-        };
-        int[] list = {0};
-        PriceOptimizer p = new PriceOptimizer(id,parts,price);
-        p.setItemCount(1);
-        assertFalse(p.compatible(list));
-    }
-
-    /**
-     * testPriceOptimizer_compatibleInvalid2Items() checks to see if
-     * a given parts list will return the right value when it is NOT
-     * possible to make 2 furniture items (should return false).
-     * In this configuration, it is possible to make one furniture
-     * item (but not 2) based on 3 pieces of furniture.
-     */
-    @Test
-    public void testPriceOptimizer_compatibleInvalid2Items() {
-        String[] id  = {};
-        int[] price = {};
-        boolean[][] parts = {
-                {true, true, false, true},
-                {true, false, true, false},
-                {false, true, false, true}
-        };
-        int[] list = {0,1,2};
-        PriceOptimizer p = new PriceOptimizer(id,parts,price);
-        p.setItemCount(2);
-        assertFalse(p.compatible(list));
-    }
-
-    /**
-     * testPriceOptimizer_compatibleValid2Items() checks to see if
-     * a given parts list will return the right value when it IS possible
-     * to make 2 furniture items with the given configuration list
-     * (should return true).
-     * In this configuration, it is possible to make 2 furniture
-     * items from 3 pieces of furniture.
-     */
-    @Test
-    public void testPriceOptimizer_compatibleValid2Items() {
-        String[] id  = {};
-        int[] price = {};
-        boolean[][] parts = {
-                {true, true, false, true},
-                {true, false, true, false},
-                {false, true, true, true}
-        };
-        int[] list = {0,1,2};
-        PriceOptimizer p = new PriceOptimizer(id,parts,price);
-        p.setItemCount(2);
-        assertTrue(p.compatible(list));
-    }
-
-    /**
-     * testPriceOptimizer_compatibleValid3Items() checks to see if
-     * a given parts list will return the right value when it IS possible
-     * to make 3 furniture items with the given configuration list
-     * (should return true).
-     * In this configuration, it is possible to make 3 furniture
-     * items from 4 pieces of furniture.
-     */
-    @Test
-    public void testPriceOptimizer_compatibleValid3Items() {
-        String[] id  = {};
-        int[] price = {};
-        boolean[][] parts = {
-                {true, true, false, true},
-                {true, false, true, true},
-                {false, true, true, true},
-                {true, false, false, false},
-                {true, true, true, false}
-        };
-        int[] list = {0,1,2,4};
-        PriceOptimizer p = new PriceOptimizer(id,parts,price);
-        p.setItemCount(3);
-        assertTrue(p.compatible(list));
-    }
-
-    /**
-     * testPriceOptimizer_compatibleInvalid3Items() checks to see if
-     * a given parts list will return the right value when it is NOT
-     * possible to make 2 furniture items (should return false).
-     * In this configuration, it is possible to make 1 or 2 furniture
-     * items but not 3 from 4 pieces of furniture.
-     */
-    @Test
-    public void testPriceOptimizer_compatibleInvalid3Items() {
-        String[] id  = {};
-        int[] price = {};
-        boolean[][] parts = {
-                {true, true, false, true},
-                {true, false, true, true},
-                {false, true, true, true},
-                {true, false, false, false},
-                {true, true, true, false}
-        };
-        int[] list = {0,1,2,3};
-        PriceOptimizer p = new PriceOptimizer(id,parts,price);
-        p.setItemCount(3);
-        assertFalse(p.compatible(list));
-    }
-
-    /**
-     * testPriceOptimizer_compatibleValid3ItemsSimple() checks to see if
-     * a given parts list will return the right value when it IS possible
-     * to make 3 furniture items with the given configuration list
-     * (should return true) based on a very simple configuration
-     * where the 3 specified furniture items are complete and can make
-     * 3 sets of new furniture.
-     */
-    @Test
-    public void testPriceOptimizer_compatibleValid3ItemsSimple() {
-        String[] id  = {};
-        int[] price = {};
-        boolean[][] parts = {
-                {true, true, false, true},
-                {true, false, true, true},
-                {false, true, true, true},
-                {true, false, false, false},
-                {true, true, true, true},
-                {true, true, true, false},
-                {true, true, true, true},
-                {true, true, true, true}
-        };
-        int[] list = {4,6,7};
-        PriceOptimizer p = new PriceOptimizer(id,parts,price);
-        p.setItemCount(3);
-        assertTrue(p.compatible(list));
-    }
-
-    /**
      * testPriceOptimizer_testOptimize asserts that the object Price
      * Optimizer can correctly produce an order with a combination of
      * pieces that total to the lowest possible cost.
@@ -647,9 +529,9 @@ public class SupplyChainTest {
         String[] result = p.optimize(1);
         String[] expected = {"C9890", "C0942"};
         String[] expected2 = {"C0942", "C9890"};
-        /*for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 2; i++) {
             System.out.println(result[i] + " ");
-        }*/
+        }
 
         Assert.assertTrue("Output array incorrect.",
                 Arrays.equals(expected, result) ||
@@ -657,37 +539,16 @@ public class SupplyChainTest {
     }
 
     /**
-     * testPriceOptimizer_testPriceAccurate will run optimize(1) and
-     * check if the price matches the expected price based on the furniture
-     * and price configuration.
-     */
-    @Test
-    public void testPriceOptimizer_testOptimizePriceAccurate() {
-        String[] id = {"C0942", "C6748", "C8138", "C9890"};
-        int[] price = {100, 75, 75, 50};
-        boolean[][] parts = {
-                {true, false, true, true},
-                {true, false, false, false},
-                {false, false, true, false},
-                {false, true, false, true},
-
-        };
-        PriceOptimizer p = new PriceOptimizer(id, parts, price);
-        String[] result = p.optimize(1);
-        int priceResult = p.getCurrentCost();
-        Assert.assertEquals(150, priceResult);
-    }
-
-    /**
-     * testPriceOptimizer_testOptimizeImpossible tests that the
-     * optimize() method will return null upon invalid values
+     * testPriceOptimizer_testOptimize1 provides a second variation of
+     * testPriceOptimizer_testOptimize, using different values for the pieces
+     * available.
      * <p>
      * Asserts that object Price Optimizer produces an order that completes
      * a furniture item with a combination of pieces that has the lowest
      * total cost.
      */
     @Test
-    public void testPriceOptimizer_testOptimizeImpossible() {
+    public void testPriceOptimizer_testOptimize1() {
         String[] id = {"C0942", "C6748", "C8138", "C9890"};
         int[] price = {100, 75, 75, 50};
         boolean[][] parts = {
@@ -702,8 +563,8 @@ public class SupplyChainTest {
 
     /**
      * testPriceOptimizer_testOptimize2 provides a second variation of
-     * testPriceOptimizer_testOptimize, testing that it is possible to make
-     *      * 2 furniture items based on a different configuration of parts.
+     * testPriceOptimizer_testOptimize, using different values for the pieces
+     * available.
      * <p>
      * Asserts that object Price Optimizer produces an order that completes
      * a furniture item with a combination of pieces that has the lowest
@@ -722,52 +583,25 @@ public class SupplyChainTest {
         PriceOptimizer p = new PriceOptimizer(id, parts, price);
         String[] result = p.optimize(2);
         String[] expected = {"C0942", "C6748"};
-        /*
         for (String s : result) {
             System.out.print(s + " ");
-        }*/
+        }
         Assert.assertTrue("Output array incorrect.",
                 Arrays.equals(expected, result) ||
                         Arrays.equals(result, expected));
     }
 
     /**
-     * testPriceOptimizer_testOptimize2PriceAccurate will run optimize(2) and
-     * check if the price matches the expected price based on the furniture
-     * and price configuration.
-     */
-    @Test
-    public void testPriceOptimizer_testOptimize2PriceAccurate() {
-        String[] id = {"C0942", "C6748", "C8138", "C9890"};
-        int[] price = {100, 75, 75, 50};
-        boolean[][] parts = {
-                {true, true, true, true},
-                {true, true, true, true},
-                {false, false, true, false},
-                {false, false, false, true}
-        };
-        PriceOptimizer p = new PriceOptimizer(id, parts, price);
-        String[] result = p.optimize(2);
-        String[] expected = {"C0942", "C6748"};
-        /*
-        for (String s : result) {
-            System.out.print(s + " ");
-        } */
-        int priceResult = p.getCurrentCost();
-        Assert.assertEquals(175, priceResult);
-    }
-
-    /**
-     * testPriceOptimizer_testOptimize2v1 provides a second variation of
-     * testPriceOptimizer_testOptimize2, testing that it is possible to make
-     * 2 furniture items based on a different configuration of parts.
+     * testPriceOptimizer_testOptimize3 provides a second variation of
+     * testPriceOptimizer_testOptimize, using different values for the pieces
+     * available.
      * <p>
      * Asserts that object Price Optimizer produces an order that completes
      * a furniture item with a combination of pieces that has the lowest
      * total cost.
      */
     @Test
-    public void testPriceOptimizer_testOptimize2v1() {
+    public void testPriceOptimizer_testOptimize3() {
         String[] id = {"C0942", "C6748", "C8138", "C9890"};
         int[] price = {100, 75, 75, 50};
         boolean[][] parts = {
@@ -779,68 +613,12 @@ public class SupplyChainTest {
         PriceOptimizer p = new PriceOptimizer(id, parts, price);
         String[] result = p.optimize(2);
         String[] expected = {"C0942", "C6748", "C9890"};
-        /*
         for (String s : result) {
             System.out.print(s + " ");
-        } */
+        }
         Assert.assertTrue("Output array incorrect.",
                 Arrays.equals(expected, result) ||
                         Arrays.equals(result, expected));
-    }
-
-    /**
-     * testPriceOptimizer_testOptimizeImpossibleLarge provides test of the
-     * optimize method, testing that it will return null when it is
-     * impossible to create a particular number of furniture items.
-     * In this case, it is possible to make 2 but impossible to make 3
-     * with any configuration available.
-     * <p>
-     * Asserts that object Price Optimizer produces an order that completes
-     * a furniture item with a combination of pieces that has the lowest
-     * total cost.
-     */
-    @Test
-    public void testPriceOptimizer_testOptimizeImpossibleLarge() {
-        String[] id  = {"1","2","3","4","5","6","7","8"};
-        int[] price = {100, 75, 75, 50, 75, 75, 100, 50};
-        boolean[][] parts = {
-                {true, true, false, true},
-                {true, false, false, true},
-                {false, true, true, true},
-                {true, false, false, false},
-                {true, true, false, true},
-                {true, true, false, false},
-                {true, true, false, true},
-                {true, true, true, true}
-        };
-        PriceOptimizer p = new PriceOptimizer(id,parts,price);
-        assertNull(p.optimize(3));
-    }
-
-    /**
-     * testPriceOptimizer_testOptimizeImpossibleSmall provides test of the
-     * optimize method, testing that it will return null when it is
-     * impossible to create a particular number of furniture items.
-     * In this case, it is possible to make 2 but impossible to make 3
-     * with any configuration available.
-     * <p>
-     * Asserts that object Price Optimizer produces an order that completes
-     * a furniture item with a combination of pieces that has the lowest
-     * total cost.
-     */
-    @Test
-    public void testPriceOptimizer_testOptimizeImpossibleSmall() {
-        String[] id  = {"C0942", "C6748", "C8138", "C9890"};
-        int[] price = {100, 75, 75, 50};
-        boolean[][] parts = {
-                {true, false, false, true},
-                {false, true, false, true},
-                {false, true, false, false},
-                {true, true, true, false}
-        };
-        PriceOptimizer p = new PriceOptimizer(id,parts,price);
-        String[] result = p.optimize(2);
-        assertNull(result);
     }
 
     /**
@@ -953,7 +731,8 @@ public class SupplyChainTest {
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
-        userIO.processInput(1); // Fulfills valid order "Mesh chair, 1"
+        userIO.processInput(1); // Fulfills valid
+        // order "Mesh chair, 1"
 
         userIO.processInput(1); // Fulfills the valid order
                                             // "Desk lamp, 1"
@@ -1204,18 +983,73 @@ public class SupplyChainTest {
         assertTrue(fileUpdated && correctOutput);
     }
 
-    /**
-     * The alteration of the MySQL credentials cannot be tested reasonably
-     * without knowledge of all other accounts on the system Supply Chain
-     * Manager is being run on because the test may be rendered incorrectly if
-     * the values used for testing to not represent an existing MySQL database
-     * and respective user does not exist on the current machine.
-     *
-     * The choice to have the database credentials' validity tested immediately
-     * after the user has changed them intends to alert the user of a problem
-     * with their current credentials before they continue to program and
-     * attempt to access and manipulate data they do not have access to.
-     */
+    @Test public void testUserIO_inValidCredentialsChange(){
+        ByteArrayInputStream terminalInput1 =
+                new ByteArrayInputStream(("\nY\n" +
+                        "invalidURL\n" +
+                        "invalidUsername\n" +
+                        "invalidPassword\n" +
+                        "Y\n\n").getBytes());
+        System.setIn(terminalInput1);
+        UserIO userIO = new UserIO();
+
+
+        userIO.processInput(5); // Processes the input for
+        // requesting to change the
+        //current MySQL credentials to invalid values
+
+        userIO.processInput(1); // Process the input for requesting
+        // a new order using the invalid MySQL Credentials
+
+
+        String expectedOutputREGEX = "(Unable to create a connection " +
+                "with\\Rthe credentials:\\R[ ]{5}DbURL: " +
+                "invalidURL\\R[ ]{2}Username: " +
+                "invalidUsername\\R[ ]{2}Password: " +
+                "invalidPassword)";
+        Pattern expectedPattern = Pattern.compile(expectedOutputREGEX);
+        Matcher expectedMatch = expectedPattern.matcher
+                (terminalContent.toString());
+
+
+        boolean correctOutput = expectedMatch.find();
+        assertTrue( correctOutput);
+    }
+
+    @Test public void testUserIO_ValidCredentialsChange(){
+        ByteArrayInputStream terminalInput1 =
+                new ByteArrayInputStream(("\nY\n" +
+                        "invalidURL\n" +
+                        "invalidUsername\n" +
+                        "invalidPassword\n" +
+                        "Y\n\n" +
+                        "\nY\n" +
+                        "jdbc:mysql://localhost/inventory\n" +
+                        "scm\n" +
+                        "ensf409\n" +
+                        "Y\n\nCANCEL").getBytes());
+        System.setIn(terminalInput1);
+        UserIO userIO = new UserIO();
+        userIO.processInput(5); // Processes the input for
+        // requesting to change the
+        // current MySQL credentials to invalid values.
+        userIO.processInput(5); // Processes the input for
+        // requesting to change the
+        //current MySQL credentials to valid values.
+
+        userIO.processInput(1); // Process the input for requesting
+        // a new order using the valid MySQL Credentials
+
+        String expectedOutputREGEX
+                = "(Please input request for furniture item)";
+        Pattern expectedPattern = Pattern.compile(expectedOutputREGEX);
+        Matcher expectedMatch = expectedPattern.matcher
+                (terminalContent.toString());
+
+
+        boolean correctOutput = expectedMatch.find();
+        assertTrue( correctOutput);
+    }
 
 
     /**
@@ -1243,4 +1077,384 @@ public class SupplyChainTest {
         assertTrue(fromOption2 && fromOption3);
     }
 
-}
+
+
+        /**
+         * testDatabaseIO_testValidChairDataTypeTask asserts that the
+         * PriceOptimizer object created by the method getChairData produces
+         * the correct String array of ID's, int array of prices, and boolean
+         * 2D array of parts for the type "Task"
+         */
+        @Test
+        public void testDatabaseIO_testValidChairDataTypeTask(){
+            DatabaseIO database = new DatabaseIO();
+            database.createConnection();
+
+            String[] id = {"C0914", "C1148", "C3405"};
+            int[] price = {50, 125, 100};
+            boolean [][] parts = {{false, false, true, true},
+                    {true, false, true, true} ,{true, true, false, false}};
+
+            PriceOptimizer arrays = database.getChairData("Task");
+
+            assertTrue(Arrays.equals(id, arrays.getId())
+                    && Arrays.equals(price, arrays.getPrice())
+                    && Arrays.deepEquals(parts, arrays.getParts()));
+
+        }
+
+        /**
+         * testDatabaseIO_testValidChairDataTypeMesh asserts that the
+         * PriceOptimizer object created by the method getChairData produces
+         * the correct String array of ID's, int array of prices, and boolean
+         * 2D array of parts for the type "Mesh"
+         */
+        @Test
+        public void testDatabaseIO_testValidChairDataTypeMesh(){
+            DatabaseIO database = new DatabaseIO();
+            database.createConnection();
+
+            String[] id = {"C0942", "C6748", "C8138", "C9890"};
+            int[] price = {175, 75, 75, 50};
+            boolean [][] parts = {{true, false, true, true},
+                    {true, false, false, false} ,{false, false, true, false},
+                    {false, true, false, true}};
+
+            PriceOptimizer arrays = database.getChairData("Mesh");
+
+            assertTrue(Arrays.equals(id, arrays.getId())
+                    && Arrays.equals(price, arrays.getPrice())
+                    && Arrays.deepEquals(parts, arrays.getParts()));
+        }
+
+        /**
+         * testDatabaseIO_testInvalidChairData asserts that if an
+         * invalid type is entered into the method getLampData,
+         * the PriceOptimizer object created is null.
+         */
+        @Test
+        public void testDatabaseIO_testInvalidChairData(){
+            DatabaseIO database = new DatabaseIO();
+            database.createConnection();
+
+            assertNull(database.getChairData("invalid"));
+        }
+
+        /**
+         * testDatabaseIO_testValidDeskDataTypeStanding asserts that the
+         * PriceOptimizer object created by the method getDeskData produces
+         * the correct String array of ID's, int array of prices, and boolean
+         * 2D array of parts for the type "Standing"
+         */
+        @Test
+        public void testDatabaseIO_testValidDeskDataTypeStanding(){
+            DatabaseIO database = new DatabaseIO();
+            database.createConnection();
+
+            String[] id = {"D1927", "D2341", "D3820", "D4438", "D9387"};
+            int[] price = {200, 100, 150, 150, 250};
+            boolean [][] parts = {{true, false, true}, {false, true, false}
+                    ,{true, false, false}, {false, true, true},
+                    {true, true, false}};
+
+            PriceOptimizer arrays = database.getDeskData("Standing");
+
+            assertTrue(Arrays.equals(id, arrays.getId())
+                    && Arrays.equals(price, arrays.getPrice())
+                    && Arrays.deepEquals(parts, arrays.getParts()));
+        }
+
+        /**
+         * testDatabaseIO_testValidDeskDataTypeTraditional asserts that the
+         * PriceOptimizer object created by the method getDeskData produces
+         * the correct String array of ID's, int array of prices, and boolean
+         * 2D array of parts for the type "Traditional"
+         */
+        @Test
+        public void testDatabaseIO_testValidDeskDataTypeTraditional(){
+            DatabaseIO database = new DatabaseIO();
+            database.createConnection();
+
+            String[] id = {"D0890", "D4231", "D8675", "D9352"};
+            int[] price = {25, 50, 75, 75};
+            boolean [][] parts = {{false, false, true}, {false, true, true}
+                    ,{true, true, false}, {true, false, true}};
+
+            PriceOptimizer arrays = database.getDeskData("Traditional");
+
+            assertTrue(Arrays.equals(id, arrays.getId())
+                    && Arrays.equals(price, arrays.getPrice())
+                    && Arrays.deepEquals(parts, arrays.getParts()));
+        }
+
+        /**
+         * testDatabaseIO_testInvalidDeskData asserts that if an
+         * invalid type is entered into the method getDeskData,
+         * the PriceOptimizer container created is null.
+         */
+        @Test
+        public void testDatabaseIO_testInvalidDeskData(){
+            DatabaseIO database = new DatabaseIO();
+            database.createConnection();
+
+            assertNull(database.getDeskData("invalid"));
+        }
+
+        /**
+         * testDatabaseIO_testValidLampDataTypeSwingArm asserts that the
+         * PriceOptimizer container created by the method getLampData produces
+         * the correct String array of ID's, int array of prices, and boolean
+         * 2D array of parts for the type "Swing Arm"
+         */
+        @Test
+        public void testDatabaseIO_testValidLampDataTypeSwingArm(){
+            DatabaseIO database = new DatabaseIO();
+            database.createConnection();
+
+            String[] id = {"L053", "L096", "L487", "L879"};
+            int[] price = {27, 3, 27, 3};
+            boolean [][] parts = {{true, false}, {false, true}
+                    ,{true, false}, {false, true}};
+
+            PriceOptimizer arrays = database.getLampData("Swing Arm");
+
+            assertTrue(Arrays.equals(id, arrays.getId())
+                    && Arrays.equals(price, arrays.getPrice())
+                    && Arrays.deepEquals(parts, arrays.getParts()));
+        }
+
+        /**
+         * testDatabaseIO_testValidLampDataTypeStudy asserts that the
+         * PriceOptimizer container created by the method getLampData produces
+         * the correct String array of ID's, int array of prices, and boolean
+         * 2D array of parts for the type "Study"
+         */
+        @Test
+        public void testDatabaseIO_testValidLampDataTypeStudy(){
+            DatabaseIO database = new DatabaseIO();
+            database.createConnection();
+
+            String[] id = {"L223", "L928", "L980", "L982"};
+            int[] price = {2, 10, 2, 8};
+            boolean [][] parts = {{false, true}, {true, true}
+                    ,{false, true}, {true, false}};
+
+            PriceOptimizer arrays = database.getLampData("Study");
+
+            assertTrue(Arrays.equals(id, arrays.getId())
+                    && Arrays.equals(price, arrays.getPrice())
+                    && Arrays.deepEquals(parts, arrays.getParts()));
+        }
+
+        /**
+         * testDatabaseIO_testInvalidLampData asserts that if an
+         * invalid type is entered into the method getLampData,
+         * the PriceOptimizer container created is null.
+         */
+        @Test
+        public void testDatabaseIO_testInvalidLampData(){
+            DatabaseIO database = new DatabaseIO();
+            database.createConnection();
+
+            assertNull(database.getLampData("invalid"));
+        }
+
+        /**
+         * testDatabaseIO_testValidFilingDataTypeLarge asserts that the
+         * PriceOptimizer container created by the method getFilingData produces
+         * the correct String array of ID's, int array of prices, and boolean
+         * 2D array of parts for the type "Large"
+         */
+        @Test
+        public void testDatabaseIO_testValidFilingDataTypeLarge(){
+            DatabaseIO database = new DatabaseIO();
+            database.createConnection();
+
+            String[] id = {"F003", "F010", "F011", "F012", "F015"};
+            int[] price = {150, 225, 225, 75, 75};
+            boolean [][] parts = {{false, false, true}, {true, false, true}
+                    ,{false, true, true}, {false, true, false},
+                    {true, false, false}};
+
+            PriceOptimizer arrays = database.getFilingData("Large");
+
+            assertTrue(Arrays.equals(id, arrays.getId())
+                    && Arrays.equals(price, arrays.getPrice())
+                    && Arrays.deepEquals(parts, arrays.getParts()));
+        }
+
+        /**
+         * testDatabaseIO_testValidFilingDataTypeSmall asserts that the
+         * PriceOptimizer container created by the method getFilingData produces
+         * the correct String array of ID's, int array of prices, and boolean
+         * 2D array of parts for the type "Small"
+         */
+        @Test
+        public void testDatabaseIO_testValidFilingDataTypeSmall(){
+            DatabaseIO database = new DatabaseIO();
+            database.createConnection();
+
+            String[] id = {"F001", "F004", "F005", "F006", "F013"};
+            int[] price = {50, 75, 75, 50, 50};
+            boolean [][] parts = {{true, true, false}, {false, true, true}
+                    ,{true, false, true}, {true, true, false},
+                    {false, false, true}};
+
+            PriceOptimizer arrays = database.getFilingData("Small");
+
+            assertTrue(Arrays.equals(id, arrays.getId())
+                    && Arrays.equals(price, arrays.getPrice())
+                    && Arrays.deepEquals(parts, arrays.getParts()));
+        }
+
+        /**
+         * testDatabaseIO_testInvalidFilingData asserts that if an
+         * invalid type is entered into the method getLampData,
+         * the PriceOptimizer container created is null.
+         */
+        @Test
+        public void testDatabaseIO_testInvalidFilingData(){
+            DatabaseIO database = new DatabaseIO();
+            database.createConnection();
+
+            assertNull(database.getFilingData("invalid"));
+        }
+
+        /**
+         * testDatabaseIO_testSuggestedManufacturersChair asserts
+         * that the String ArrayList created by the method
+         * suggestedManufacturers produces the correct String ArrayList
+         * of the suggested manufacturers for chairs.
+         */
+        @Test
+        public void testDatabaseIO_testSuggestedManufacturersChair(){
+            DatabaseIO database = new DatabaseIO();
+            database.createConnection();
+
+            String[] checkChair = {"Office Furnishings", "Chairs R Us",
+                    "Furniture Goods", "Fine Office Supplies"};
+            ArrayList<String> test
+                    = database.suggestedManufacturers("chair");
+            String[] testArray = test.toArray(new String[0]);
+
+            assertArrayEquals(checkChair, testArray);
+        }
+
+        /**
+         * testDatabaseIO_testSuggestedManufacturersLamp asserts
+         * that the String ArrayList created by the method
+         * suggestedManufacturers produces the correct String ArrayList of
+         * the suggested manufacturers for lamps.
+         */
+        @Test
+        public void testDatabaseIO_testSuggestedManufacturersLamp(){
+            DatabaseIO database = new DatabaseIO();
+            database.createConnection();
+
+            String[] checkChair = {"Office Furnishings", "Furniture Goods",
+                    "Fine Office Supplies"};
+            ArrayList<String> test
+                    = database.suggestedManufacturers("lamp");
+            String[] testArray = test.toArray(new String[0]);
+
+            assertArrayEquals(checkChair, testArray);
+        }
+
+        /**
+         * testDatabaseIO_testSuggestedManufacturersInvalid asserts
+         * that if an invalid furniture is entered into the method
+         * suggestedManufacturers, the String Arraylist created is null.
+         */
+        @Test
+        public void testDatabaseIO_testSuggestedManufacturersInvalid(){
+            DatabaseIO database = new DatabaseIO();
+            database.createConnection();
+
+
+            assertNull(database.suggestedManufacturers("invalid"));
+        }
+
+        /**
+         * testDatabaseIO_testGetSizeOfDeskTypeStanding asserts
+         * that the int created by the method getSize produces
+         * the correct int of the number of standing desks.
+         */
+        @Test
+        public void testDatabaseIO_testGetSizeOfDeskTypeStanding(){
+            DatabaseIO database = new DatabaseIO();
+            database.createConnection();
+
+            assertEquals(5, database.getSize("desk",
+                    "Standing"));
+        }
+
+        /**
+         * testDatabaseIO_testGetSizeOfLampTypeDesk asserts
+         * that the int created by the method getSize produces
+         * the correct int of the number of desk lamps.
+         */
+        @Test
+        public void testDatabaseIO_testGetSizeOfLampTypeDesk(){
+            DatabaseIO database = new DatabaseIO();
+            database.createConnection();
+
+            assertEquals(7, database.getSize("lamp",
+                    "Desk"));
+        }
+
+        /**
+         * testDatabaseIO_testGetSizeOfFilingInvalidType asserts
+         * that if an invalid type is entered into the method getSize,
+         * the int created is 0.
+         */
+        @Test
+        public void testDatabaseIO_testGetSizeOfFilingInvalidType(){
+            DatabaseIO database = new DatabaseIO();
+            database.createConnection();
+
+            assertEquals(0, database.getSize("filing",
+                    "invalid"));
+        }
+
+        /**
+         * testDatabaseIO_testTypeMediumExistsOfFiling asserts that
+         * the correct table name "Filing" and furniture type "Medium"
+         * is entered into the method typeExists.
+         */
+        @Test
+        public void testDatabaseIO_testTypeMediumExistsOfFiling(){
+            DatabaseIO database = new DatabaseIO();
+            database.createConnection();
+
+            assertTrue(database.typeExists("filing",
+                    "Medium"));
+        }
+
+        /**
+         * testDatabaseIO_testTypeAdjustableOfDesk asserts that
+         * the correct table name "Desk" and furniture type "Adjustable"
+         * is entered into the method typeExists.
+         */
+        @Test
+        public void testDatabaseIO_testTypeAdjustableOfDesk(){
+            DatabaseIO database = new DatabaseIO();
+            database.createConnection();
+
+            assertTrue(database.typeExists("desk",
+                    "Adjustable"));
+        }
+
+        /**
+         * testDatabaseIO_testTypeInvalidOfChair asserts that
+         * the correct table name "Chair" but incorrect furniture
+         * type "invalid" is entered into the method typeExists.
+         */
+        @Test
+        public void testDatabaseIO_testTypeInvalidOfChair(){
+            DatabaseIO database = new DatabaseIO();
+            database.createConnection();
+
+            assertFalse(database.typeExists("chair",
+                    "invalid"));
+        }
+    }
