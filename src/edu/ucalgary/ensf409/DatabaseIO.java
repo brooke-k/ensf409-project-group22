@@ -96,7 +96,6 @@ public class DatabaseIO {
             this.dbUrl = dbUrl;
             this.username = username;
             this.password = password;
-            createConnection();
         } catch (SQLException e){
             System.out.println("Could not update MySQL credentials");
         }
@@ -106,19 +105,20 @@ public class DatabaseIO {
      * The method initializeConnection promises to create a
      * connection to the database otherwise it will output an error.
      */
-    public void createConnection(){
+    public boolean createConnection(){
         try{
             this.dbConnect = DriverManager.getConnection(this.dbUrl,
                     this.username, this.password);
+            return true;
         } catch (SQLException e){
             System.out.println();
             System.out.println("Unable to create a connection with");
-            System.out.println("the current credentials: ");
+            System.out.println("the credentials: ");
             System.out.println("     DbURL: " + this.dbUrl);
             System.out.println("  Username: " + this.username);
             System.out.println("  Password: " + this.password);
             System.out.println();
-            e.printStackTrace();
+            return false;
         }
     }
 
