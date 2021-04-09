@@ -155,7 +155,7 @@ public class UserIO {
      * if the user inputs an invalid input.
      * @param inputValue Request from the user.
      */
-    public boolean processInput(int inputValue){
+    public boolean processInput(int inputValue, boolean remove){
         System.out.println();
         System.out.println("--------------------------------------------");
         System.out.println();
@@ -179,7 +179,7 @@ public class UserIO {
                 System.out.println("Enter request: ");
                 readLine();
                 String readFromScan = readLine();
-                processUserRequest(readFromScan);
+                processUserRequest(readFromScan, remove);
                 return true;
             case 2:
                 System.out.println("\nCurrent output file name is: " +
@@ -240,7 +240,7 @@ public class UserIO {
      * @param userRequest String of the user's order request that is to
      *                   be processed.
      */
-    public void processUserRequest(String userRequest){
+    public void processUserRequest(String userRequest, boolean remove){
         if(userRequest.equals("CANCEL")){
             System.out.println("Returning to menu. No order has been placed.");
             return;
@@ -284,7 +284,7 @@ public class UserIO {
                     "[quantity of items]");
             System.out.println("Or enter \"CANCEL\" to return to the menu.\n");
             System.out.println("Enter order: ");
-            processUserRequest(readLine());
+            processUserRequest(readLine(), remove);
         }
 
 
@@ -299,7 +299,7 @@ public class UserIO {
                                        "[quantity of items]");
                     System.out.println("Or enter \"CANCEL\" to return to the menu.\n");
                     System.out.println("Enter order: ");
-                    processUserRequest(readLine());
+                    processUserRequest(readLine(), remove);
                     return;
                 } else {
                     furnType = requestMatch2.group(1);
@@ -317,7 +317,7 @@ public class UserIO {
                                        "[quantity of items]");
                     System.out.println("Or enter \"CANCEL\" to return to the menu.\n");
                     System.out.println("Enter order: ");
-                    processUserRequest(readLine());
+                    processUserRequest(readLine(), remove);
                     return;
                 } else {
                     furnType = requestMatch1.group(1);
@@ -335,7 +335,9 @@ public class UserIO {
                             .optimize(Integer.parseInt(numOfItems));
                     if(temp!=null){
                         for(String t: temp){
-                            //databaseIO.removeItem(furnCategory, t);
+                            if(remove) {
+                                databaseIO.removeItem(furnCategory, t);
+                            }
                         }
                         fileIO = new FileIO(outputFile,temp,userRequest,
                                 priceOpt.getCurrentCost());
@@ -357,7 +359,7 @@ public class UserIO {
                                        "[quantity of items]");
                     System.out.println("Or enter \"CANCEL\" to return to the menu.\n");
                     System.out.println("Enter order: ");
-                    processUserRequest(readLine());
+                    processUserRequest(readLine(), remove);
                 }
             } else {
                 System.out.println();
@@ -372,7 +374,7 @@ public class UserIO {
                                    "[quantity of items]");
                 System.out.println("Or enter \"CANCEL\" to return to the menu.\n");
                 System.out.println("Enter order: ");
-                processUserRequest(readLine());
+                processUserRequest(readLine(), remove);
             }
         }
     }

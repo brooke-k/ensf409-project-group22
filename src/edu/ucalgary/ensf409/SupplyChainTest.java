@@ -926,7 +926,7 @@ public class SupplyChainTest {
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
-        userIO.processInput(1);
+        userIO.processInput(1, false);
 
         assertEquals("chair", userIO.getFurnCategory());
     }
@@ -945,7 +945,7 @@ public class SupplyChainTest {
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
-        userIO.processInput(1);
+        userIO.processInput(1,false);
 
         assertEquals("Mesh", userIO.getFurnType());
     }
@@ -964,7 +964,7 @@ public class SupplyChainTest {
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
-        userIO.processInput(1);
+        userIO.processInput(1,false);
 
         assertEquals("1", userIO.getNumOfItems());
     }
@@ -983,7 +983,7 @@ public class SupplyChainTest {
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
-        userIO.processInput(1);
+        userIO.processInput(1,false);
 
         assertEquals("Mesh chair, 1", userIO.getLatestRequest());
     }
@@ -1001,7 +1001,7 @@ public class SupplyChainTest {
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
-        userIO.processInput(1);
+        userIO.processInput(1,false);
 
         assertNull(userIO.getFurnType());
     }
@@ -1023,13 +1023,13 @@ public class SupplyChainTest {
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
-        userIO.processInput(1); // Fulfills valid
+        userIO.processInput(1,false); // Fulfills valid
         // order "Mesh chair, 1"
 
-        userIO.processInput(1); // Fulfills the valid order
+        userIO.processInput(1,false); // Fulfills the valid order
                                             // "Desk lamp, 1"
 
-        userIO.processInput(1); // Attempts to fulfill the invalid
+        userIO.processInput(1,false); // Attempts to fulfill the invalid
                                             // order "Invalid order name"
 
 
@@ -1049,7 +1049,7 @@ public class SupplyChainTest {
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
-        userIO.processInput(1);
+        userIO.processInput(1,false);
 
         assertNull(userIO.getFurnCategory());
     }
@@ -1072,12 +1072,12 @@ public class SupplyChainTest {
         UserIO userIO = new UserIO();
 
   System.setIn(terminalInput1); // Fulfills valid order "Mesh chair, 1"
-        userIO.processInput(1);
+        userIO.processInput(1,false);
 
-       userIO.processInput(1); // Fulfills the valid order
+       userIO.processInput(1,false); // Fulfills the valid order
         // "Desk lamp, 1"
 
-       userIO.processInput(1); // Attempts to fulfill the invalid
+       userIO.processInput(1,false); // Attempts to fulfill the invalid
         // order "Invalid order"
 
 
@@ -1097,7 +1097,7 @@ public class SupplyChainTest {
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
-        userIO.processInput(1);
+        userIO.processInput(1,false);
 
         assertNull(userIO.getNumOfItems());
     }
@@ -1120,12 +1120,12 @@ public class SupplyChainTest {
         UserIO userIO = new UserIO();
 
         System.setIn(terminalInput1); // Fulfills valid order "Mesh chair, 1"
-        userIO.processInput(1);
+        userIO.processInput(1,false);
 
-        userIO.processInput(1); // Fulfills the valid order
+        userIO.processInput(1,false); // Fulfills the valid order
         // "Desk lamp, 1"
 
-        userIO.processInput(1); // Attempts to fulfill the invalid
+        userIO.processInput(1,false); // Attempts to fulfill the invalid
         // order "Meaningless order"
 
 
@@ -1146,7 +1146,7 @@ public class SupplyChainTest {
         UserIO userIO = new UserIO();
 
 
-        userIO.processInput(1);
+        userIO.processInput(1,false);
 
         assertNull(userIO.getLatestRequest());
     }
@@ -1170,14 +1170,14 @@ public class SupplyChainTest {
 
 
         System.setIn(terminalInput1); // Fulfills valid order "Mesh chair, 1"
-        userIO.processInput(1);
+        userIO.processInput(1,false);
 
 
-        userIO.processInput(1); // Fulfills the valid order
+        userIO.processInput(1,false); // Fulfills the valid order
         // "Desk lamp, 1"
 
 
-        userIO.processInput(1); // Attempts to fulfill the invalid
+        userIO.processInput(1,false); // Attempts to fulfill the invalid
         // order "Bad bad order"
 
 
@@ -1195,7 +1195,7 @@ public class SupplyChainTest {
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
-      userIO.processInput(3);
+      userIO.processInput(3,false);
 
         String expectedOutputREGEX = "(Current database URL: " +
                 "jdbc:mysql://localhost/inventory)" +
@@ -1222,7 +1222,7 @@ public class SupplyChainTest {
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
-      userIO.processInput(2);
+      userIO.processInput(2,false);
 
         String expectedOutputREGEX = "(Current output file name is: " +
                 "OrderOutput.txt)";
@@ -1252,11 +1252,11 @@ public class SupplyChainTest {
         UserIO userIO = new UserIO();
 
 
-        userIO.processInput(4); // Processes the input for
+        userIO.processInput(4,false); // Processes the input for
                                             // requesting to change the
                                             //current output file name
 
-        userIO.processInput(2); // Processes the input for
+        userIO.processInput(2,false); // Processes the input for
                                             // requesting to view the current
                                             // output file name
 
@@ -1286,11 +1286,11 @@ public class SupplyChainTest {
         UserIO userIO = new UserIO();
 
 
-        userIO.processInput(5); // Processes the input for
+        userIO.processInput(5,false); // Processes the input for
         // requesting to change the
         //current MySQL credentials to invalid values
 
-        userIO.processInput(1); // Process the input for requesting
+        userIO.processInput(1,false); // Process the input for requesting
         // a new order using the invalid MySQL Credentials
 
 
@@ -1322,14 +1322,14 @@ public class SupplyChainTest {
                         "Y\n\nCANCEL").getBytes());
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
-        userIO.processInput(5); // Processes the input for
+        userIO.processInput(5,false); // Processes the input for
         // requesting to change the
         // current MySQL credentials to invalid values.
-        userIO.processInput(5); // Processes the input for
+        userIO.processInput(5,false); // Processes the input for
         // requesting to change the
         //current MySQL credentials to valid values.
 
-        userIO.processInput(1); // Process the input for requesting
+        userIO.processInput(1,false); // Process the input for requesting
         // a new order using the valid MySQL Credentials
 
         String expectedOutputREGEX
@@ -1350,7 +1350,7 @@ public class SupplyChainTest {
      */
     @Test public void testUserIO_QuitMenu(){
         UserIO ioTest = new UserIO();
-        boolean returnedFromIO = ioTest.processInput(0);
+        boolean returnedFromIO = ioTest.processInput(0,false);
         assertFalse(returnedFromIO);
     }
 
@@ -1364,8 +1364,8 @@ public class SupplyChainTest {
                 new ByteArrayInputStream(("\n\n\n").getBytes());
         System.setIn(terminalInput1);
         UserIO testIO = new UserIO();
-        boolean fromOption2 = testIO.processInput(2);
-        boolean fromOption3 = testIO.processInput(3);
+        boolean fromOption2 = testIO.processInput(2,false);
+        boolean fromOption3 = testIO.processInput(3,false);
         assertTrue(fromOption2 && fromOption3);
     }
 
