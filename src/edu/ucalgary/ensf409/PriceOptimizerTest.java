@@ -351,6 +351,156 @@ public class PriceOptimizerTest {
     }
 
     /**
+     * testPriceOptimizer_testOptimize2v1_3parts provides a second variation of
+     * testPriceOptimizer_testOptimize2, testing that it is possible to make
+     * 2 furniture items based on a different configuration of parts.
+     * <p>
+     * Asserts that object Price Optimizer produces an order that completes
+     * a furniture item with a combination of pieces that has the lowest
+     * total cost.
+     */
+    @Test
+    public void testPriceOptimizer_testOptimize2v1_3Parts() {
+        String[] id = {"C0942", "C6748", "C8138", "C9890"};
+        int[] price = {100, 75, 75, 50};
+        boolean[][] parts = {
+                {true, false, true},
+                {false, true, true},
+                {false, true, false},
+                {true, true, true}
+        };
+        PriceOptimizer p = new PriceOptimizer(id, parts, price);
+        String[] result = p.optimize(2);
+        String[] expected = {"C0942", "C6748", "C9890"};
+        for (String s : result) {
+            System.out.print(s + " ");
+        }
+        Assert.assertTrue("Output array incorrect.",
+                Arrays.equals(expected, result) ||
+                        Arrays.equals(result, expected));
+    }
+
+    /**
+     * testPriceOptimizer_testOptimize2v1 provides a second variation of
+     * testPriceOptimizer_testOptimize2, testing that it is possible to make
+     * 2 furniture items based on a different configuration of parts.
+     * <p>
+     * Asserts that object Price Optimizer produces an order that completes
+     * a furniture item with a combination of pieces that has the lowest
+     * total cost.
+     */
+    @Test
+    public void testPriceOptimizer_testOptimize2v1_3Partsv1() {
+        String[] id = {"C0942", "C6748", "C8138", "C9890"};
+        int[] price = {100, 75, 75, 50};
+        boolean[][] parts = {
+                {false, false, true},
+                {true, true, true},
+                {false, true, false},
+                {true, true, true}
+        };
+        PriceOptimizer p = new PriceOptimizer(id, parts, price);
+        String[] result = p.optimize(2);
+        String[] expected = {"C6748", "C9890"};
+        for (String s : result) {
+            System.out.print(s + " ");
+        }
+        Assert.assertTrue("Output array incorrect.",
+                Arrays.equals(expected, result) ||
+                        Arrays.equals(result, expected));
+    }
+
+    /**
+     * testPriceOptimizer_testOptimize2v1_3Partsv2 provides a second variation of
+     * testPriceOptimizer_testOptimize2, testing that it is possible to make
+     * 2 furniture items based on a different configuration of parts.
+     * With 3 parts per furniture item.
+     * <p>
+     * Asserts that object Price Optimizer produces an order that completes
+     * a furniture item with a combination of pieces that has the lowest
+     * total cost.
+     */
+    @Test
+    public void testPriceOptimizer_testOptimize2v1_3Partsv2() {
+        String[] id = {"1","2","3","4","5","6"};
+        int[] price = {100, 75, 75, 50, 50, 60};
+        boolean[][] parts = {
+                {false, false, true},
+                {true, false, true},
+                {false, true, true},
+                {false, true, false},
+                {true, false, false},
+                {true, false, true}
+        };
+        PriceOptimizer p = new PriceOptimizer(id, parts, price);
+        String[] result = p.optimize(2);
+        String[] expected = {"3","4","5","6"};
+        for (String s : result) {
+            System.out.print(s + " ");
+        }
+        Assert.assertTrue("Output array incorrect.",
+                Arrays.equals(expected, result) ||
+                        Arrays.equals(result, expected));
+    }
+
+    /**
+     * testPriceOptimizer_testOptimize2v1_3Partsv2_compatible provides a second variation of
+     * testPriceOptimizer_testOptimize2 just testing the compatible method with a
+     * configuration of 3 parts per furniture item.
+     * <p>
+     * Asserts that object Price Optimizer produces an order that completes
+     * a furniture item with a combination of pieces that has the lowest
+     * total cost.
+     */
+    @Test
+    public void testPriceOptimizer_testOptimize2v1_3Partsv2_compatible() {
+        String[] id = {"1","2","3","4","5"};
+        int[] price = {100, 75, 75, 50, 50};
+        boolean[][] parts = {
+                {false, false, true},
+                {true, false, true},
+                {false, true, true},
+                {false, true, false},
+                {true, false, false}
+        };
+        int[] list = {0,1,2,3,4};
+        PriceOptimizer p = new PriceOptimizer(id,parts,price);
+        p.setItemCount(2);
+        assertTrue(p.compatible(list));
+    }
+
+    /**
+     * testPriceOptimizer_testOptimize2v1_2Parts provides a second variation of
+     * testPriceOptimizer_testOptimize2, testing that it is possible to make
+     * 2 furniture items based on a different configuration of parts with
+     * a 2 parts per furniture item.
+     * <p>
+     * Asserts that object Price Optimizer produces an order that completes
+     * a furniture item with a combination of pieces that has the lowest
+     * total cost.
+     */
+    @Test
+    public void testPriceOptimizer_testOptimize2v1_2Parts() {
+        String[] id = {"C0942", "C6748", "C8138", "C9890"};
+        int[] price = {100, 75, 75, 50};
+        boolean[][] parts = {
+                {true, false},
+                {false, true},
+                {false, true},
+                {true, true}
+        };
+        PriceOptimizer p = new PriceOptimizer(id, parts, price);
+        String[] result = p.optimize(2);
+        String[] expected = {"C0942", "C6748", "C9890"};
+        for (String s : result) {
+            System.out.print(s + " ");
+        }
+        Assert.assertTrue("Output array incorrect.",
+                Arrays.equals(expected, result) ||
+                        Arrays.equals(result, expected));
+    }
+
+    /**
      * testPriceOptimizer_testOptimizeImpossibleLarge provides test of the
      * optimize method, testing that it will return null when it is
      * impossible to create a particular number of furniture items.
