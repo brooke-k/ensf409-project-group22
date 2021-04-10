@@ -147,13 +147,13 @@ public class DatabaseIO {
         try{
             Statement myStmt = dbConnect.createStatement();
             results = myStmt.executeQuery("SELECT * FROM chair");
-
+            //the while statement goes through the whole chair table
+            //to gather the information for a certain type of chair
             int i = 0;
             while(results.next()){
                 if(results.getString("Type").equals(type)){
                     idList[i] = results.getString("ID");
                     priceList[i] = results.getInt("Price");
-
                     partList[i][0] = results.getString("Legs")
                             .equals("Y");
                     partList[i][1] = results.getString("Arms")
@@ -198,6 +198,8 @@ public class DatabaseIO {
             Statement myStmt = dbConnect.createStatement();
             results = myStmt.executeQuery("SELECT * FROM desk");
 
+            //the while statement goes through the whole desk table
+            //to gather the information for a certain type of desk
             int i = 0;
             while(results.next()){
                 if(results.getString("Type").equals(type)){
@@ -244,6 +246,8 @@ public class DatabaseIO {
             Statement myStmt = dbConnect.createStatement();
             results = myStmt.executeQuery("SELECT * FROM lamp");
 
+            //the while statement goes through the whole lamp table
+            //to gather the information for a certain type of lamp
             int i = 0;
             while(results.next()){
                 if(results.getString("type").equals(type)){
@@ -289,6 +293,8 @@ public class DatabaseIO {
             Statement myStmt = dbConnect.createStatement();
             results = myStmt.executeQuery("SELECT * FROM filing");
 
+            //the while statement goes through the whole filing table
+            //to gather the information for a certain type of filing
             int i = 0;
             while(results.next()){
                 if(results.getString("type").equals(type)){
@@ -348,6 +354,8 @@ public class DatabaseIO {
             Statement myStmt = dbConnect.createStatement();
             results = myStmt.executeQuery("SELECT * FROM " + tableName);
 
+            //gets all the manufacturing ID's for a certain furniture but
+            //does not store any duplicates in the String ArrayList manuList
             while(results.next()){
                 String tempManu = results.getString("manuid");
                 if(!manuList.contains(tempManu)){
@@ -357,6 +365,9 @@ public class DatabaseIO {
 
             results = myStmt.executeQuery("SELECT * FROM manufacturer");
 
+            //goes through the manufacturer table and gets the name for
+            //all the manufacturers with the corresponding ID in
+            //and adds it into String ArrayList suggestList
             while(results.next()){
                 String tempManu = results.getString("manuid");
                 if(manuList.contains(tempManu)){
@@ -385,6 +396,8 @@ public class DatabaseIO {
      */
     public int getSize(String table, String type){
         int size = 0;
+        //goes through a furniture table and counts how many are
+        //of the certain type given
         try {
             Statement myStmt = dbConnect.createStatement();
             results = myStmt.executeQuery("SELECT * FROM " + table);
@@ -398,6 +411,10 @@ public class DatabaseIO {
         } catch(SQLException e){
             System.out.println();
         }
+
+        //returns 0 if furniture table or furniture type is invalid
+        //or returns the number of certain type of furniture in the
+        //table given
         return size;
     }
 
@@ -408,7 +425,7 @@ public class DatabaseIO {
      */
     public boolean typeExists(String category, String type){
         try {
-
+            //checks if category exists, if not it states results as null
             Statement myStmt = dbConnect.createStatement();
             results = null;
             switch(category){
@@ -429,7 +446,7 @@ public class DatabaseIO {
             if(results == null){
                 return false;
             }
-
+            //if the type entered exists it returns as true
             while (results.next()) {
                 if (results.getString("Type").equals(type)) {
                     return true;
