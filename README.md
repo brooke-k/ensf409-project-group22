@@ -18,19 +18,20 @@
 ----------------------------------------------------------------------
 
 ## About the Program
-*Supply Chain Manager* is a program intended to provide user-friendly system
+*Supply Chain Manager* is a program intended to provide a user-friendly system
 for managing a sustainable furniture supply chain 
-that reconfigures pieces of old furniture into recycled items for a low cost.
+that reconfigures pieces of old furniture into new recycled furniture for a low cost.
 
 By using a database of individual components, their manufacturers, 
-cost, and the multiple configurations,  all possible combinations for creating a
-complete furniture item can be evaluated. This functionality, allows the 
+cost, and the status of their components, the program evaluates all
+possible configurations buying the used furniture. This functionality allows the 
 program to accurately determine the most cost-efficient way to assemble 
-furniture that fulfills the user's requests.
+refurbished furniture items that fulfill the user's requests.
 
 If a configuration is not possible, the *Supply Chain Manager* will supply
 the user with a list of alternate suppliers who may be able to fulfill
-their request for furniture with new items. 
+their request for furniture with new items based on the information in the
+database.
 
 In addition to managing the database for the supply chain and providing
 the most cost-efficient way for a piece of furniture to be manufactured,
