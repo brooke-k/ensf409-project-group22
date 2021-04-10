@@ -7,10 +7,13 @@
 
 
 > #### Members:
->* Christopher Chan   
->* Amnah Hussain 
->* Brooke Kindleman   
->* Neeraj Sunil Kumar
+>* ![Christopher Chan](christopher.chan2@ucalgary.ca) 
+>* ![Amnah Hussain](amnah.hussain@ucalgary.ca)
+>* ![Brooke Kindleman](brooke.kindleman@ucalgary.ca)   
+>* ![Neeraj Sunil Kumar](neeraj.sunikumar@ucalgary.ca)
+
+> #### Relevant links
+> TO_FILL_IN
 
 ----------------------------------------------------------------------
 
