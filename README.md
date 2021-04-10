@@ -15,6 +15,13 @@
 > #### Relevant links
 > TO_FILL_IN
 
+
+*All components of the project (i.e. source code, extra libraries, and) are included within
+the submitted zip file, with the exception of the presentation video.*
+
+*The presentation video can be found in an independant zip file within the same dropbox, 
+or at the link above.*
+
 ----------------------------------------------------------------------
 
 ## About the Program
