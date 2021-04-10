@@ -95,7 +95,7 @@ public class SupplyChainTest {
                 ("\n" +
                  "Order could not be fulfilled based on current inventory.\n" +
                  "The suggested manufacturer for this order " +
-                 "is First manufacturer."));
+                 "is: \nFirst manufacturer."));
     }
 
     /**
@@ -114,7 +114,7 @@ public class SupplyChainTest {
         assertEquals(fileIO.createUnfulfilledOutput(),
                 ("\n" +
                  "Order could not be fulfilled based on current inventory.\n" +
-                 "Suggested manufacturers for this order are First " +
+                 "Suggested manufacturers for this order are: \nFirst " +
                  "manufacturer and Second manufacturer."));
     }
 
@@ -136,7 +136,7 @@ public class SupplyChainTest {
                 ("\n" +
                  "Order could not be fulfilled based on current inventory.\n" +
                  "Suggested manufacturers for this " +
-                 "order are First, Second, Third, and Fourth."));
+                 "order are: \nFirst, \nSecond, \nThird, \nand Fourth."));
     }
 
     /**
@@ -156,7 +156,7 @@ public class SupplyChainTest {
         String expectedOutput = ("Order could not be fulfilled based " +
                 "on current inventory." + "\n" + "The suggested manufacturer " +
                 "for this " +
-                "order is " + "One manufacturer" + ".");
+                "order is: \n" + "One manufacturer" + ".");
         String termCont = terminalContent.toString().trim();
 
 
@@ -182,7 +182,7 @@ public class SupplyChainTest {
         String expectedOutput = ("Order could not be fulfilled based " +
                 "on current inventory." + "\n" + "Suggested manufacturers " +
                 "for this " +
-                "order are " + "First company" + " and " +
+                "order are: \n" + "First company" + " and " +
                 "Second company" + ".");
         String termCont = terminalContent.toString().trim();
 
@@ -211,13 +211,13 @@ public class SupplyChainTest {
                 "on current inventory." +
                 "\n" +
                 "Suggested manufacturers " +
-                "for this order are " +
+                "for this order are: \n" +
                 "First corp" +
-                ", " +
+                ", \n" +
                 "Second corp" +
-                ", " +
+                ", \n" +
                 "Third corp" +
-                ", " +
+                ", \n" +
                 "and " +
                 "Fourth corp" +
                 ".");
