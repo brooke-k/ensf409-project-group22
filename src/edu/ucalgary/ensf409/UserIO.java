@@ -16,15 +16,24 @@ import java.util.regex.Pattern;
  * through.
  */
 public class UserIO {
-    private Scanner input;
-    private String furnType;
-    private String furnCategory;
-    private String numOfItems;
-    private DatabaseIO databaseIO;
-    private FileIO fileIO;
-    private String latestRequest;
-    private PriceOptimizer priceOpt;
-    private String outputFile = "OrderOutput.txt";
+    private Scanner input;             // Used for reading user
+                                        // input from the terminal
+    private String furnType;           // Furniture type read from latest order
+    private String furnCategory;       // Furniture category read from
+                                        // latest order
+    private String numOfItems;         // Number pieces of furniture in
+                                        // latest order
+    private DatabaseIO databaseIO;     // For accessing the database
+    private FileIO fileIO;             // For creating and producing outputs
+                                        // in response to valid orders
+    private String latestRequest;      // The latest valid request entered by
+                                        // the user as an order
+    private PriceOptimizer priceOpt;   // Used for finding, if possible, the
+                                        // lowest cost combination of furniture
+                                        // pieces to fulfill the order
+    private String outputFile = "OrderOutput.txt";  // Name of the file used
+                                                     // for the outputted
+                                                     // order form
     
     /**
      * The method menu will display the user menu and return the selected option
@@ -32,7 +41,11 @@ public class UserIO {
      * @return int corresponding to the selected option by the user
      */
     public int menu() {
+            // Pauses at the output of the previous action, allowing
+            // user time to read it before the menu is rendered to the terminal
+            // again.
             pressEnterToContinue();
+            // Main options for menu informing user of their options
             System.out.println();
             System.out.println("--------------------------------------------");
             System.out.println();
@@ -45,6 +58,10 @@ public class UserIO {
             System.out.println("0. Exit Program");
             System.out.println();
             System.out.print("Enter your selection: ");
+
+            // Returns the entry the user has inputted to the menu
+            // back to main method to manage the next process based on the
+            // selection
             return readIntUntilAccepted(0, 5);
     }
 
@@ -72,6 +89,9 @@ public class UserIO {
     public UserIO() {
         input = new Scanner(System.in);
         databaseIO = new DatabaseIO();
+        // Class variables regarding the order are set to null to imply the
+        // previous order, which at the time of the construction of this object
+        // does not exist, was not a valid order.
         furnType = null;
         furnCategory = null;
         latestRequest = null;
@@ -84,7 +104,7 @@ public class UserIO {
      * @return String with user input to console
      */
     public String readLine() {
-        // Take the next line of input
+        // Take the next line of input stream, System.in, using Scanner
         return input.nextLine();
     }
 
@@ -94,6 +114,8 @@ public class UserIO {
      * @return int corresponding to the int the user entered
      */
     public int readInt(){
+        // Take the next integer value that can be found in the input stream,
+        // System.in, using Scanner
         return input.nextInt();
     }
 
@@ -112,6 +134,7 @@ public class UserIO {
         if(userInput < min || userInput > max) {
             throw new InputOutOfBoundsException();
         }
+        // Only returned if the user input was a valid integer.
         return userInput;
     }
 
@@ -122,13 +145,21 @@ public class UserIO {
      * @return int corresponding to the valid int the user entered
      */
     public int readIntUntilAccepted(int min, int max) {
-        boolean inputOK;
+        boolean inputOK;    // Used to indicated if the user's selection from
+                            // the menu is valid
         int userInput = -1;
-        do {
+        do {    // Will keep repeating until the user enters a valid selection
+                // from the menu
             inputOK = true;
             try {
+                // If the user input is valid, no exception will be thrown
+                // and userInput will be set to the user's selection
                 userInput = readInt(min, max);
             } catch (InputOutOfBoundsException | InputMismatchException e) {
+                // If the user's input is not valid, an
+                // InputOutOfBoundsException will be thrown, and another
+                // chance for the user to make a selection from the menu
+                // is given.
                 input.nextLine();
                 System.out.println();
                 System.out.print("Please only enter a number from 0 to 5.");
@@ -145,6 +176,7 @@ public class UserIO {
             }
         }while(!inputOK);
 
+        // Returns the valid user selection from the menu
         return userInput;
     }
 
@@ -154,22 +186,38 @@ public class UserIO {
      * input has been provided by the user, or will return with no action taken
      * if the user inputs an invalid input.
      * @param inputValue Request from the user.
+     * @param remove True if a successful order request is to remove the
+     *               items used to fulfill the order. False if the database
+     *               is to remain unchanged after a successful order
      */
     public boolean processInput(int inputValue, boolean remove){
         System.out.println();
         System.out.println("--------------------------------------------");
         System.out.println();
         switch(inputValue){
-            case 1:
+            case 1: // The user has requested to make a new order
                 databaseIO.createConnection();
-                setReadValuesNull();
+                setReadValuesNull(); // Sets all class variables regarding
+                                    // the order information to null. If the
+                                    // order request is valid, they will be
+                                    // replaced with the user's request values.
+                                    // If not, they will remain as null
+                                    // to indicate the latest order request was
+                                    // invalid.
 
                boolean connectionMade = databaseIO.createConnection();
-               if(!connectionMade) {
+               if(!connectionMade) {    // If a connection to the database
+                                        // cannot be made, method informs
+                                        // the user and returns to the
+                                        // main menu.
                    System.out.println("Returning to menu. " +
                            "No order has been placed.");
-                   return true;
+                   return true;     // Keeps while loop in Main going
+                                    // and returns to the menu
                }
+
+                // Provides structure for the user to put in their order
+                // in the terminal
                 System.out.println("\nPlease input request for " +
                         "furniture item in the form");
                 System.out.println("[type] [furniture category], " +
@@ -178,15 +226,19 @@ public class UserIO {
                 System.out.println("or enter \"CANCEL\" to return to the menu");
                 System.out.println("Enter request: ");
                 readLine();
-                String readFromScan = readLine();
-                processUserRequest(readFromScan, remove);
-                return true;
-            case 2:
+                String readFromScan = readLine();   // Scans for user input
+                processUserRequest(readFromScan, remove); // Processes the order
+                return true;    // Keeps the while loop going
+                                // and returns to the menu
+            case 2:     // Case where the user asks to see the current
+                        // output file name the order is written to
                 System.out.println("\nCurrent output file name is: " +
                         outputFile + "\n");
                 readLine();
-                return true;
-            case 3:
+                return true;    // Keeps while loop in Main going
+                                // and returns to the menu
+            case 3:     // Case where the user asks to see the current
+                        // MySQL credentials being used to access the database
                 System.out.println("\nCurrent database URL: "
                         + databaseIO.getDbUrl());
                 System.out.println("Current database username: "
@@ -194,8 +246,10 @@ public class UserIO {
                 System.out.println("Current database password: "
                         + hidePassword(databaseIO.getPassword()));
                 readLine();
-                return true;
-            case 4:
+                return true;    // Keeps the while loop in Main going and
+                                // returns to the menu
+            case 4:     // Case where the user requests to alter the output
+                        // file the order output is being written to.
                 readLine();
                 System.out.println("\nThe current output file name is: \"" +
                         outputFile + "\"\n");
@@ -204,18 +258,24 @@ public class UserIO {
                     System.out.println("New file name: ");
                     String readFileName = readLine();
                 updateOutputName(readFileName);
-                return true;
-            case 5:
+                return true;    // Keeps the while loop in Main going and
+                                // returns to the menu
+            case 5:     // Case where the user requests to change the MySQL
+                        // credentials being used to access the database
                 updateSQLCredentials();
-                return true;
-            case 0:
+                return true;    // Keeps the while loop in Main going and
+                                // returns to the menu
+            case 0:     // Case where the user requests that the program close
                 System.out.println();
                 System.out.println("Thank you for using Supply Chain Manager.");
                 System.out.println("Now closing the program.");
-                return false;
-
+                return false;   // Stops the while loop in Main and triggers
+                                // actions to safely stop the program.
         }
-        return true;
+        return true;    // Should be unused. In the case that a case not listed
+                        // is taken in as an argument, the program will keep
+                        // the while loop in Main going, and returns to the
+                        // menu.
     }
 
     /**
@@ -239,15 +299,22 @@ public class UserIO {
      *
      * @param userRequest String of the user's order request that is to
      *                   be processed.
+     * @param remove True if items should be removed from the database
+     *               in the case of a successful order. False if the database
+     *               should remain unchanged after a successful order.
      */
     public void processUserRequest(String userRequest, boolean remove){
-        if(userRequest.equals("CANCEL")){
+        if(userRequest.equals("CANCEL")){   // Provides the user the
+                                            // ability to abort making an order
+                                            // and return to the menu
             System.out.println("Returning to menu. No order has been placed.");
             return;
         }
 
         String requestREGEX1 = "([A-Z][a-z]+) ([a-z]+), ([0-9]+)";
         String requestREGEX2 = "([A-Z][a-z]+ [A-Z][a-z]+) ([a-z]+), ([0-9]+)";
+            // Regex Strings search for inputs in the form [Word] [word], [int]
+            // and [Word] [Word] [word], [int]
 
         Pattern requestPattern1 = Pattern.compile(requestREGEX1);
         Matcher requestMatch1 = requestPattern1.matcher(userRequest);
@@ -259,17 +326,23 @@ public class UserIO {
         if(!matchesFound1 && !matchesFound2){
             String spellingCapErrREGEX ="([A-Za-z]+[ ]){0,2}" +
                                          "([A-Za-z]+), ([0-9]+)";
+                // Regex String to find out if the user just happened to
+                // misspell or improperly capitalize their order entry.
             Pattern spellingCapErrPat = Pattern.compile(spellingCapErrREGEX);
             Matcher spelCapErrMat = spellingCapErrPat.matcher(userRequest);
             boolean spelCapErrMatFound = spelCapErrMat.find();
             if(!spelCapErrMatFound){
+                // If order input was not formatted correctly at all
                 System.out.println();
                 System.out.println("Order could not be recognized.");
             } else if (spelCapErrMat.group(0).length() != (userRequest.length())){
+                // If there's more incorrect with the order input than just
+                // spelling and capitalization
                 System.out.println();
                 System.out.println("Order could not be recognized.");
             }
-            else {
+            else {  // Informs the user that they need to check their
+                    // capitalization for their entry.
                 System.out.println();
                 System.out.println("Please make sure that your capitalization");
                 System.out.println("matches that of the provided examples.");
@@ -277,79 +350,131 @@ public class UserIO {
                 System.out.println("Example Two: Swing Arm lamp, 1");
                 pressEnterToContinue();
             }
-
+            // Gives the user another chance to enter their order request,
+            // or request to abort the order and return to the menu
             System.out.println();
             System.out.println("Please enter your order in the form");
             System.out.println("[type] [furniture category], " +
                     "[quantity of items]");
             System.out.println("Or enter \"CANCEL\" to return to the menu.\n");
             System.out.println("Enter order: ");
-            processUserRequest(readLine(), remove);
+            processUserRequest(readLine(), remove); // Recursive call to
+                                                    // processUserRequest
+                                                    // to allow the method
+                                                    // to process the user's
+                                                    // new input.
         }
 
 
-        else{
-            if(matchesFound2) {
+        else{   // There was a match to an order in the correct format,
+                // and the entry will be checked for more specific errors
+            if(matchesFound2) { // If there was a match in the form
+                                // [Word] [Word] [word], [int]
                 if(requestMatch2.group(0).length()!=userRequest.length()){
+                        // Case where there was a match for a correct order
+                        // format, but there is more content in the order
+                        // entry that was not correct.
                     System.out.println();
                     System.out.println("Order could not be recognized.");
                     System.out.println();
                     System.out.println("Please enter your order in the form");
                     System.out.println("[type] [furniture category], " +
                                        "[quantity of items]");
-                    System.out.println("Or enter \"CANCEL\" to return to the menu.\n");
+                    System.out.println("Or enter \"CANCEL\" to " +
+                            "return to the menu.\n");
                     System.out.println("Enter order: ");
+                    // Recursive call to processUserRequest to
+                    // give user another chance to enter their order.
                     processUserRequest(readLine(), remove);
                     return;
                 } else {
+                        // Saves the inputs provided from the order in the class
+                        // variables for later reference.
                     furnType = requestMatch2.group(1);
                     furnCategory = requestMatch2.group(2);
                     numOfItems = requestMatch2.group(3);
                     latestRequest = userRequest;
                 }
-            }else{
-                if(matchesFound1 && requestMatch1.group(0).length()!=userRequest.length()){
+            }else{          // If there was a match in the form
+                            // [Word] [word], [int]
+                if(matchesFound1 && requestMatch1.group(0).length()
+                        !=userRequest.length()){
+                        // Case where there was a match for a correct order
+                        // entry, but there was other incorrect content
+                        // also included in the order entry
                     System.out.println();
                     System.out.println("Order could not be recognized.");
                     System.out.println();
                     System.out.println("Please enter your order in the form");
                     System.out.println("[type] [furniture category], " +
                                        "[quantity of items]");
-                    System.out.println("Or enter \"CANCEL\" to return to the menu.\n");
+                    System.out.println("Or enter \"CANCEL\" to return " +
+                            "to the menu.\n");
                     System.out.println("Enter order: ");
+                    // Recursive call to processUserRequest to
+                    // give user another chance to enter their order.
                     processUserRequest(readLine(), remove);
                     return;
                 } else {
+                    // Saves the values read from the order in class variables
+                    // for future reference.
                     furnType = requestMatch1.group(1);
                     furnCategory = requestMatch1.group(2);
                     numOfItems = requestMatch1.group(3);
                     latestRequest = userRequest;
                 }
             }
+            // At this point, the order has been parsed and the values
+            // provided for the request by the user have been saved
+            // as class variables
             if(furnCategory.equals("chair") || furnCategory.equals("desk")
                     || furnCategory.equals("filing")
                     || furnCategory.equals("lamp")){
+                // Checks to ensure the furniture category requested by the
+                // user is one that is available in the database
                 if(databaseIO.typeExists(furnCategory, furnType)){
-                    checkFurniture();
+                    // Checks to ensure that the type of furniture requested
+                    // by the user exists in the database.
+                    checkFurniture();   // Method for utilizing the class
+                                        // instance of PriceOptimizer
+                                        // to get the best price possible
+                                        // for the furniture
                     String[] temp = priceOpt
                             .optimize(Integer.parseInt(numOfItems));
                     if(temp!=null){
+                        // If there was a possible combination to fulfill
+                        // the user's request
                         for(String t: temp){
                             if(remove) {
+                                // boolean "remove" used to allow for
+                                // possibility to test method without
+                                // actively removing furniture from the
+                                // database.
+                                // When running the program normally,
+                                // it will always be true and the item(s)
+                                // ordered will be removed from the database.
                                 databaseIO.removeItem(furnCategory, t);
                             }
                         }
+                        // Creates an output file and terminal output for a
+                        // successful order that has now been fulfilled.
                         fileIO = new FileIO(outputFile,temp,userRequest,
                                 priceOpt.getCurrentCost());
                     }
-                    else{
+                    else{   // If there was no possible combination of
+                            // items available to fulfill the user's order
+
+                            // Creates a terminal output for an unsuccessful
+                            // order, listing alternative manufacturers.
                         fileIO = new FileIO(databaseIO
                                 .suggestedManufacturers(furnCategory));
                     }
-                } else {
+                } else {    // If the furniture type could not be found in the
+                            // database; gives user another chance to enter
+                            // their order.
                     System.out.println();
                     System.out.println("The furniture type " + furnType  +
-                                       "could ");
+                                       " could ");
                     System.out.println("not be found in the " +
                                        "current database.");
                     pressEnterToContinue();
@@ -357,14 +482,19 @@ public class UserIO {
                     System.out.println("Please enter your order in the form");
                     System.out.println("[type] [furniture category], " +
                                        "[quantity of items]");
-                    System.out.println("Or enter \"CANCEL\" to return to the menu.\n");
+                    System.out.println("Or enter \"CANCEL\" to return " +
+                            "to the menu.\n");
                     System.out.println("Enter order: ");
+                    // Recursive call to processUserRequest to
+                    // give user another chance to enter their order.
                     processUserRequest(readLine(), remove);
                 }
-            } else {
+            } else {    // If the furniture category is not available in the
+                        // database; gives user another chance to enter their
+                        // order
                 System.out.println();
                 System.out.println("The category " + furnCategory  +
-                                   "could ");
+                                   " could ");
                 System.out.println("not be found in the " +
                                    "current database.");
                 pressEnterToContinue();
@@ -372,8 +502,11 @@ public class UserIO {
                 System.out.println("Please enter your order in the form");
                 System.out.println("[type] [furniture category], " +
                                    "[quantity of items]");
-                System.out.println("Or enter \"CANCEL\" to return to the menu.\n");
+                System.out.println("Or enter \"CANCEL\" to return " +
+                        "to the menu.\n");
                 System.out.println("Enter order: ");
+                // Recursive call to processUserRequest to
+                // give user another chance to enter their order.
                 processUserRequest(readLine(), remove);
             }
         }
@@ -405,13 +538,15 @@ public class UserIO {
                 this.priceOpt = databaseIO.getFilingData(this.furnType);
                 break;
             default:
+                // Under normal operation, the default case will never be
+                // reached.
                 System.out.println("error");
         }
     }
 
     /**
-     * Method updateOutputName allows the user to update their preferred name of
-     * the output file that the order will be written to.
+     * Method updateOutputName allows the user to update their
+     * preferred name of the output file that the order will be written to.
      *
      * Checks to ensure that the user provides a valid file name for the new
      * output.
@@ -423,13 +558,18 @@ public class UserIO {
      *                    replace the current output file name with.
      */
     public void updateOutputName(String newFileName){
-        if(newFileName.equals("CANCEL")){
+        if(newFileName.equals("CANCEL")){   // Provides the user the ability to
+                                            // abort the output file name
+                                            // change and return to the menu.
             System.out.println("Returning to menu. Order output file name " +
                     "has not been updated.");
             return;
-        }else{
+        }else{  // If the user has not opted to abort the change and return
+                // to the menu.
             File checkFile = new File(newFileName);
             if(checkFile.isDirectory()){
+                // If the output file name selected by the user is one
+                // corrosponding to a directory instead of a file.
                 System.out.println("\n\nThe provided name is not a valid " +
                         "file.");
                 System.out.println("Please enter a valid file name or enter " +
@@ -437,22 +577,38 @@ public class UserIO {
                 System.out.println("Current order output file name: "
                         + this.outputFile);
                 System.out.println("New order output file name: ");
+                // Recursive call to updateOutputName to give the user another
+                // chance to enter a valid output file name, or abort the
+                // change output file name operation
                 updateOutputName(readLine());
+                return;
             }
-            else{
+            else{   // If the output file name is a valid name for a file,
+                    // regardless of whether it exists or not.
                 System.out.println("New order output file name is \"" +
                         newFileName + "\"");
+                    // Allows the user to confirm that they want to save
+                    // the change to the file name
                 System.out.println("Save update? (Y/N): ");
-                String saveResponse = readLine();
+                String saveResponse = readLine();   // Holds the user's response
+                                                    // to saving their output
+                                                    // file name change or not
                 while(!saveResponse.equals("Y") && !saveResponse.equals("N")){
+                    // Continues to ask the user whether to save the output file
+                    // name change until they give an acceptable input.
                     System.out.println("Save update? (Y/N): ");
                     saveResponse = readLine();
                 }
                 if(saveResponse.equals("N")){
+                    // If the user opts not to save the change to the output
+                    // file name
                     System.out.println("Returning to menu. Order output file " +
                             "name has not been updated.");
+                    return;
                 }
                 else{
+                    // If the user does opt to save the change to the output
+                    // file name
                     this.outputFile = newFileName;
                     System.out.println("\nOrder output file name has been " +
                             "updated to " + this.outputFile);
@@ -472,55 +628,79 @@ public class UserIO {
      */
     public void updateSQLCredentials(){
         readLine();
+        // Provides user warning about changing the MySQL credentials because
+        // of the possibility of rendering the Supply Chain Manager unusable
+        // for placing and fulfilling orders
         System.out.println("\n\nWarning: Altering the current MySQL " +
                 "credentials \nmay make the database unreachable.\n");
         System.out.println("\nDo you want to proceed? (Y/N):");
-        String updateString = readLine();
+        String updateString = readLine();   // Stores user's response to
+                                            // continue changing the credentials
+                                            // or not
         while(!updateString.equals("Y") && !updateString.equals("N")){
+            // Continues to ask user to confirm whether to continue or not
+            // until they provide a valid response.
             System.out.println("Do you want to proceed? (Y/N):");
             updateString = readLine();
         }
         if(updateString.equals("N")){
+            // If the user opts to abort the operation to change the MySQL
+            // credentials, returns to menu without making any changes
             System.out.println("\nReturning to menu. " +
                     "No changes have been made.");
         }
-        else{
+        else{   // If the user opts to continue the operation to change the
+                // MySQL credentials
             String newURL;
             System.out.println("\nEnter \"CANCEL\" at any time to return to " +
                     "menu \nwithout updating MySQL credentials.\n");
             System.out.println("Please enter the new database URL: ");
-            updateString = readLine();
+            updateString = readLine(); // Temporary storage for the user entry
             if(updateString.equals("CANCEL")){
+                // If the user opts to abort the operation to change the MySQL
+                // credentials, returns to the menu without making any changes
                 System.out.println("\nReturning to menu. " +
                         "No changes have been made.");
                 return;
             }
             else{
-                newURL = updateString;
+                newURL = updateString;  // Temporarily stores
+                                        // the user entry as the newURL
             }
             String newUser;
             System.out.println("Please enter the new database username: ");
-            updateString = readLine();
+            updateString = readLine(); // Temporarily stores the user entry
             if(updateString.equals("CANCEL")){
+                // If the user opts to abort the operation to change the MySQL
+                // credentials, returns to the menu without making any changes
                 System.out.println("\nReturning to menu. " +
                         "No changes have been made.");
                 return;
             } else {
-                newUser = updateString;
+                newUser = updateString; // Temporarily stores the user entry
+                                        // as the new username
             }
             String newPassword;
             System.out.println("Please enter the new database password: ");
-            updateString = readLine();
+            updateString = readLine(); // Temporarily stores the user entry
             if(updateString.equals("CANCEL")) {
+                // If the user opts to abort the operation to change the MySQL
+                // credentials, returns to the menu without making any changes
                 System.out.println("\nReturning to menu. " +
                         "\nNo changes have been made.");
                 return;
             } else {
-                newPassword = updateString;
+                newPassword = updateString; // Temporarily stores the user entry
+                                            // as the new password
             }
+
+            // Provides the user a chance to review the updated credentials
+            // compared to the current credentials
             System.out.println("\nOld MySQL credentials are");
             System.out.println("  URL: " + databaseIO.getDbUrl());
             System.out.println("  Username: " + databaseIO.getUsername());
+            // Passwords are displayed as a series of stars for privacy
+            // as the user reviews the information
             System.out.println("  Password: " + hidePassword(databaseIO
                     .getPassword()));
             System.out.println();
@@ -530,19 +710,26 @@ public class UserIO {
             System.out.println("  Password: " + hidePassword(newPassword));
             System.out.println();
             System.out.println("Update MySQL credentials? (Y/N):");
-            updateString = readLine();
+            updateString = readLine(); // Temporarily stores the user entry
             while(!updateString.equals("Y") && !updateString.equals("N")){
+                // Continues to ask user to confirm whether to continue or not
+                // until they provide a valid response.
                 System.out.println("Update MySQL credentials? (Y/N):");
                 updateString = readLine();
             }
             if(updateString.equals("N")){
+                // If the user opts to abort the operation to change the MySQL
+                // credentials, returns to the menu without making any changes
                 System.out.println("\nReturning to menu. " +
                         "\nMySQL credentials have not been updated.");
             }
             else {
+                // Updates all the MySQL credentials in the class instance of
+                // databaseIO and informs the user of such.
                 databaseIO.updateCredentials(newURL, newUser, newPassword);
                 System.out.println("\nMySQL credentials have been " +
                         "\nupdated.");
+                // Returns to the menu upon completion.
                 System.out.println("Returning to menu.");
             }
         }
@@ -563,6 +750,8 @@ public class UserIO {
         for(int i = 0; i<password.length(); i++){
             hidden.append("*");
         }
+        // Returns a string the same length as the provided password,
+        // with each character as a '*'
         return hidden.toString();
     }
 
@@ -624,6 +813,7 @@ public class UserIO {
     private void pressEnterToContinue(){
         boolean pressed = false;
         String returned = null;
+        // Continues running until the user presses enter.
         while(!pressed) {
             System.out.println();
             System.out.println("Press ENTER to continue");

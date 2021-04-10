@@ -1,17 +1,6 @@
 /**
- * INSTRUCTIONS FOR OPERATION:
- * 1. Run the Supply Chain program in the command line, using
- * the class Main as the class containing the main method.
- * Ensure that the driver for operating the database,
- * "mysql_connector_java_8_0_23.jar"
- * is included in the classpath at execution.
- * Ensure the database "inventory.sql" exists and is set up
- * to be used.
- *
- * 2. Follow instructions in the command line for each desired action.
- * The Supply Chain program will continue to run under normal operation
- * until the user explicitly commands it to end.
- *
+ * Instructions for use of Supply Chain Manager can be found
+ * in file README.md located in the immediate directory.
  *
  * ENSF 409 Winter 2021 Final Group Project
  * Program designed with the intention of allowing a sustainable
@@ -52,16 +41,18 @@ public class Main {
     public static void main(String[] args) {
         boolean continueLoop = true;
         UserIO input = new UserIO();
-        input.firstMenu();
+        input.firstMenu();  // Introductory message to the program to be
+                            // displayed once upon start up.
         int selection = input.menu();
-        continueLoop = input.processInput(selection);
+        continueLoop = input.processInput(selection, true);
         while(continueLoop) { // Will continue to run the program through
                                 // the UserIO menu until the user opts to end
                                 // the program and continueLoop is set as false.
             selection = input.menu();
-            continueLoop = input.processInput(selection);
+            continueLoop = input.processInput(selection, true);
 
         }
+        // Once the while loop finishes, the program terminates successfully.
         System.exit(0);
 
     }
