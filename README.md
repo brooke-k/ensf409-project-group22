@@ -49,7 +49,7 @@ Other operating systems will need to modify these instructions slightly.***
 
 ----------------------------------------------------------------------
 
-## Compilation Instructions for *Supply Chain Manager*
+## Compilation Instructions for *Supply Chain Manager* and All *Supply Chain Manager* Unit Tests
 1. Enter the directory `"SupplyChainManager/"` in the command line
 
 2. Ensure the database to be used for management of items is accesible by the 
@@ -64,10 +64,10 @@ current machine.
    the command
    
     >`javac -cp .;lib/* edu/ucalgary/ensf409/*.java`
-
+----------------------------------------------------------------------
 ----------------------------------------------------------------------    
 
-## Execution Instructions for *Supply Chain Manager*
+## Execution Instructions for *Supply Chain Manager* 
 1. Enter the directory `"SupplyChainManager/"` in the command line
 2. Ensure the *Supply Chain Manager* program has been compiled correctly
 3. Ensure the following directories are contained within the current
@@ -82,10 +82,6 @@ command
    
 5. Follow the directions provided in the terminal to operate 
    the *Supply Chain Manager*. 
----------------------------------------------------------------------
----------------------------------------------------------------------
-## Compilation Instructions for *Supply Chain Manager* Unit Testing
-* Follow *Compilation Instructions for *Supply Chain Manager**, above.
 ---------------------------------------------------------------------
 ## Execution Instructions for *Supply Chain Manager* Unit Testing
 1. Enter the directory `"SupplyChainManager/"` in the command line
