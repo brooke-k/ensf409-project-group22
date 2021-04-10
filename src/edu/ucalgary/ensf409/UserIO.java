@@ -16,15 +16,24 @@ import java.util.regex.Pattern;
  * through.
  */
 public class UserIO {
-    private Scanner input;
-    private String furnType;
-    private String furnCategory;
-    private String numOfItems;
-    private DatabaseIO databaseIO;
-    private FileIO fileIO;
-    private String latestRequest;
-    private PriceOptimizer priceOpt;
-    private String outputFile = "OrderOutput.txt";
+    private Scanner input;             // Used for reading user
+                                        // input from the terminal
+    private String furnType;           // Furniture type read from latest order
+    private String furnCategory;       // Furniture category read from
+                                        // latest order
+    private String numOfItems;         // Number pieces of furniture in
+                                        // latest order
+    private DatabaseIO databaseIO;     // For accessing the database
+    private FileIO fileIO;             // For creating and producing outputs
+                                        // in response to valid orders
+    private String latestRequest;      // The latest valid request entered by
+                                        // the user as an order
+    private PriceOptimizer priceOpt;   // Used for finding, if possible, the
+                                        // lowest cost combination of furniture
+                                        // pieces to fulfill the order
+    private String outputFile = "OrderOutput.txt";  // Name of the file used
+                                                     // for the outputted
+                                                     // order form
     
     /**
      * The method menu will display the user menu and return the selected option
@@ -32,7 +41,11 @@ public class UserIO {
      * @return int corresponding to the selected option by the user
      */
     public int menu() {
+            // Pauses at the output of the previous action, allowing
+            // user time to read it before the menu is rendered to the terminal
+            // again.
             pressEnterToContinue();
+            // Main options for menu informing user of their options
             System.out.println();
             System.out.println("--------------------------------------------");
             System.out.println();
@@ -45,6 +58,10 @@ public class UserIO {
             System.out.println("0. Exit Program");
             System.out.println();
             System.out.print("Enter your selection: ");
+
+            // Returns the entry the user has inputted to the menu
+            // back to main method to manage the next process based on the
+            // selection
             return readIntUntilAccepted(0, 5);
     }
 
@@ -72,6 +89,9 @@ public class UserIO {
     public UserIO() {
         input = new Scanner(System.in);
         databaseIO = new DatabaseIO();
+        // Class variables regarding the order are set to null to imply the
+        // previous order, which at the time of the construction of this object
+        // does not exist, was not a valid order.
         furnType = null;
         furnCategory = null;
         latestRequest = null;
@@ -84,7 +104,7 @@ public class UserIO {
      * @return String with user input to console
      */
     public String readLine() {
-        // Take the next line of input
+        // Take the next line of input stream, System.in, using Scanner
         return input.nextLine();
     }
 
@@ -94,6 +114,8 @@ public class UserIO {
      * @return int corresponding to the int the user entered
      */
     public int readInt(){
+        // Take the next integer value that can be found in the input stream,
+        // System.in, using Scanner
         return input.nextInt();
     }
 
@@ -112,6 +134,7 @@ public class UserIO {
         if(userInput < min || userInput > max) {
             throw new InputOutOfBoundsException();
         }
+        // Only returned if the user input was a valid integer.
         return userInput;
     }
 
@@ -122,13 +145,21 @@ public class UserIO {
      * @return int corresponding to the valid int the user entered
      */
     public int readIntUntilAccepted(int min, int max) {
-        boolean inputOK;
+        boolean inputOK;    // Used to indicated if the user's selection from
+                            // the menu is valid
         int userInput = -1;
-        do {
+        do {    // Will keep repeating until the user enters a valid selection
+                // from the menu
             inputOK = true;
             try {
+                // If the user input is valid, no exception will be thrown
+                // and userInput will be set to the user's selection
                 userInput = readInt(min, max);
             } catch (InputOutOfBoundsException | InputMismatchException e) {
+                // If the user's input is not valid, an
+                // InputOutOfBoundsException will be thrown, and another
+                // chance for the user to make a selection from the menu
+                // is given.
                 input.nextLine();
                 System.out.println();
                 System.out.print("Please only enter a number from 0 to 5.");
@@ -145,6 +176,7 @@ public class UserIO {
             }
         }while(!inputOK);
 
+        // Returns the valid user selection from the menu
         return userInput;
     }
 
@@ -496,6 +528,8 @@ public class UserIO {
                 this.priceOpt = databaseIO.getFilingData(this.furnType);
                 break;
             default:
+                // Under normal operation, the default case will never be
+                // reached.
                 System.out.println("error");
         }
     }
