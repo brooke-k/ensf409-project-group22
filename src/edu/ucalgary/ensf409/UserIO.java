@@ -160,16 +160,22 @@ public class UserIO {
         System.out.println("--------------------------------------------");
         System.out.println();
         switch(inputValue){
-            case 1:
+            case 1: // The user has requested to make a new order
                 databaseIO.createConnection();
                 setReadValuesNull();
 
                boolean connectionMade = databaseIO.createConnection();
-               if(!connectionMade) {
+               if(!connectionMade) {    // If a connection to the database
+                                        // cannot be made, method informs
+                                        // the user and returns to the
+                                        // main menu.
                    System.out.println("Returning to menu. " +
                            "No order has been placed.");
                    return true;
                }
+
+                // Provides structure for the user to put in their order
+                // in the terminal
                 System.out.println("\nPlease input request for " +
                         "furniture item in the form");
                 System.out.println("[type] [furniture category], " +
@@ -178,15 +184,19 @@ public class UserIO {
                 System.out.println("or enter \"CANCEL\" to return to the menu");
                 System.out.println("Enter request: ");
                 readLine();
-                String readFromScan = readLine();
-                processUserRequest(readFromScan, remove);
-                return true;
-            case 2:
+                String readFromScan = readLine();   // Scans for user input
+                processUserRequest(readFromScan, remove); // Processes the order
+                return true;    // Keeps the while loop going
+                                // and returns to the menu
+            case 2:     // Case where the user asks to see the current
+                        // output file name the order is written to
                 System.out.println("\nCurrent output file name is: " +
                         outputFile + "\n");
                 readLine();
-                return true;
-            case 3:
+                return true;    // Keeps while loop in Main going
+                                // and returns to the menu
+            case 3:     // Case where the user asks to see the current
+                        // MySQL credentials being used to access the database
                 System.out.println("\nCurrent database URL: "
                         + databaseIO.getDbUrl());
                 System.out.println("Current database username: "
@@ -194,8 +204,10 @@ public class UserIO {
                 System.out.println("Current database password: "
                         + hidePassword(databaseIO.getPassword()));
                 readLine();
-                return true;
-            case 4:
+                return true;    // Keeps the while loop in Main going and
+                                // returns to the menu
+            case 4:     // Case where the user requests to alter the output
+                        // file the order output is being written to.
                 readLine();
                 System.out.println("\nThe current output file name is: \"" +
                         outputFile + "\"\n");
@@ -204,18 +216,24 @@ public class UserIO {
                     System.out.println("New file name: ");
                     String readFileName = readLine();
                 updateOutputName(readFileName);
-                return true;
-            case 5:
+                return true;    // Keeps the while loop in Main going and
+                                // returns to the menu
+            case 5:     // Case where the user requests to change the MySQL
+                        // credentials being used to access the database
                 updateSQLCredentials();
-                return true;
-            case 0:
+                return true;    // Keeps the while loop in Main going and
+                                // returns to the menu
+            case 0:     // Case where the user requests that the program close
                 System.out.println();
                 System.out.println("Thank you for using Supply Chain Manager.");
                 System.out.println("Now closing the program.");
-                return false;
-
+                return false;   // Stops the while loop in Main and triggers
+                                // actions to safely stop the program.
         }
-        return true;
+        return true;    // Should be unused. In the case that a case not listed
+                        // is taken in as an argument, the program will keep
+                        // the while loop in Main going, and returns to the
+                        // menu.
     }
 
     /**
@@ -239,15 +257,22 @@ public class UserIO {
      *
      * @param userRequest String of the user's order request that is to
      *                   be processed.
+     * @param remove True if items should be removed from the database
+     *               in the case of a successful order. False if the database
+     *               should remain unchanged after a successful order.
      */
     public void processUserRequest(String userRequest, boolean remove){
-        if(userRequest.equals("CANCEL")){
+        if(userRequest.equals("CANCEL")){   // Provides the user the
+                                            // ability to abort making an order
+                                            // and return to the menu
             System.out.println("Returning to menu. No order has been placed.");
             return;
         }
 
         String requestREGEX1 = "([A-Z][a-z]+) ([a-z]+), ([0-9]+)";
         String requestREGEX2 = "([A-Z][a-z]+ [A-Z][a-z]+) ([a-z]+), ([0-9]+)";
+            // Regex Strings search for inputs in the form [Word] [word], [int]
+            // and [Word] [Word] [word], [int]
 
         Pattern requestPattern1 = Pattern.compile(requestREGEX1);
         Matcher requestMatch1 = requestPattern1.matcher(userRequest);
@@ -259,17 +284,23 @@ public class UserIO {
         if(!matchesFound1 && !matchesFound2){
             String spellingCapErrREGEX ="([A-Za-z]+[ ]){0,2}" +
                                          "([A-Za-z]+), ([0-9]+)";
+                // Regex String to find out if the user just happened to
+                // misspell or improperly capitalize their order entry.
             Pattern spellingCapErrPat = Pattern.compile(spellingCapErrREGEX);
             Matcher spelCapErrMat = spellingCapErrPat.matcher(userRequest);
             boolean spelCapErrMatFound = spelCapErrMat.find();
             if(!spelCapErrMatFound){
+                // If order input was not formatted correctly at all
                 System.out.println();
                 System.out.println("Order could not be recognized.");
             } else if (spelCapErrMat.group(0).length() != (userRequest.length())){
+                // If there's more incorrect with the order input than just
+                // spelling and capitalization
                 System.out.println();
                 System.out.println("Order could not be recognized.");
             }
-            else {
+            else {  // Informs the user that they need to check their
+                    // capitalization for their entry.
                 System.out.println();
                 System.out.println("Please make sure that your capitalization");
                 System.out.println("matches that of the provided examples.");
@@ -277,76 +308,128 @@ public class UserIO {
                 System.out.println("Example Two: Swing Arm lamp, 1");
                 pressEnterToContinue();
             }
-
+            // Gives the user another chance to enter their order request,
+            // or request to abort the order and return to the menu
             System.out.println();
             System.out.println("Please enter your order in the form");
             System.out.println("[type] [furniture category], " +
                     "[quantity of items]");
             System.out.println("Or enter \"CANCEL\" to return to the menu.\n");
             System.out.println("Enter order: ");
-            processUserRequest(readLine(), remove);
+            processUserRequest(readLine(), remove); // Recursive call to
+                                                    // processUserRequest
+                                                    // to allow the method
+                                                    // to process the user's
+                                                    // new input.
         }
 
 
-        else{
-            if(matchesFound2) {
+        else{   // There was a match to an order in the correct format,
+                // and the entry will be checked for more specific errors
+            if(matchesFound2) { // If there was a match in the form
+                                // [Word] [Word] [word], [int]
                 if(requestMatch2.group(0).length()!=userRequest.length()){
+                        // Case where there was a match for a correct order
+                        // format, but there is more content in the order
+                        // entry that was not correct.
                     System.out.println();
                     System.out.println("Order could not be recognized.");
                     System.out.println();
                     System.out.println("Please enter your order in the form");
                     System.out.println("[type] [furniture category], " +
                                        "[quantity of items]");
-                    System.out.println("Or enter \"CANCEL\" to return to the menu.\n");
+                    System.out.println("Or enter \"CANCEL\" to " +
+                            "return to the menu.\n");
                     System.out.println("Enter order: ");
+                    // Recursive call to processUserRequest to
+                    // give user another chance to enter their order.
                     processUserRequest(readLine(), remove);
                     return;
                 } else {
+                        // Saves the inputs provided from the order in the class
+                        // variables for later reference.
                     furnType = requestMatch2.group(1);
                     furnCategory = requestMatch2.group(2);
                     numOfItems = requestMatch2.group(3);
                     latestRequest = userRequest;
                 }
-            }else{
-                if(matchesFound1 && requestMatch1.group(0).length()!=userRequest.length()){
+            }else{          // If there was a match in the form
+                            // [Word] [word], [int]
+                if(matchesFound1 && requestMatch1.group(0).length()
+                        !=userRequest.length()){
+                        // Case where there was a match for a correct order
+                        // entry, but there was other incorrect content
+                        // also included in the order entry
                     System.out.println();
                     System.out.println("Order could not be recognized.");
                     System.out.println();
                     System.out.println("Please enter your order in the form");
                     System.out.println("[type] [furniture category], " +
                                        "[quantity of items]");
-                    System.out.println("Or enter \"CANCEL\" to return to the menu.\n");
+                    System.out.println("Or enter \"CANCEL\" to return " +
+                            "to the menu.\n");
                     System.out.println("Enter order: ");
+                    // Recursive call to processUserRequest to
+                    // give user another chance to enter their order.
                     processUserRequest(readLine(), remove);
                     return;
                 } else {
+                    // Saves the values read from the order in class variables
+                    // for future reference.
                     furnType = requestMatch1.group(1);
                     furnCategory = requestMatch1.group(2);
                     numOfItems = requestMatch1.group(3);
                     latestRequest = userRequest;
                 }
             }
+            // At this point, the order has been parsed and the values
+            // provided for the request by the user have been saved
+            // as class variables
             if(furnCategory.equals("chair") || furnCategory.equals("desk")
                     || furnCategory.equals("filing")
                     || furnCategory.equals("lamp")){
+                // Checks to ensure the furniture category requested by the
+                // user is one that is available in the database
                 if(databaseIO.typeExists(furnCategory, furnType)){
-                    checkFurniture();
+                    // Checks to ensure that the type of furniture requested
+                    // by the user exists in the database.
+                    checkFurniture();   // Method for utilizing the class
+                                        // instance of PriceOptimizer
+                                        // to get the best price possible
+                                        // for the furniture
                     String[] temp = priceOpt
                             .optimize(Integer.parseInt(numOfItems));
                     if(temp!=null){
+                        // If there was a possible combination to fulfill
+                        // the user's request
                         for(String t: temp){
                             if(remove) {
+                                // boolean "remove" used to allow for
+                                // possibility to test method without
+                                // actively removing furniture from the
+                                // database.
+                                // When running the program normally,
+                                // it will always be true and the item(s)
+                                // ordered will be removed from the database.
                                 databaseIO.removeItem(furnCategory, t);
                             }
                         }
+                        // Creates an output file and terminal output for a
+                        // successful order that has now been fulfilled.
                         fileIO = new FileIO(outputFile,temp,userRequest,
                                 priceOpt.getCurrentCost());
                     }
-                    else{
+                    else{   // If there was no possible combination of
+                            // items available to fulfill the user's order
+
+                            // Creates a terminal output for an unsuccessful
+                            // order, listing alternative manufacturers.
                         fileIO = new FileIO(databaseIO
                                 .suggestedManufacturers(furnCategory));
                     }
-                } else {
+                } else {    // If the furniture type could not be found in the
+                            // database; gives user another chance to enter
+                            // their order.
                     System.out.println();
                     System.out.println("The furniture type " + furnType  +
                                        "could ");
@@ -357,11 +440,16 @@ public class UserIO {
                     System.out.println("Please enter your order in the form");
                     System.out.println("[type] [furniture category], " +
                                        "[quantity of items]");
-                    System.out.println("Or enter \"CANCEL\" to return to the menu.\n");
+                    System.out.println("Or enter \"CANCEL\" to return " +
+                            "to the menu.\n");
                     System.out.println("Enter order: ");
+                    // Recursive call to processUserRequest to
+                    // give user another chance to enter their order.
                     processUserRequest(readLine(), remove);
                 }
-            } else {
+            } else {    // If the furniture category is not available in the
+                        // database; gives user another chance to enter their
+                        // order
                 System.out.println();
                 System.out.println("The category " + furnCategory  +
                                    "could ");
@@ -372,8 +460,11 @@ public class UserIO {
                 System.out.println("Please enter your order in the form");
                 System.out.println("[type] [furniture category], " +
                                    "[quantity of items]");
-                System.out.println("Or enter \"CANCEL\" to return to the menu.\n");
+                System.out.println("Or enter \"CANCEL\" to return " +
+                        "to the menu.\n");
                 System.out.println("Enter order: ");
+                // Recursive call to processUserRequest to
+                // give user another chance to enter their order.
                 processUserRequest(readLine(), remove);
             }
         }
@@ -410,8 +501,8 @@ public class UserIO {
     }
 
     /**
-     * Method updateOutputName allows the user to update their preferred name of
-     * the output file that the order will be written to.
+     * Method updateOutputName allows the user to update their
+     * preferred name of the output file that the order will be written to.
      *
      * Checks to ensure that the user provides a valid file name for the new
      * output.
