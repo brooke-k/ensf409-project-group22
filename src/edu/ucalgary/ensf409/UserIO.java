@@ -358,6 +358,8 @@ public class UserIO {
             System.out.println("Please enter your order in the form");
             System.out.println("[type] [furniture category], " +
                     "[quantity of items]");
+            System.out.println("Example One: Mesh chair, 3");
+            System.out.println("Example Two: Swing Arm lamp, 1");
             System.out.println("Or enter \"CANCEL\" to return to the menu.\n");
             System.out.println("Enter order: ");
             processUserRequest(readLine(), remove); // Recursive call to
