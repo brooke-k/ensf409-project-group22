@@ -198,7 +198,6 @@ public class UserIO {
         System.out.println();
         switch(inputValue){
             case 1: // The user has requested to make a new order
-                databaseIO.createConnection();
                 setReadValuesNull(); // Sets all class variables regarding
                                     // the order information to null. If the
                                     // order request is valid, they will be
@@ -214,6 +213,7 @@ public class UserIO {
                                         // main menu.
                    System.out.println("Returning to menu. " +
                            "No order has been placed.");
+                   input.nextLine();
                    return true;     // Keeps while loop in Main going
                                     // and returns to the menu
                }

@@ -118,7 +118,15 @@ public class DatabaseIO {
             System.out.println("the credentials:");
             System.out.println("     DbURL: " + this.dbUrl);
             System.out.println("  Username: " + this.username);
-            System.out.println("  Password: " + this.password);
+            StringBuilder hiddenPassword = new StringBuilder();
+            for(int i = 0; i<this.password.length() ; i++){
+                hiddenPassword.append('*');
+            }
+            System.out.println("  Password: " + hiddenPassword.toString());
+
+
+
+
             System.out.println();
             return false;
         }

@@ -1298,7 +1298,7 @@ public class SupplyChainTest {
                 "with\\Rthe credentials:\\R[ ]{5}DbURL: " +
                 "invalidURL\\R[ ]{2}Username: " +
                 "invalidUsername\\R[ ]{2}Password: " +
-                "invalidPassword)";
+                "\\*\\*\\*\\*\\*\\*\\*\\*\\*\\*\\*\\*\\*\\*\\*)";
         Pattern expectedPattern = Pattern.compile(expectedOutputREGEX);
         Matcher expectedMatch = expectedPattern.matcher
                 (terminalContent.toString());

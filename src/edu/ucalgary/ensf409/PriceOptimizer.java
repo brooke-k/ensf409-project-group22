@@ -76,20 +76,18 @@ public class PriceOptimizer {
         for(int p : price){
             currentCost += p;
         }
+
         int[] indexs = new int[parts.length];
-        for (int i = 0; i < parts.length; i++) {
+        for (int i = 0; i < parts.length; i++) { //index stores the index of all the parts
             indexs[i] = i;
         }
 
-        for (int i = 1; i <= partCount; i++) {
-            int[] data = new int[i];
-            recursion(indexs, data, 0, indexs.length-1, 0, i);
+        for (int i = 1; i <= parts.length; i++) {
+            int[] data = new int[i];        //makes an array to store the compatible data
+            recursion(indexs, data, 0, indexs.length-1, 0, i); //calls recursion
         }
 
-        if(!compatible(indexs)) {
-            return null;
-        }
-        String[] ids = null;
+        String[] ids = null;            //sets returning string as null incase there wasnt a match
         if(minIndex != null){
             ids = new String[minIndex.length];
             for (int i = 0; i < ids.length; i++) {
@@ -118,6 +116,7 @@ public class PriceOptimizer {
      */
     private void recursion(int[] arr, int[] data, int start,
                            int end, int index, int r) {
+
         if (index == r) {
             if(compatible(data)){
                 if(getPrice(data) < currentCost){
@@ -128,6 +127,7 @@ public class PriceOptimizer {
             }
             return;
         }
+        //
         for (int i = start; i <= end && end - i + 1 >= r - index; i++) {
             data[index] = arr[i];
             recursion(arr, data, i + 1, end, index + 1, r);
