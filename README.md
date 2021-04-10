@@ -7,7 +7,7 @@
 
 
 > #### Members:
->* [Christopher Chan](christopher.chan2@ucalgary.ca) 
+>* Christopher Chan - ![christopher.chan2@ucalgary.ca](christopher.chan2@ucalgary.ca) 
 >* [Amnah Hussain](amnah.hussain@ucalgary.ca)
 >* [Brooke Kindleman](brooke.kindleman@ucalgary.ca)   
 >* [Neeraj Sunil Kumar](neeraj.sunikumar@ucalgary.ca)
