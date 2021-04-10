@@ -118,8 +118,9 @@ public class PriceOptimizer {
                            int end, int index, int r) {
 
         if (index == r) {
+
             if(compatible(data)){
-                if(getPrice(data) < currentCost){
+                if(getPrice(data) <= currentCost){
                     currentCost = getPrice(data);
                     minIndex = new int[data.length];
                     System.arraycopy(data, 0, minIndex, 0, data.length);
