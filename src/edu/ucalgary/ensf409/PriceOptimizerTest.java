@@ -241,7 +241,7 @@ public class PriceOptimizerTest {
 
         };
         PriceOptimizer p = new PriceOptimizer(id, parts, price);
-        String[] result = p.optimize(1);
+        p.optimize(1);
         int priceResult = p.getCurrentCost();
         Assert.assertEquals(150, priceResult);
     }
@@ -312,7 +312,6 @@ public class PriceOptimizerTest {
         };
         PriceOptimizer p = new PriceOptimizer(id, parts, price);
         String[] result = p.optimize(2);
-        String[] expected = {"C0942", "C6748"};
         for (String s : result) {
             System.out.print(s + " ");
         }
