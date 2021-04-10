@@ -699,6 +699,8 @@ public class UserIO {
             System.out.println("\nOld MySQL credentials are");
             System.out.println("  URL: " + databaseIO.getDbUrl());
             System.out.println("  Username: " + databaseIO.getUsername());
+            // Passwords are displayed as a series of stars for privacy
+            // as the user reviews the information
             System.out.println("  Password: " + hidePassword(databaseIO
                     .getPassword()));
             System.out.println();
@@ -748,6 +750,8 @@ public class UserIO {
         for(int i = 0; i<password.length(); i++){
             hidden.append("*");
         }
+        // Returns a string the same length as the provided password,
+        // with each character as a '*'
         return hidden.toString();
     }
 
@@ -809,6 +813,7 @@ public class UserIO {
     private void pressEnterToContinue(){
         boolean pressed = false;
         String returned = null;
+        // Continues running until the user presses enter.
         while(!pressed) {
             System.out.println();
             System.out.println("Press ENTER to continue");
