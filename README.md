@@ -30,7 +30,7 @@ the user with a list of alternate suppliers who may be able to fulfill
 their request for furniture with new items. 
 
 In addition to managing the database for the supply chain and providing
-the most cost efficient way for a piece of furniture to be manufactured,
+the most cost-efficient way for a piece of furniture to be manufactured,
 *Supply Chain Manager* provides a way for the user to save seperate forms for
 each successful order for later reference or offline distribution.
 
