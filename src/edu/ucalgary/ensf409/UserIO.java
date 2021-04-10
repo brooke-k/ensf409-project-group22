@@ -186,6 +186,9 @@ public class UserIO {
      * input has been provided by the user, or will return with no action taken
      * if the user inputs an invalid input.
      * @param inputValue Request from the user.
+     * @param remove True if a successful order request is to remove the
+     *               items used to fulfill the order. False if the database
+     *               is to remain unchanged after a successful order
      */
     public boolean processInput(int inputValue, boolean remove){
         System.out.println();
@@ -194,7 +197,13 @@ public class UserIO {
         switch(inputValue){
             case 1: // The user has requested to make a new order
                 databaseIO.createConnection();
-                setReadValuesNull();
+                setReadValuesNull(); // Sets all class variables regarding
+                                    // the order information to null. If the
+                                    // order request is valid, they will be
+                                    // replaced with the user's request values.
+                                    // If not, they will remain as null
+                                    // to indicate the latest order request was
+                                    // invalid.
 
                boolean connectionMade = databaseIO.createConnection();
                if(!connectionMade) {    // If a connection to the database
@@ -203,7 +212,8 @@ public class UserIO {
                                         // main menu.
                    System.out.println("Returning to menu. " +
                            "No order has been placed.");
-                   return true;
+                   return true;     // Keeps while loop in Main going
+                                    // and returns to the menu
                }
 
                 // Provides structure for the user to put in their order
@@ -548,13 +558,18 @@ public class UserIO {
      *                    replace the current output file name with.
      */
     public void updateOutputName(String newFileName){
-        if(newFileName.equals("CANCEL")){
+        if(newFileName.equals("CANCEL")){   // Provides the user the ability to
+                                            // abort the output file name
+                                            // change and return to the menu.
             System.out.println("Returning to menu. Order output file name " +
                     "has not been updated.");
             return;
-        }else{
+        }else{  // If the user has not opted to abort the change and return
+                // to the menu.
             File checkFile = new File(newFileName);
             if(checkFile.isDirectory()){
+                // If the output file name selected by the user is one
+                // corrosponding to a directory instead of a file.
                 System.out.println("\n\nThe provided name is not a valid " +
                         "file.");
                 System.out.println("Please enter a valid file name or enter " +
@@ -562,22 +577,38 @@ public class UserIO {
                 System.out.println("Current order output file name: "
                         + this.outputFile);
                 System.out.println("New order output file name: ");
+                // Recursive call to updateOutputName to give the user another
+                // chance to enter a valid output file name, or abort the
+                // change output file name operation
                 updateOutputName(readLine());
+                return;
             }
-            else{
+            else{   // If the output file name is a valid name for a file,
+                    // regardless of whether it exists or not.
                 System.out.println("New order output file name is \"" +
                         newFileName + "\"");
+                    // Allows the user to confirm that they want to save
+                    // the change to the file name
                 System.out.println("Save update? (Y/N): ");
-                String saveResponse = readLine();
+                String saveResponse = readLine();   // Holds the user's response
+                                                    // to saving their output
+                                                    // file name change or not
                 while(!saveResponse.equals("Y") && !saveResponse.equals("N")){
+                    // Continues to ask the user whether to save the output file
+                    // name change until they give an acceptable input.
                     System.out.println("Save update? (Y/N): ");
                     saveResponse = readLine();
                 }
                 if(saveResponse.equals("N")){
+                    // If the user opts not to save the change to the output
+                    // file name
                     System.out.println("Returning to menu. Order output file " +
                             "name has not been updated.");
+                    return;
                 }
                 else{
+                    // If the user does opt to save the change to the output
+                    // file name
                     this.outputFile = newFileName;
                     System.out.println("\nOrder output file name has been " +
                             "updated to " + this.outputFile);
