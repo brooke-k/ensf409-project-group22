@@ -183,6 +183,7 @@ public class FileIO {
         fileBuilder.append("\n\n");
         fileBuilder.append("Items Ordered:");
 
+        // Lists the items that were purchased to fulfill the user's order
         for (String s : itemsOrdered) {
             fileBuilder.append("\n");
             fileBuilder.append("  ID: ");
@@ -192,6 +193,8 @@ public class FileIO {
         fileBuilder.append("Total price of order: $");
         fileBuilder.append(orderCost);
 
+        // Saves the string that was printed to the order form for
+        // future reference.
         orderOutputString = fileBuilder.toString();
 
         printOutputs();
