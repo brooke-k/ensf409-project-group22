@@ -52,7 +52,7 @@ Other operating systems will need to modify these instructions slightly.***
 2. Ensure the database to be used for management of items is accesible by the 
 current machine.
 
-3. Ensure the following files and directories are contained within the current 
+3. Ensure the following directories are contained within the current 
    directory:
     1. `"edu/ucalgary/ensf409/"`
     2. `"lib/"`
@@ -67,7 +67,7 @@ current machine.
 ## Execution Instructions for *Supply Chain Manager*
 1. Enter the directory `"SupplyChainManager/"` in the command line
 2. Ensure the *Supply Chain Manager* program has been compiled correctly
-3. Ensure the following files and directories are contained within the current
+3. Ensure the following directories are contained within the current
    directory:
     1. `"edu/ucalgary/ensf409/"`
     2. `"lib/"`
@@ -87,7 +87,7 @@ command
 ## Execution Instructions for *Supply Chain Manager* Unit Testing
 1. Enter the directory `"SupplyChainManager/"` in the command line
 2. Ensure the *Supply Chain Manager* program has been compiled correctly
-3. Ensure the following files and directories are contained within the current 
+3. Ensure the following directories are contained within the current 
    directory:
     1. `"edu/ucalgary/ensf409/"`
     2. `"lib/"`
