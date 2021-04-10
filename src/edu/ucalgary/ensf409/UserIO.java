@@ -71,6 +71,8 @@ public class UserIO {
      * giving the user the option to pick through the menu.
      */
     public void firstMenu(){
+        // Text only introduction to the Supply Chain Manager program
+        // to be displayed once upon start up.
         System.out.println();
         System.out.println("Welcome to the Supply Chain Manager for");
         System.out.println("recycled and second hand furniture.");
