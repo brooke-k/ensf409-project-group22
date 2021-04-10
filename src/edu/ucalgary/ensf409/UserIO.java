@@ -628,52 +628,74 @@ public class UserIO {
      */
     public void updateSQLCredentials(){
         readLine();
+        // Provides user warning about changing the MySQL credentials because
+        // of the possibility of rendering the Supply Chain Manager unusable
+        // for placing and fulfilling orders
         System.out.println("\n\nWarning: Altering the current MySQL " +
                 "credentials \nmay make the database unreachable.\n");
         System.out.println("\nDo you want to proceed? (Y/N):");
-        String updateString = readLine();
+        String updateString = readLine();   // Stores user's response to
+                                            // continue changing the credentials
+                                            // or not
         while(!updateString.equals("Y") && !updateString.equals("N")){
+            // Continues to ask user to confirm whether to continue or not
+            // until they provide a valid response.
             System.out.println("Do you want to proceed? (Y/N):");
             updateString = readLine();
         }
         if(updateString.equals("N")){
+            // If the user opts to abort the operation to change the MySQL
+            // credentials, returns to menu without making any changes
             System.out.println("\nReturning to menu. " +
                     "No changes have been made.");
         }
-        else{
+        else{   // If the user opts to continue the operation to change the
+                // MySQL credentials
             String newURL;
             System.out.println("\nEnter \"CANCEL\" at any time to return to " +
                     "menu \nwithout updating MySQL credentials.\n");
             System.out.println("Please enter the new database URL: ");
-            updateString = readLine();
+            updateString = readLine(); // Temporary storage for the user entry
             if(updateString.equals("CANCEL")){
+                // If the user opts to abort the operation to change the MySQL
+                // credentials, returns to the menu without making any changes
                 System.out.println("\nReturning to menu. " +
                         "No changes have been made.");
                 return;
             }
             else{
-                newURL = updateString;
+                newURL = updateString;  // Temporarily stores
+                                        // the user entry as the newURL
             }
             String newUser;
             System.out.println("Please enter the new database username: ");
-            updateString = readLine();
+            updateString = readLine(); // Temporarily stores the user entry
             if(updateString.equals("CANCEL")){
+                // If the user opts to abort the operation to change the MySQL
+                // credentials, returns to the menu without making any changes
                 System.out.println("\nReturning to menu. " +
                         "No changes have been made.");
                 return;
             } else {
-                newUser = updateString;
+                newUser = updateString; // Temporarily stores the user entry
+                                        // as the new username
             }
             String newPassword;
             System.out.println("Please enter the new database password: ");
-            updateString = readLine();
+            updateString = readLine(); // Temporarily stores the user entry
             if(updateString.equals("CANCEL")) {
+                // If the user opts to abort the operation to change the MySQL
+                // credentials, returns to the menu without making any changes
                 System.out.println("\nReturning to menu. " +
                         "\nNo changes have been made.");
                 return;
             } else {
-                newPassword = updateString;
+                newPassword = updateString; // Temporarily stores the user entry
+                                            // as the new password
             }
+
+            // Provides the user a chance to review the updated credentials
+            // compared to the current credentials
             System.out.println("\nOld MySQL credentials are");
             System.out.println("  URL: " + databaseIO.getDbUrl());
             System.out.println("  Username: " + databaseIO.getUsername());
@@ -686,19 +708,26 @@ public class UserIO {
             System.out.println("  Password: " + hidePassword(newPassword));
             System.out.println();
             System.out.println("Update MySQL credentials? (Y/N):");
-            updateString = readLine();
+            updateString = readLine(); // Temporarily stores the user entry
             while(!updateString.equals("Y") && !updateString.equals("N")){
+                // Continues to ask user to confirm whether to continue or not
+                // until they provide a valid response.
                 System.out.println("Update MySQL credentials? (Y/N):");
                 updateString = readLine();
             }
             if(updateString.equals("N")){
+                // If the user opts to abort the operation to change the MySQL
+                // credentials, returns to the menu without making any changes
                 System.out.println("\nReturning to menu. " +
                         "\nMySQL credentials have not been updated.");
             }
             else {
+                // Updates all the MySQL credentials in the class instance of
+                // databaseIO and informs the user of such.
                 databaseIO.updateCredentials(newURL, newUser, newPassword);
                 System.out.println("\nMySQL credentials have been " +
                         "\nupdated.");
+                // Returns to the menu upon completion.
                 System.out.println("Returning to menu.");
             }
         }
