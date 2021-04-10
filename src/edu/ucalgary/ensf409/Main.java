@@ -8,10 +8,10 @@
  * reconstructed or refurbished furniture items from their catalog, at the
  * lowest price possible for each item.
  *
- * @author <a href="christopher.chan2@ucalgary.ca>Christopher Chan</a>
- * @author <a href="amnah.hussain@ucalgary.ca>Amnah Hussain</a>
- * @author <a href="brooke.kindleman@ucalgary.ca>Brooke Kindleman</a>
- * @author <a href="neeraj.sunikumar@ucalgary.ca>Neeraj Sunil Kumar</a>
+ * @author <a href="christopher.chan2@ucalgary.ca">Christopher Chan</a>
+ * @author <a href="amnah.hussain@ucalgary.ca">Amnah Hussain</a>
+ * @author <a href="brooke.kindleman@ucalgary.ca">Brooke Kindleman</a>
+ * @author <a href="neeraj.sunikumar@ucalgary.ca">Neeraj Sunil Kumar</a>
  *
  * @since 1.0
  *
