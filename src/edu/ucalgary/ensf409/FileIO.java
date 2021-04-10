@@ -13,13 +13,18 @@ import java.util.ArrayList;
  * the order status.
  */
 public class FileIO {
-    private File outputFile;
-    private String[] itemsOrdered;
-    private String originalRequest;
-    private int orderCost;
-    private String orderOutputString;
-    private String consoleOutputString;
-    private ArrayList<String> manufacturer;
+    private File outputFile;            // File to be written to as the order
+                                         // form
+    private String[] itemsOrdered;      // ID numbers of the items that were
+                                         // purchased to fulfill the order
+    private String originalRequest;     // The original order request the user
+                                         // made
+    private int orderCost;              // Total cost of the order
+    private String orderOutputString;   // String to be written to the order
+                                         // output form
+    private String consoleOutputString; // String to be printed to the console
+    private ArrayList<String> manufacturer; // List of manufacturers to be
+                                            // suggest for alternative supply
 
     /**
      * Constructor for FileIO in the case of an unfulfilled order.
@@ -31,6 +36,8 @@ public class FileIO {
      */
     public FileIO(ArrayList<String> manufacturer){
         this.manufacturer = manufacturer;
+        // Constructs the FileIO object and creates an output for an
+        // unfulfilled order at the same time.
         createUnfulfilledOutput();
     }
 
@@ -49,6 +56,8 @@ public class FileIO {
      */
     public FileIO(String outputFileName, String[] itemsOrdered,
                   String originalRequest, int orderCost){
+        // Constructs the FileIO object and creates a fulfilled output
+        // at the same time.
         this.itemsOrdered = itemsOrdered;
         this.originalRequest = originalRequest;
         this.orderCost = orderCost;
@@ -72,6 +81,8 @@ public class FileIO {
                 "on current inventory.");
         outputString.append("\n");
         if(manufacturer.size() == 1){
+            // Provides proper grammar for when only one manufacturer is
+            // suggested.
             outputString.append("The suggested manufacturer for this " +
                     "order is ");
             outputString.append(manufacturer.get(0));
@@ -79,6 +90,8 @@ public class FileIO {
             consoleOutputString = outputString.toString();
         }
         else if(manufacturer.size() == 2){
+            // Provides proper grammar for when two manufacturers are
+            // suggested.
             outputString.append("Suggested manufacturers for this order are ");
             outputString.append(manufacturer.get(0));
             outputString.append(" and ");
@@ -87,6 +100,8 @@ public class FileIO {
             consoleOutputString = outputString.toString();
         }
         else{
+            // Provides proper grammar for when three or more manufacturers
+            // are suggested.
             outputString.append("Suggested manufacturers for this order are ");
             for(int i = 0; i<manufacturer.size()-1; i++){
                 outputString.append(manufacturer.get(i));
@@ -97,7 +112,11 @@ public class FileIO {
             outputString.append(".");
             consoleOutputString = outputString.toString();
         }
+        // Prints the message regarding the order's lack of success to the
+        // terminal for the user to see, including suggested
+        // manufacturers.
         System.out.println(consoleOutputString);
+        // Returns the string that was printed to the console
         return consoleOutputString;
     }
 
@@ -119,17 +138,22 @@ public class FileIO {
     consoleBuilder.append("\n");
     consoleBuilder.append("Order successful.");
     consoleBuilder.append("\n");
+    // Construction for the message that will be printed to the console
         if(itemsOrdered.length == 1){
+            // Provides proper grammar if only one component was purchased.
             consoleBuilder.append("Purchased component: ");
             consoleBuilder.append(itemsOrdered[0]);
 
         } else if(itemsOrdered.length == 2){
+            // Provides proper grammar if exactly two components were purchased
             consoleBuilder.append("Purchased components: ");
             consoleBuilder.append(itemsOrdered[0]);
             consoleBuilder.append(" and ");
             consoleBuilder.append(itemsOrdered[1]);
 
         } else{
+            // Provides proper grammar if three or more components were
+            // purchased.
             consoleBuilder.append("Purchased components: ");
             for(int i = 0; i<itemsOrdered.length -1; i++){
                 consoleBuilder.append(itemsOrdered[i]);
@@ -140,6 +164,8 @@ public class FileIO {
 
         }
 
+        // Construction for the String that will be written into the order
+        // output file containing details about the order.
         consoleBuilder.append(" for $");
         consoleBuilder.append(orderCost);
         consoleOutputString = consoleBuilder.toString();
@@ -176,6 +202,9 @@ public class FileIO {
      * and for writing the order form to the output file.
      */
     private void printOutputs(){
+
+        // Tries to write the order's output form to the order output
+        // file
         try {
             BufferedWriter outWriter = new BufferedWriter(
                     new FileWriter(outputFile));
@@ -186,6 +215,8 @@ public class FileIO {
                     "for order form.");
         }
 
+        // Prints the message with details about the successful order to the
+        // console for the user to see.
         System.out.println(consoleOutputString);
     }
 

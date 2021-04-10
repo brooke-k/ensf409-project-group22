@@ -474,7 +474,7 @@ public class UserIO {
                             // their order.
                     System.out.println();
                     System.out.println("The furniture type " + furnType  +
-                                       "could ");
+                                       " could ");
                     System.out.println("not be found in the " +
                                        "current database.");
                     pressEnterToContinue();
@@ -494,7 +494,7 @@ public class UserIO {
                         // order
                 System.out.println();
                 System.out.println("The category " + furnCategory  +
-                                   "could ");
+                                   " could ");
                 System.out.println("not be found in the " +
                                    "current database.");
                 pressEnterToContinue();

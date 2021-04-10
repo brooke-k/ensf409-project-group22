@@ -5,7 +5,7 @@
  * Ensure that the driver for operating the database,
  * "mysql_connector_java_8_0_23.jar"
  * is included in the classpath at execution.
- * Ensure the database "inventory.sql" exists and is set up
+ * Ensure the database "originalInventory.sql" exists and is set up
  * to be used.
  *
  * 2. Follow instructions in the command line for each desired action.
@@ -54,12 +54,12 @@ public class Main {
         UserIO input = new UserIO();
         input.firstMenu();
         int selection = input.menu();
-        continueLoop = input.processInput(selection);
+        continueLoop = input.processInput(selection, true);
         while(continueLoop) { // Will continue to run the program through
                                 // the UserIO menu until the user opts to end
                                 // the program and continueLoop is set as false.
             selection = input.menu();
-            continueLoop = input.processInput(selection);
+            continueLoop = input.processInput(selection, true);
 
         }
         System.exit(0);
