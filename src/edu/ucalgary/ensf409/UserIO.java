@@ -338,7 +338,8 @@ public class UserIO {
                 // If order input was not formatted correctly at all
                 System.out.println();
                 System.out.println("Order could not be recognized.");
-            } else if (spelCapErrMat.group(0).length() != (userRequest.length())){
+            } else if (spelCapErrMat.group(0).length() !=
+                    (userRequest.length())){
                 // If there's more incorrect with the order input than just
                 // spelling and capitalization
                 System.out.println();
@@ -793,7 +794,8 @@ public class UserIO {
     }
 
     /**
-     * Getter method for the furniture category of the latest valid order request
+     * Getter method for the furniture category of the latest valid order
+     * request
      * @return Latest valid order request furniture category
      */
     public String getFurnCategory(){
@@ -841,7 +843,7 @@ public class UserIO {
 
     /**
      * Private method setReadValuesNull sets the values for
-     * furnType, furnCategory, latestRequest, and numofItems to
+     * furnType, furnCategory, latestRequest, and numOfItems to
      * null.
      *
      * Used in the case of an invalid order being placed.

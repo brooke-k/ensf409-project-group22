@@ -92,7 +92,8 @@ public class FileIO {
         else if(manufacturer.size() == 2){
             // Provides proper grammar for when two manufacturers are
             // suggested.
-            outputString.append("Suggested manufacturers for this order are: \n");
+            outputString.append("Suggested manufacturers for this order are: " +
+                    "\n");
             outputString.append(manufacturer.get(0));
             outputString.append(" and ");
             outputString.append(manufacturer.get(1));
@@ -102,7 +103,8 @@ public class FileIO {
         else{
             // Provides proper grammar for when three or more manufacturers
             // are suggested.
-            outputString.append("Suggested manufacturers for this order are: \n");
+            outputString.append("Suggested manufacturers for this order are: " +
+                    "\n");
             for(int i = 0; i<manufacturer.size()-1; i++){
                 outputString.append(manufacturer.get(i));
                 outputString.append(", \n");
