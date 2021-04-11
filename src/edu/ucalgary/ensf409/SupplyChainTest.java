@@ -19,6 +19,10 @@ package edu.ucalgary.ensf409;
 
 import org.junit.*;
 import java.io.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.regex.Matcher;
@@ -1929,4 +1933,147 @@ public class SupplyChainTest {
             assertFalse(database.typeExists("chair",
                     "invalid"));
         }
+
+    /**
+     * testDatabaseIO_removeItemChairOfTypeKneeling() asserts that
+     * the specified item is removed from that database when the
+     * correct itemID and table is entered into method removeItem
+     */
+    @Test
+    public void testDatabaseIO_removeItemChairOfTypeKneeling(){
+        DatabaseIO database = new DatabaseIO();
+        database.createConnection();
+
+        database.removeItem("chair", "C1320");
+
+        PriceOptimizer priceOptimizer = database.getChairData("Kneeling");
+        String[] idBefore = priceOptimizer.getId();
+        int[] priceBefore = priceOptimizer.getPrice();
+        boolean[][] partsBefore = priceOptimizer.getParts();
+
+
+        try{
+            Connection dbConnect =
+                    DriverManager.getConnection(database.getDbUrl(),
+                            database.getUsername(), database.getPassword());
+            String query = "INSERT INTO chair " +
+                    "(ID, Type, Legs, Arms, Seat, Cushion, Price, ManuID) " +
+                    "VALUES (?,?,?,?,?,?,?,?)";
+            PreparedStatement chairStmt = dbConnect.prepareStatement(query);
+
+            chairStmt.setString(1, "C1320");
+            chairStmt.setString(2, "Kneeling");
+            chairStmt.setString(3, "Y");
+            chairStmt.setString(4, "N");
+            chairStmt.setString(5, "N");
+            chairStmt.setString(6, "N");
+            chairStmt.setInt(7, 50);
+            chairStmt.setString(8, "002");
+
+            chairStmt.executeUpdate();
+            chairStmt.close();
+            dbConnect.close();
+        } catch (SQLException e){
+            System.out.println("Database Error");
+        }
+
+        priceOptimizer = database.getChairData("Kneeling");
+        String[] idAfter = priceOptimizer.getId();
+        int[] priceAfter = priceOptimizer.getPrice();
+        boolean[][] partsAfter = priceOptimizer.getParts();
+
+        assertFalse(Arrays.equals(idBefore, idAfter)
+                || Arrays.deepEquals(partsBefore, partsAfter)
+                || Arrays.deepEquals(partsBefore, partsAfter));
     }
+
+    /**
+     * testDatabaseIO_removeTwoItemLampOfTypeStudy asserts that
+     * the two specified items are removed from that database when the
+     * correct itemID and table is entered into method removeItem
+     */
+    @Test
+    public void testDatabaseIO_removeTwoItemLampOfTypeStudy(){
+        DatabaseIO database = new DatabaseIO();
+        database.createConnection();
+
+        database.removeItem("lamp", "L980");
+        database.removeItem("lamp", "L982");
+
+        PriceOptimizer priceOptimizer = database.getLampData("Study");
+        String[] idBefore = priceOptimizer.getId();
+        int[] priceBefore = priceOptimizer.getPrice();
+        boolean[][] partsBefore = priceOptimizer.getParts();
+
+
+        try{
+            Connection dbConnect =
+                    DriverManager.getConnection(database.getDbUrl(),
+                            database.getUsername(), database.getPassword());
+            String query = "INSERT INTO lamp " +
+                    "(ID, Type, Base, Bulb, Price, ManuID) " +
+                    "VALUES (?,?,?,?,?,?)";
+            PreparedStatement lampStmt = dbConnect.prepareStatement(query);
+
+            lampStmt.setString(1, "L980");
+            lampStmt.setString(2, "Study");
+            lampStmt.setString(3, "N");
+            lampStmt.setString(4, "Y");
+            lampStmt.setInt(5, 2);
+            lampStmt.setString(6, "004");
+
+            lampStmt.executeUpdate();
+            lampStmt = dbConnect.prepareStatement(query);
+
+            lampStmt.setString(1, "L982");
+            lampStmt.setString(2, "Study");
+            lampStmt.setString(3, "Y");
+            lampStmt.setString(4, "N");
+            lampStmt.setInt(5, 8);
+            lampStmt.setString(6, "002");
+
+
+            lampStmt.executeUpdate();
+            lampStmt.close();
+            dbConnect.close();
+        } catch (SQLException e){
+            System.out.println("Database Error");
+        }
+
+        priceOptimizer = database.getLampData("Study");
+        String[] idAfter = priceOptimizer.getId();
+        int[] priceAfter = priceOptimizer.getPrice();
+        boolean[][] partsAfter = priceOptimizer.getParts();
+
+        assertFalse(Arrays.equals(idBefore, idAfter)
+                || Arrays.deepEquals(partsBefore, partsAfter)
+                || Arrays.deepEquals(partsBefore, partsAfter));
+    }
+
+    /**
+     * testDatabaseIO_removeInvalidItemFilingOfTypeLarge asserts that
+     * the specified item is not removed from that database when the
+     * incorrect itemID but correct table is entered into method removeItem
+     */
+    @Test
+    public void testDatabaseIO_removeInvalidItemFilingOfTypeLarge(){
+        DatabaseIO database = new DatabaseIO();
+        database.createConnection();
+
+        PriceOptimizer priceOptimizer = database.getFilingData("Large");
+        String[] idBefore = priceOptimizer.getId();
+        int[] priceBefore = priceOptimizer.getPrice();
+        boolean[][] partsBefore = priceOptimizer.getParts();
+
+        database.removeItem("filing", "F999");
+
+        priceOptimizer = database.getFilingData("Large");
+        String[] idAfter = priceOptimizer.getId();
+        int[] priceAfter = priceOptimizer.getPrice();
+        boolean[][] partsAfter = priceOptimizer.getParts();
+
+        assertTrue(Arrays.equals(idBefore, idAfter)
+                && Arrays.deepEquals(partsBefore, partsAfter)
+                && Arrays.deepEquals(partsBefore, partsAfter));
+    }
+}
