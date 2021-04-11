@@ -95,7 +95,9 @@ public class SupplyChainTest {
 
         FileIO fileOutput = new FileIO(manufacturers);
 
-        assertEquals(fileOutput.createUnfulfilledOutput(),
+        assertEquals("Output String for an unfulfilled " +
+                        "order with one manufacturer is incorrect.",
+                fileOutput.createUnfulfilledOutput(),
                 ("\n" +
                  "Order could not be fulfilled based on current inventory.\n" +
                  "The suggested manufacturer for this order " +
@@ -115,7 +117,9 @@ public class SupplyChainTest {
 
         FileIO fileIO = new FileIO(manufacturers);
 
-        assertEquals(fileIO.createUnfulfilledOutput(),
+        assertEquals("Output String for an unfulfilled " +
+                        "order with two manufacturers is incorrect.",
+                fileIO.createUnfulfilledOutput(),
                 ("\n" +
                  "Order could not be fulfilled based on current inventory.\n" +
                  "Suggested manufacturers for this order are: \nFirst " +
@@ -136,7 +140,9 @@ public class SupplyChainTest {
         manufacturers.add("Fourth");
 
         FileIO fileIO = new FileIO(manufacturers);
-        assertEquals(fileIO.createUnfulfilledOutput(),
+        assertEquals("Output String for an unfulfilled " +
+                        "order with four manufacturers is incorrect.",
+                fileIO.createUnfulfilledOutput(),
                 ("\n" +
                  "Order could not be fulfilled based on current inventory.\n" +
                  "Suggested manufacturers for this " +
@@ -164,7 +170,9 @@ public class SupplyChainTest {
         String termCont = terminalContent.toString().trim();
 
 
-        assertEquals(expectedOutput, termCont);
+        assertEquals("Terminal output for an unfulfilled order " +
+                        "with one manufacturer is incorrect.",
+                expectedOutput, termCont);
 
     }
 
@@ -191,7 +199,9 @@ public class SupplyChainTest {
         String termCont = terminalContent.toString().trim();
 
 
-        assertEquals(expectedOutput, termCont);
+        assertEquals("Terminal output for an unfulfilled order " +
+                "with two manufacturers is incorrect.",expectedOutput,
+                termCont);
     }
 
     /**
@@ -228,7 +238,9 @@ public class SupplyChainTest {
         String termCont = terminalContent.toString().trim();
 
 
-        assertEquals(expectedOutput, termCont);
+        assertEquals("Terminal output for an unfulfilled order " +
+                "with four manufacturers is incorrect."
+                ,expectedOutput, termCont);
     }
 
     /**
@@ -248,7 +260,9 @@ public class SupplyChainTest {
 
         String expectedConsoleOutput = ("Order successful." + "\n" +
                 "Purchased component: " + "OneItem" + " for $" + "3700");
-        assertEquals(expectedConsoleOutput,
+        assertEquals("Terminal output for a fulfilled item" +
+                        " with one item is incorrect.",
+                expectedConsoleOutput,
                 fileIO.getConsoleOutputString().trim());
     }
 
@@ -270,7 +284,8 @@ public class SupplyChainTest {
         String expectedConsoleOutput = ("Order successful." + "\n" +
                 "Purchased components: " + "One item" + " and " + "two items"
                 + " for $" + "7373");
-        assertEquals(expectedConsoleOutput,
+        assertEquals("Terminal output for a fulfilled item" +
+                        " with two items is incorrect.",expectedConsoleOutput,
                 fileIO.getConsoleOutputString().trim());
     }
 
@@ -292,7 +307,8 @@ public class SupplyChainTest {
         String expectedConsoleOutput = ("Order successful." + "\n" +
                 "Purchased components: " + "One1" + ", " + "Two2" + ", " +
                 "Three3" + ", " + "and " + "Four4" + " for $" + "89899");
-        assertEquals(expectedConsoleOutput,
+        assertEquals("Terminal output for a fulfilled item" +
+                        " with four items is incorrect.",expectedConsoleOutput,
                 fileIO.getConsoleOutputString().trim());
     }
 
@@ -329,7 +345,9 @@ public class SupplyChainTest {
                 "\n\n" +
                 "Total price of order: $" +
                 orderCost);
-        assertEquals(expectedOutputFileString, fileIO.getOrderOutputString());
+        assertEquals("Order form output String for an order " +
+                        "with one item is incorrect.",
+                expectedOutputFileString, fileIO.getOrderOutputString());
     }
 
     /**
@@ -368,7 +386,9 @@ public class SupplyChainTest {
                 "\n\n" +
                 "Total price of order: $" +
                 orderCost);
-        assertEquals(expectedOutputFileString, fileIO.getOrderOutputString());
+        assertEquals("Order form output String for an order " +
+                "with two items is incorrect.",expectedOutputFileString,
+                fileIO.getOrderOutputString());
     }
 
     /**
@@ -413,7 +433,9 @@ public class SupplyChainTest {
                 "\n\n" +
                 "Total price of order: $" +
                 orderCost);
-        assertEquals(expectedOutputFileString, fileIO.getOrderOutputString());
+        assertEquals("Order form output String for an order " +
+                "with four items is incorrect.",expectedOutputFileString,
+                fileIO.getOrderOutputString());
     }
 
     /**
@@ -433,7 +455,8 @@ public class SupplyChainTest {
         FileIO fileIO = new FileIO(testFileName, testItemsOrdered,
                 testRequest, testOrderCost);
         File testFile = new File(testFileName);
-        assertTrue(testFile.exists() && testFile.isFile());
+        assertTrue("The order output form file was not created.",
+                testFile.exists() && testFile.isFile());
     }
 
     /**
@@ -465,7 +488,10 @@ public class SupplyChainTest {
                 readFromFile.append(readChar);
                 readCharInt = testFileRead.read();
             }
-            assertEquals(fileIO.getOrderOutputString(),
+            assertEquals("The order output String does not " +
+                            "match the contents " +
+                            "of the generated order output form.",
+                    fileIO.getOrderOutputString(),
                     readFromFile.toString());
         } catch (IOException e) {
             System.err.println("IOException: " +
@@ -491,7 +517,9 @@ public class SupplyChainTest {
         int[] list = {0,1,2};
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
         p.setItemCount(1);
-        assertTrue(p.compatible(list));
+        assertTrue("Price optimizer with void id and price fails to " +
+                        "identify compatible items.",
+                p.compatible(list));
     }
 
     /**
@@ -511,7 +539,9 @@ public class SupplyChainTest {
         int[] list = {0,1,2};
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
         p.setItemCount(1);
-        assertFalse(p.compatible(list));
+        assertFalse("Price optimizer with void id and price does not" +
+                        " identify incompatible combinations.",
+                p.compatible(list));
     }
 
 
@@ -530,7 +560,10 @@ public class SupplyChainTest {
         int[] list = {0};
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
         p.setItemCount(1);
-        assertFalse(p.compatible(list));
+        assertFalse("Price optimizer with void id and price, and " +
+                        "one set of parts does not return " +
+                        "an invalid compatibility.",
+                p.compatible(list));
     }
 
     /**
@@ -552,7 +585,10 @@ public class SupplyChainTest {
         int[] list = {0,1,2};
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
         p.setItemCount(2);
-        assertFalse(p.compatible(list));
+        assertFalse("Price optimizer for two items and invalid " +
+                        "compatibility did not identify an " +
+                        "incompatible combination.",
+                p.compatible(list));
     }
 
     /**
@@ -575,7 +611,10 @@ public class SupplyChainTest {
         int[] list = {0,1,2};
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
         p.setItemCount(2);
-        assertTrue(p.compatible(list));
+        assertTrue("Price optimizer with two item request and " +
+                        "valid compatibility did not identify the " +
+                        "compatibility.",
+                p.compatible(list));
     }
 
     /**
@@ -600,7 +639,9 @@ public class SupplyChainTest {
         int[] list = {0,1,2,4};
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
         p.setItemCount(3);
-        assertTrue(p.compatible(list));
+        assertTrue("Price optimizer with three item request and " +
+                "valid compatibility did not identify the " +
+                "compatibility.",p.compatible(list));
     }
 
     /**
@@ -624,7 +665,9 @@ public class SupplyChainTest {
         int[] list = {0,1,2,3};
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
         p.setItemCount(3);
-        assertFalse(p.compatible(list));
+        assertFalse("Price optimizer with three item request and " +
+                "invalid compatibility did not identify the " +
+                "non-compatibility.",p.compatible(list));
     }
 
     /**
@@ -652,7 +695,10 @@ public class SupplyChainTest {
         int[] list = {4,6,7};
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
         p.setItemCount(3);
-        assertTrue(p.compatible(list));
+        assertTrue("PriceOptimizer with a three item order and " +
+                        "simple compatibility did not identify a " +
+                        "valid compatibility.",
+                p.compatible(list));
     }
 
     /**
@@ -703,7 +749,9 @@ public class SupplyChainTest {
         PriceOptimizer p = new PriceOptimizer(id, parts, price);
         p.optimize(1);
         int priceResult = p.getCurrentCost();
-        Assert.assertEquals(150, priceResult);
+        Assert.assertEquals("PriceOptimizer did not correctly " +
+                        "identify the lowest possible price for an order.",
+                150, priceResult);
     }
 
     /**
@@ -725,7 +773,10 @@ public class SupplyChainTest {
                 {false, false, false, true}
         };
         PriceOptimizer p = new PriceOptimizer(id, parts, price);
-        p.optimize(1);
+        String[] producedArray = p.optimize(1);
+        assertNull("PriceOptimizer did not return null for a " +
+                        "selection of incompatible items.",
+                producedArray);
     }
 
     /**
@@ -776,7 +827,9 @@ public class SupplyChainTest {
             System.out.print(s + " ");
         }
         int priceResult = p.getCurrentCost();
-        Assert.assertEquals(175, priceResult);
+        Assert.assertEquals("PriceOptimizer did not produce " +
+                        "the correct price.",
+                175, priceResult);
     }
 
     /**
@@ -841,8 +894,8 @@ public class SupplyChainTest {
     }
 
     /**
-     * testPriceOptimizer_testOptimize2v1_3Partsv1 provides a second variation of
-     * testPriceOptimizer_testOptimize2, testing that it is possible to make
+     * testPriceOptimizer_testOptimize2v1_3Partsv1 provides a second variation
+     * of testPriceOptimizer_testOptimize2, testing that it is possible to make
      * 2 furniture items based on a different configuration of parts.
      * With 3 parts per furniture item.
      * <p>
@@ -872,10 +925,11 @@ public class SupplyChainTest {
     }
 
     /**
-     * testPriceOptimizer_testOptimize2v1_3Partsv2_allTrue provides a second variation of
-     * testPriceOptimizer_testOptimize2, testing that it is possible to make
-     * 2 furniture items based on a different configuration of parts.
-     * With 3 parts per furniture item and all furniture items are true.
+     * testPriceOptimizer_testOptimize2v1_3Partsv2_allTrue provides a second
+     * variation of testPriceOptimizer_testOptimize2, testing that it is
+     * possible to make 2 furniture items based on a different configuration
+     * of parts, with 3 parts per furniture item and all furniture items are
+     * true.
      * <p>
      * Asserts that object Price Optimizer produces an order that completes
      * a furniture item with a combination of pieces that has the lowest
@@ -901,8 +955,8 @@ public class SupplyChainTest {
     }
 
     /**
-     * testPriceOptimizer_testOptimize2v1_3Partsv2 provides a second variation of
-     * testPriceOptimizer_testOptimize2, testing that it is possible to make
+     * testPriceOptimizer_testOptimize2v1_3Partsv2 provides a second variation
+     * of testPriceOptimizer_testOptimize2, testing that it is possible to make
      * 2 furniture items based on a different configuration of parts.
      * With 3 parts per furniture item.
      * <p>
@@ -934,9 +988,9 @@ public class SupplyChainTest {
     }
 
     /**
-     * testPriceOptimizer_testOptimize2v1_3Partsv2_compatible provides a second variation of
-     * testPriceOptimizer_testOptimize2 just testing the compatible method with a
-     * configuration of 3 parts per furniture item.
+     * testPriceOptimizer_testOptimize2v1_3Partsv2_compatible provides a second
+     * variation of testPriceOptimizer_testOptimize2 just testing the compatible
+     * method with a configuration of 3 parts per furniture item.
      * <p>
      * Asserts that object Price Optimizer produces an order that completes
      * a furniture item with a combination of pieces that has the lowest
@@ -992,10 +1046,10 @@ public class SupplyChainTest {
     }
 
     /**
-     * testPriceOptimizer_testOptimize2v1_2Parts_SwingArm provides a second variation of
-     * testPriceOptimizer_testOptimize2, testing that it is possible to make
-     * 2 furniture items based on a different configuration of parts with
-     * a 2 parts per furniture item.
+     * testPriceOptimizer_testOptimize2v1_2Parts_SwingArm provides a second
+     * variation of testPriceOptimizer_testOptimize2, testing that it is
+     * possible to make 2 furniture items based on a different configuration
+     * of parts with 2 parts per furniture item.
      * This test is based on Swing Arm
      * <p>
      * Asserts that object Price Optimizer produces an order that completes
@@ -1049,7 +1103,9 @@ public class SupplyChainTest {
                 {true, true, true, true}
         };
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
-        assertNull(p.optimize(3));
+        assertNull("PriceOptimizer did not return null when" +
+                        " given an impossible to combine series of pieces.",
+                p.optimize(3));
     }
 
     /**
@@ -1075,7 +1131,8 @@ public class SupplyChainTest {
         };
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
         String[] result = p.optimize(2);
-        assertNull(result);
+        assertNull("PriceOptimizer did not return null when" +
+                " given an impossible to combine series of pieces.",result);
     }
 
     /**
@@ -1093,8 +1150,10 @@ public class SupplyChainTest {
         };
         int[] price = {100, 75, 75, 50};
         PriceOptimizer p = new PriceOptimizer (id,parts,price);
-        assertTrue("Constructor failed.", Arrays.equals(id, p.getId()) &&
-                Arrays.equals(parts, p.getParts()) && Arrays.equals(price, p.getPrice()));
+        assertTrue("PriceOptimizer was not properly constructed.",
+                Arrays.equals(id, p.getId()) &&
+                Arrays.equals(parts, p.getParts()) &&
+                        Arrays.equals(price, p.getPrice()));
     }
 
     /**
@@ -1112,7 +1171,9 @@ public class SupplyChainTest {
 
         userIO.processInput(1, false);
 
-        assertEquals("chair", userIO.getFurnCategory());
+        assertEquals("processInput did not properly read the " +
+                        "furniture category from a valid order.",
+                "chair", userIO.getFurnCategory());
     }
 
     /**
@@ -1131,7 +1192,9 @@ public class SupplyChainTest {
 
         userIO.processInput(1,false);
 
-        assertEquals("Mesh", userIO.getFurnType());
+        assertEquals("processInput did not properly read the " +
+                "furniture type from a valid order.",
+                "Mesh", userIO.getFurnType());
     }
 
     /**
@@ -1150,7 +1213,9 @@ public class SupplyChainTest {
 
         userIO.processInput(1,false);
 
-        assertEquals("1", userIO.getNumOfItems());
+        assertEquals("processInput did not properly read the " +
+                "number of items from a valid order.",
+                "1", userIO.getNumOfItems());
     }
 
     /**
@@ -1169,7 +1234,9 @@ public class SupplyChainTest {
 
         userIO.processInput(1,false);
 
-        assertEquals("Mesh chair, 1", userIO.getLatestRequest());
+        assertEquals("processInput did not properly read the " +
+                "order request from a valid order.","Mesh chair, 1",
+                userIO.getLatestRequest());
     }
 
     /**
@@ -1187,7 +1254,9 @@ public class SupplyChainTest {
 
         userIO.processInput(1,false);
 
-        assertNull(userIO.getFurnType());
+        assertNull("processInput failed to save furniture type " +
+                        "as null for an invalid first order.",
+                userIO.getFurnType());
     }
 
     /**
@@ -1210,14 +1279,18 @@ public class SupplyChainTest {
         userIO.processInput(1,false); // Fulfills valid
         // order "Mesh chair, 1"
 
-        userIO.processInput(1,false); // Fulfills the valid order
+        userIO.processInput(1,false);
+        // Fulfills the valid order
                                             // "Desk lamp, 1"
 
-        userIO.processInput(1,false); // Attempts to fulfill the invalid
+        userIO.processInput(1,false);
+        // Attempts to fulfill the invalid
                                             // order "Invalid order name"
 
 
-        assertNull(userIO.getFurnType());
+        assertNull("processInput failed to save furniture type " +
+                "as null for an invalid order after the first order."
+                ,userIO.getFurnType());
     }
 
     /**
@@ -1235,7 +1308,8 @@ public class SupplyChainTest {
 
         userIO.processInput(1,false);
 
-        assertNull(userIO.getFurnCategory());
+        assertNull("processInput failed to save furniture category " +
+                "as null for an invalid first order.",userIO.getFurnCategory());
     }
 
     /**
@@ -1258,14 +1332,18 @@ public class SupplyChainTest {
   System.setIn(terminalInput1); // Fulfills valid order "Mesh chair, 1"
         userIO.processInput(1,false);
 
-       userIO.processInput(1,false); // Fulfills the valid order
+       userIO.processInput(1,false);
+       // Fulfills the valid order
         // "Desk lamp, 1"
 
-       userIO.processInput(1,false); // Attempts to fulfill the invalid
+       userIO.processInput(1,false);
+       // Attempts to fulfill the invalid
         // order "Invalid order"
 
 
-        assertNull(userIO.getFurnCategory());
+        assertNull("processInput failed to save furniture category " +
+                        "as null for an invalid order after the first order."
+                ,userIO.getFurnCategory());
     }
 
     /**
@@ -1283,7 +1361,8 @@ public class SupplyChainTest {
 
         userIO.processInput(1,false);
 
-        assertNull(userIO.getNumOfItems());
+        assertNull("processInput failed to save number of items " +
+                "as null for an invalid first order.",userIO.getNumOfItems());
     }
 
     /**
@@ -1303,17 +1382,22 @@ public class SupplyChainTest {
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
 
-        System.setIn(terminalInput1); // Fulfills valid order "Mesh chair, 1"
+        System.setIn(terminalInput1);
+        // Fulfills valid order "Mesh chair, 1"
         userIO.processInput(1,false);
 
-        userIO.processInput(1,false); // Fulfills the valid order
+        userIO.processInput(1,false);
+        // Fulfills the valid order
         // "Desk lamp, 1"
 
-        userIO.processInput(1,false); // Attempts to fulfill the invalid
+        userIO.processInput(1,false);
+        // Attempts to fulfill the invalid
         // order "Meaningless order"
 
 
-        assertNull(userIO.getNumOfItems());
+        assertNull("processInput failed to save number of items " +
+                        "as null for an invalid order after the first order."
+                ,userIO.getNumOfItems());
     }
 
     /**
@@ -1332,7 +1416,9 @@ public class SupplyChainTest {
 
         userIO.processInput(1,false);
 
-        assertNull(userIO.getLatestRequest());
+        assertNull("processInput failed to save order request " +
+                "as null for an invalid first order.",
+                userIO.getLatestRequest());
     }
 
     /**
@@ -1357,15 +1443,19 @@ public class SupplyChainTest {
         userIO.processInput(1,false);
 
 
-        userIO.processInput(1,false); // Fulfills the valid order
+        userIO.processInput(1,false);
+        // Fulfills the valid order
         // "Desk lamp, 1"
 
 
-        userIO.processInput(1,false); // Attempts to fulfill the invalid
+        userIO.processInput(1,false);
+        // Attempts to fulfill the invalid
         // order "Bad bad order"
 
 
-        assertNull(userIO.getLatestRequest());
+        assertNull("processInput failed to save order request " +
+                        "as null for an invalid order after the first order."
+                ,userIO.getLatestRequest());
     }
 
     /**
@@ -1391,7 +1481,9 @@ public class SupplyChainTest {
 
         boolean correctOutput = expectedMatch.find();
 
-        assertTrue(correctOutput);
+        assertTrue("UserIO failed to display the correct " +
+                        "SQL credentials to the terminal.",
+                correctOutput);
 
     }
 
@@ -1416,7 +1508,9 @@ public class SupplyChainTest {
 
         boolean correctOutput = expectedMatch.find();
 
-        assertTrue(correctOutput);
+        assertTrue("UserIO failed to display the correct current " +
+                        "output file name to the terminal.",
+                correctOutput);
     }
 
     /**
@@ -1436,11 +1530,13 @@ public class SupplyChainTest {
         UserIO userIO = new UserIO();
 
 
-        userIO.processInput(4,false); // Processes the input for
+        userIO.processInput(4,false);
+        // Processes the input for
                                             // requesting to change the
                                             //current output file name
 
-        userIO.processInput(2,false); // Processes the input for
+        userIO.processInput(2,false);
+        // Processes the input for
                                             // requesting to view the current
                                             // output file name
 
@@ -1456,7 +1552,10 @@ public class SupplyChainTest {
 
 
         boolean correctOutput = expectedMatch.find();
-        assertTrue(fileUpdated && correctOutput);
+        assertTrue("UserIO failed to update output file name and " +
+                        "display the updated output file name to " +
+                        "the terminal.",
+                fileUpdated && correctOutput);
     }
 
     @Test public void testUserIO_inValidCredentialsChange(){
@@ -1470,11 +1569,13 @@ public class SupplyChainTest {
         UserIO userIO = new UserIO();
 
 
-        userIO.processInput(5,false); // Processes the input for
+        userIO.processInput(5,false);
+        // Processes the input for
         // requesting to change the
         //current MySQL credentials to invalid values
 
-        userIO.processInput(1,false); // Process the input for requesting
+        userIO.processInput(1,false);
+        // Process the input for requesting
         // a new order using the invalid MySQL Credentials
 
 
@@ -1489,7 +1590,9 @@ public class SupplyChainTest {
 
 
         boolean correctOutput = expectedMatch.find();
-        assertTrue( correctOutput);
+        assertTrue("UserIO failed to identify and print message " +
+                "for invalid SQL credentials and failed connection to " +
+                "the database.", correctOutput);
     }
 
     @Test public void testUserIO_ValidCredentialsChange(){
@@ -1506,14 +1609,17 @@ public class SupplyChainTest {
                         "Y\n\nCANCEL").getBytes());
         System.setIn(terminalInput1);
         UserIO userIO = new UserIO();
-        userIO.processInput(5,false); // Processes the input for
+        userIO.processInput(5,false);
+        // Processes the input for
         // requesting to change the
         // current MySQL credentials to invalid values.
-        userIO.processInput(5,false); // Processes the input for
+        userIO.processInput(5,false);
+        // Processes the input for
         // requesting to change the
         //current MySQL credentials to valid values.
 
-        userIO.processInput(1,false); // Process the input for requesting
+        userIO.processInput(1,false);
+        // Process the input for requesting
         // a new order using the valid MySQL Credentials
 
         String expectedOutputREGEX
@@ -1524,7 +1630,9 @@ public class SupplyChainTest {
 
 
         boolean correctOutput = expectedMatch.find();
-        assertTrue( correctOutput);
+        assertTrue("UserIO failed to identify and implement a " +
+                        "valid SQL credentials change.",
+                correctOutput);
     }
 
 
@@ -1534,8 +1642,11 @@ public class SupplyChainTest {
      */
     @Test public void testUserIO_QuitMenu(){
         UserIO ioTest = new UserIO();
-        boolean returnedFromIO = ioTest.processInput(0,false);
-        assertFalse(returnedFromIO);
+        boolean returnedFromIO = ioTest.processInput(0,
+                false);
+        assertFalse("processInput failed to return " +
+                        "false upon having input 0.",
+                returnedFromIO);
     }
 
 
@@ -1550,7 +1661,9 @@ public class SupplyChainTest {
         UserIO testIO = new UserIO();
         boolean fromOption2 = testIO.processInput(2,false);
         boolean fromOption3 = testIO.processInput(3,false);
-        assertTrue(fromOption2 && fromOption3);
+        assertTrue("processInput failed to return true when " +
+                        "provided a valid, non-zero input.",
+                fromOption2 && fromOption3);
     }
 
 
@@ -1573,8 +1686,10 @@ public class SupplyChainTest {
 
         PriceOptimizer arrays = database.getChairData("Task");
 
-        assertTrue("Chair data obtained for type Task is not the same " +
-                "as listed in the database.", Arrays.equals(id, arrays.getId())
+        assertTrue("Chair data obtained for " +
+                        "type Task is not the same " +
+                "as listed in the database.",
+                Arrays.equals(id, arrays.getId())
                 && Arrays.equals(price, arrays.getPrice())
                 && Arrays.deepEquals(parts, arrays.getParts()));
 
@@ -1599,8 +1714,10 @@ public class SupplyChainTest {
 
         PriceOptimizer arrays = database.getChairData("Mesh");
 
-        assertTrue("Chair data obtained for type Mesh is not the same " +
-                "as listed in the database.", Arrays.equals(id, arrays.getId())
+        assertTrue("Chair data obtained for " +
+                        "type Mesh is not the same " +
+                "as listed in the database.",
+                Arrays.equals(id, arrays.getId())
                 && Arrays.equals(price, arrays.getPrice())
                 && Arrays.deepEquals(parts, arrays.getParts()));
     }
@@ -1638,8 +1755,10 @@ public class SupplyChainTest {
 
         PriceOptimizer arrays = database.getDeskData("Standing");
 
-        assertTrue("Desk data obtained for type Standing is not the same " +
-                "as listed in the database.", Arrays.equals(id, arrays.getId())
+        assertTrue("Desk data obtained for type " +
+                "Standing is not the same " +
+                "as listed in the database.",
+                Arrays.equals(id, arrays.getId())
                 && Arrays.equals(price, arrays.getPrice())
                 && Arrays.deepEquals(parts, arrays.getParts()));
     }
@@ -1662,8 +1781,10 @@ public class SupplyChainTest {
 
         PriceOptimizer arrays = database.getDeskData("Traditional");
 
-        assertTrue("Desk data obtained for type Traditional is not the same " +
-                "as listed in the database.", Arrays.equals(id, arrays.getId())
+        assertTrue("Desk data obtained for type " +
+                        "Traditional is not the same " +
+                "as listed in the database.",
+                Arrays.equals(id, arrays.getId())
                 && Arrays.equals(price, arrays.getPrice())
                 && Arrays.deepEquals(parts, arrays.getParts()));
     }
@@ -1700,8 +1821,10 @@ public class SupplyChainTest {
 
         PriceOptimizer arrays = database.getLampData("Swing Arm");
 
-        assertTrue("Lamp data obtained for type Swing Arm is not the same " +
-                "as listed in the database.", Arrays.equals(id, arrays.getId())
+        assertTrue("Lamp data obtained for type " +
+                        "Swing Arm is not the same " +
+                "as listed in the database.",
+                Arrays.equals(id, arrays.getId())
                 && Arrays.equals(price, arrays.getPrice())
                 && Arrays.deepEquals(parts, arrays.getParts()));
     }
@@ -1724,8 +1847,10 @@ public class SupplyChainTest {
 
         PriceOptimizer arrays = database.getLampData("Study");
 
-        assertTrue("Lamp data obtained for type Study is not the same " +
-                "as listed in the database.", Arrays.equals(id, arrays.getId())
+        assertTrue("Lamp data obtained for type " +
+                        "Study is not the same " +
+                "as listed in the database.",
+                Arrays.equals(id, arrays.getId())
                 && Arrays.equals(price, arrays.getPrice())
                 && Arrays.deepEquals(parts, arrays.getParts()));
     }
@@ -1763,8 +1888,10 @@ public class SupplyChainTest {
 
         PriceOptimizer arrays = database.getFilingData("Large");
 
-        assertTrue("Filing data obtained for type Large is not the same " +
-                "as listed in the database.", Arrays.equals(id, arrays.getId())
+        assertTrue("Filing data obtained for type " +
+                        "Large is not the same " +
+                "as listed in the database.",
+                Arrays.equals(id, arrays.getId())
                 && Arrays.equals(price, arrays.getPrice())
                 && Arrays.deepEquals(parts, arrays.getParts()));
     }
@@ -1788,8 +1915,10 @@ public class SupplyChainTest {
 
         PriceOptimizer arrays = database.getFilingData("Small");
 
-        assertTrue("Filing data obtained for type Small is not the same " +
-                "as listed in the database.", Arrays.equals(id, arrays.getId())
+        assertTrue("Filing data obtained for type " +
+                        "Small is not the same " +
+                "as listed in the database.",
+                Arrays.equals(id, arrays.getId())
                 && Arrays.equals(price, arrays.getPrice())
                 && Arrays.deepEquals(parts, arrays.getParts()));
     }
@@ -1821,10 +1950,12 @@ public class SupplyChainTest {
 
         String[] checkChair = {"Office Furnishings", "Chairs R Us",
                 "Furniture Goods", "Fine Office Supplies"};
-        ArrayList<String> test = database.suggestedManufacturers("chair");
+        ArrayList<String> test
+                = database.suggestedManufacturers("chair");
         String[] testArray = test.toArray(new String[0]);
 
-        assertArrayEquals("The incorrect manufacturers were listed for any " +
+        assertArrayEquals("The incorrect manufacturers " +
+                "were listed for any " +
                 "Chair furniture.", checkChair, testArray);
     }
 
@@ -1841,10 +1972,12 @@ public class SupplyChainTest {
 
         String[] checkChair = {"Office Furnishings", "Furniture Goods",
                 "Fine Office Supplies"};
-        ArrayList<String> test = database.suggestedManufacturers("lamp");
+        ArrayList<String> test
+                = database.suggestedManufacturers("lamp");
         String[] testArray = test.toArray(new String[0]);
 
-        assertArrayEquals("The incorrect manufacturers were listed for any " +
+        assertArrayEquals("The incorrect manufacturers were " +
+                "listed for any " +
                 "Lamp furniture.", checkChair, testArray);
     }
 
@@ -1858,7 +1991,8 @@ public class SupplyChainTest {
         DatabaseIO database = new DatabaseIO();
         database.createConnection();
 
-        assertNull("Manufacturers were listed for a table that does not " +
+        assertNull("Manufacturers were listed for a table that " +
+                        "does not " +
                         "exist in the database."
                 ,database.suggestedManufacturers("invalid"));
     }
@@ -1873,7 +2007,8 @@ public class SupplyChainTest {
         DatabaseIO database = new DatabaseIO();
         database.createConnection();
 
-        assertEquals("The number of standing desks in the database is " +
+        assertEquals("The number of standing desks in the" +
+                        " database is " +
                         "not of the correct value", 5,
                 database.getSize("desk", "Standing"));
     }
@@ -2002,10 +2137,10 @@ public class SupplyChainTest {
         int[] priceAfter = priceOptimizer.getPrice();
         boolean[][] partsAfter = priceOptimizer.getParts();
 
-        assertFalse("The item with ID C1320 was not removed from the database" +
+        assertFalse("The item with ID C1320 was not removed " +
+                        "from the database" +
                         " or did not exist in the database.",
                 Arrays.equals(idBefore, idAfter)
-                        || Arrays.deepEquals(partsBefore, partsAfter)
                         || Arrays.deepEquals(partsBefore, partsAfter));
     }
 
@@ -2067,10 +2202,10 @@ public class SupplyChainTest {
         int[] priceAfter = priceOptimizer.getPrice();
         boolean[][] partsAfter = priceOptimizer.getParts();
 
-        assertFalse("The items with ID L980 and L982 were not removed from the database" +
+        assertFalse("The items with ID L980 and L982 were not" +
+                        " removed from the database" +
                         " or did not exist in the database.",
                 Arrays.equals(idBefore, idAfter)
-                        || Arrays.deepEquals(partsBefore, partsAfter)
                         || Arrays.deepEquals(partsBefore, partsAfter));
     }
 
@@ -2099,7 +2234,6 @@ public class SupplyChainTest {
         assertTrue("An item with an invalid ID altered the database " +
                 "even though the ID does not correspond to any " +
                 "furniture item.", Arrays.equals(idBefore, idAfter)
-                && Arrays.deepEquals(partsBefore, partsAfter)
                 && Arrays.deepEquals(partsBefore, partsAfter));
     }
 }

@@ -90,7 +90,8 @@ public class DatabaseIO {
      * @param username New database username
      * @param password New database password
      */
-    public void updateCredentials(String dbUrl, String username, String password){
+    public void updateCredentials(String dbUrl, String username,
+                                  String password){
         try {
             if(this.dbConnect !=null) {
                 dbConnect.close();

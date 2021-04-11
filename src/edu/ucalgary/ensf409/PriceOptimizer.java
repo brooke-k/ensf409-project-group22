@@ -78,16 +78,20 @@ public class PriceOptimizer {
         }
 
         int[] indexs = new int[parts.length];
-        for (int i = 0; i < parts.length; i++) { //index stores the index of all the parts
+        for (int i = 0; i < parts.length; i++) { //index stores the index
+                                                // of all the parts
             indexs[i] = i;
         }
 
         for (int i = 1; i <= parts.length; i++) {
-            int[] data = new int[i];        //makes an array to store the compatible data
-            recursion(indexs, data, 0, indexs.length-1, 0, i); //calls recursion
+            int[] data = new int[i];        //makes an array to store the
+                                            // compatible data
+            recursion(indexs, data, 0, indexs.length-1,
+                    0, i); //calls recursion
         }
 
-        String[] ids = null;            //sets returning string as null incase there wasnt a match
+        String[] ids = null;            //sets returning string as null
+                                         // in case there wasn't a match
         if(minIndex != null){
             ids = new String[minIndex.length];
             for (int i = 0; i < ids.length; i++) {
@@ -120,10 +124,12 @@ public class PriceOptimizer {
         //once the data has a list of index to search it will call compatible
         if (index == r) {
             if(compatible(data)){
-                if(getPrice(data) <= currentCost){      //if the new price is lower
+                if(getPrice(data) <= currentCost){      //if the new price is
+                                                        // lower
                     currentCost = getPrice(data);       //then change the min
                     minIndex = new int[data.length];    //store the new array
-                    System.arraycopy(data, 0, minIndex, 0, data.length);
+                    System.arraycopy(data, 0, minIndex,
+                            0, data.length);
                 }
             }
             return;
@@ -216,7 +222,8 @@ public class PriceOptimizer {
     private boolean[][] copyOf(boolean[][] array){
         boolean[][] newArray = new boolean[array.length][array[0].length];
         for (int i = 0; i < array.length; i++) {
-            System.arraycopy(array[i], 0, newArray[i], 0, array[0].length);
+            System.arraycopy(array[i], 0, newArray[i],
+                    0, array[0].length);
         }
         return newArray;
     }
