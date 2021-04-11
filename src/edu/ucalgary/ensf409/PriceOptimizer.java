@@ -117,18 +117,21 @@ public class PriceOptimizer {
     private void recursion(int[] arr, int[] data, int start,
                            int end, int index, int r) {
 
+        //once the data has a list of index to search it will call compatible
         if (index == r) {
-
             if(compatible(data)){
-                if(getPrice(data) <= currentCost){
-                    currentCost = getPrice(data);
-                    minIndex = new int[data.length];
+                if(getPrice(data) <= currentCost){      //if the new price is lower
+                    currentCost = getPrice(data);       //then change the min
+                    minIndex = new int[data.length];    //store the new array
                     System.arraycopy(data, 0, minIndex, 0, data.length);
                 }
             }
             return;
         }
-        //
+
+        //recursively sends combinations of index to the recursion
+        //ie: if there are 3 items, it will first send
+        // 0, then 1, then 2, then 01, then 02, and so on
         for (int i = start; i <= end && end - i + 1 >= r - index; i++) {
             data[index] = arr[i];
             recursion(arr, data, i + 1, end, index + 1, r);
