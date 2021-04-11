@@ -32,7 +32,8 @@ public class DatabaseIOTest {
 
         PriceOptimizer arrays = database.getChairData("Task");
 
-        assertTrue(Arrays.equals(id, arrays.getId())
+        assertTrue("Chair data obtained for type Task is not the same " +
+                "as listed in the database.", Arrays.equals(id, arrays.getId())
                 && Arrays.equals(price, arrays.getPrice())
                 && Arrays.deepEquals(parts, arrays.getParts()));
 
@@ -57,7 +58,8 @@ public class DatabaseIOTest {
 
         PriceOptimizer arrays = database.getChairData("Mesh");
 
-        assertTrue(Arrays.equals(id, arrays.getId())
+        assertTrue("Chair data obtained for type Mesh is not the same " +
+                "as listed in the database.", Arrays.equals(id, arrays.getId())
                 && Arrays.equals(price, arrays.getPrice())
                 && Arrays.deepEquals(parts, arrays.getParts()));
     }
@@ -72,7 +74,8 @@ public class DatabaseIOTest {
         DatabaseIO database = new DatabaseIO();
         database.createConnection();
 
-        assertNull(database.getChairData("invalid"));
+        assertNull("The given type for chair does actually exist " +
+                        "in the database." ,database.getChairData("invalid"));
     }
 
     /**
@@ -94,7 +97,8 @@ public class DatabaseIOTest {
 
         PriceOptimizer arrays = database.getDeskData("Standing");
 
-        assertTrue(Arrays.equals(id, arrays.getId())
+        assertTrue("Desk data obtained for type Standing is not the same " +
+                "as listed in the database.", Arrays.equals(id, arrays.getId())
                 && Arrays.equals(price, arrays.getPrice())
                 && Arrays.deepEquals(parts, arrays.getParts()));
     }
@@ -117,7 +121,8 @@ public class DatabaseIOTest {
 
         PriceOptimizer arrays = database.getDeskData("Traditional");
 
-        assertTrue(Arrays.equals(id, arrays.getId())
+        assertTrue("Desk data obtained for type Traditional is not the same " +
+                "as listed in the database.", Arrays.equals(id, arrays.getId())
                 && Arrays.equals(price, arrays.getPrice())
                 && Arrays.deepEquals(parts, arrays.getParts()));
     }
@@ -132,7 +137,8 @@ public class DatabaseIOTest {
         DatabaseIO database = new DatabaseIO();
         database.createConnection();
 
-        assertNull(database.getDeskData("invalid"));
+        assertNull("The given type for desk does actually exist " +
+                "in the database.", database.getDeskData("invalid"));
     }
 
     /**
@@ -153,7 +159,8 @@ public class DatabaseIOTest {
 
         PriceOptimizer arrays = database.getLampData("Swing Arm");
 
-        assertTrue(Arrays.equals(id, arrays.getId())
+        assertTrue("Lamp data obtained for type Swing Arm is not the same " +
+                "as listed in the database.", Arrays.equals(id, arrays.getId())
                 && Arrays.equals(price, arrays.getPrice())
                 && Arrays.deepEquals(parts, arrays.getParts()));
     }
@@ -176,7 +183,8 @@ public class DatabaseIOTest {
 
         PriceOptimizer arrays = database.getLampData("Study");
 
-        assertTrue(Arrays.equals(id, arrays.getId())
+        assertTrue("Lamp data obtained for type Study is not the same " +
+                "as listed in the database.", Arrays.equals(id, arrays.getId())
                 && Arrays.equals(price, arrays.getPrice())
                 && Arrays.deepEquals(parts, arrays.getParts()));
     }
@@ -191,7 +199,8 @@ public class DatabaseIOTest {
         DatabaseIO database = new DatabaseIO();
         database.createConnection();
 
-        assertNull(database.getLampData("invalid"));
+        assertNull("The given type for lamp does actually exist " +
+                "in the database.", database.getLampData("invalid"));
     }
 
     /**
@@ -213,7 +222,8 @@ public class DatabaseIOTest {
 
         PriceOptimizer arrays = database.getFilingData("Large");
 
-        assertTrue(Arrays.equals(id, arrays.getId())
+        assertTrue("Filing data obtained for type Large is not the same " +
+                "as listed in the database.", Arrays.equals(id, arrays.getId())
                 && Arrays.equals(price, arrays.getPrice())
                 && Arrays.deepEquals(parts, arrays.getParts()));
     }
@@ -237,7 +247,8 @@ public class DatabaseIOTest {
 
         PriceOptimizer arrays = database.getFilingData("Small");
 
-        assertTrue(Arrays.equals(id, arrays.getId())
+        assertTrue("Filing data obtained for type Small is not the same " +
+                "as listed in the database.", Arrays.equals(id, arrays.getId())
                 && Arrays.equals(price, arrays.getPrice())
                 && Arrays.deepEquals(parts, arrays.getParts()));
     }
@@ -252,7 +263,8 @@ public class DatabaseIOTest {
         DatabaseIO database = new DatabaseIO();
         database.createConnection();
 
-        assertNull(database.getFilingData("invalid"));
+        assertNull("The given type for filing does actually exist " +
+                "in the database.", database.getFilingData("invalid"));
     }
 
     /**
@@ -271,7 +283,8 @@ public class DatabaseIOTest {
         ArrayList<String> test = database.suggestedManufacturers("chair");
         String[] testArray = test.toArray(new String[0]);
 
-        assertArrayEquals(checkChair, testArray);
+        assertArrayEquals("The incorrect manufacturers were listed for any " +
+                        "Chair furniture.", checkChair, testArray);
     }
 
     /**
@@ -290,7 +303,8 @@ public class DatabaseIOTest {
         ArrayList<String> test = database.suggestedManufacturers("lamp");
         String[] testArray = test.toArray(new String[0]);
 
-        assertArrayEquals(checkChair, testArray);
+        assertArrayEquals("The incorrect manufacturers were listed for any " +
+                "Lamp furniture.", checkChair, testArray);
     }
 
     /**
@@ -303,7 +317,9 @@ public class DatabaseIOTest {
         DatabaseIO database = new DatabaseIO();
         database.createConnection();
 
-        assertNull(database.suggestedManufacturers("invalid"));
+        assertNull("Manufacturers were listed for a table that does not " +
+                "exist in the database."
+                ,database.suggestedManufacturers("invalid"));
     }
 
     /**
@@ -316,7 +332,9 @@ public class DatabaseIOTest {
         DatabaseIO database = new DatabaseIO();
         database.createConnection();
 
-        assertEquals(5, database.getSize("desk", "Standing"));
+        assertEquals("The number of standing desks in the database is " +
+                "not of the correct value", 5,
+                database.getSize("desk", "Standing"));
     }
 
     /**
@@ -329,7 +347,9 @@ public class DatabaseIOTest {
         DatabaseIO database = new DatabaseIO();
         database.createConnection();
 
-        assertEquals(7, database.getSize("lamp", "Desk"));
+        assertEquals("The number of desk lamps in the database is " +
+                "not of the correct value.", 7,
+                database.getSize("lamp", "Desk"));
     }
 
     /**
@@ -342,7 +362,9 @@ public class DatabaseIOTest {
         DatabaseIO database = new DatabaseIO();
         database.createConnection();
 
-        assertEquals(0, database.getSize("filing", "invalid"));
+        assertEquals("The number of invalid filing's should not " +
+                "be greater than or less than zero.", 0,
+                database.getSize("filing", "invalid"));
     }
 
     /**
@@ -355,7 +377,9 @@ public class DatabaseIOTest {
         DatabaseIO database = new DatabaseIO();
         database.createConnection();
 
-        assertTrue(database.typeExists("filing", "Medium"));
+        assertTrue("The type Medium does not exist in the " +
+                "filing table in the database."
+                ,database.typeExists("filing", "Medium"));
     }
 
     /**
@@ -368,7 +392,9 @@ public class DatabaseIOTest {
         DatabaseIO database = new DatabaseIO();
         database.createConnection();
 
-        assertTrue(database.typeExists("desk", "Adjustable"));
+        assertTrue("The type Adjustable does not exist in the " +
+                "desk table in the database."
+                , database.typeExists("desk", "Adjustable"));
     }
 
     /**
@@ -381,7 +407,10 @@ public class DatabaseIOTest {
         DatabaseIO database = new DatabaseIO();
         database.createConnection();
 
-        assertFalse(database.typeExists("chair", "invalid"));
+        assertFalse("The type Invalid does exist in the " +
+                "chair table in the database but it should not " +
+                        "as it is an invalid type.",
+                database.typeExists("chair", "invalid"));
     }
 
     /**
@@ -432,7 +461,9 @@ public class DatabaseIOTest {
         int[] priceAfter = priceOptimizer.getPrice();
         boolean[][] partsAfter = priceOptimizer.getParts();
 
-        assertFalse(Arrays.equals(idBefore, idAfter)
+        assertFalse("The item with ID C1320 was not removed from the database" +
+                " or did not exist in the database.",
+                Arrays.equals(idBefore, idAfter)
                 || Arrays.deepEquals(partsBefore, partsAfter)
                 || Arrays.deepEquals(partsBefore, partsAfter));
     }
@@ -495,7 +526,9 @@ public class DatabaseIOTest {
         int[] priceAfter = priceOptimizer.getPrice();
         boolean[][] partsAfter = priceOptimizer.getParts();
 
-        assertFalse(Arrays.equals(idBefore, idAfter)
+        assertFalse("The items with ID L980 and L982 were not removed from the database" +
+                " or did not exist in the database.",
+                Arrays.equals(idBefore, idAfter)
                 || Arrays.deepEquals(partsBefore, partsAfter)
                 || Arrays.deepEquals(partsBefore, partsAfter));
     }
@@ -522,7 +555,9 @@ public class DatabaseIOTest {
         int[] priceAfter = priceOptimizer.getPrice();
         boolean[][] partsAfter = priceOptimizer.getParts();
 
-        assertTrue(Arrays.equals(idBefore, idAfter)
+        assertTrue("An item with an invalid ID altered the database " +
+                        "even though the ID does not correspond to any " +
+                        "furniture item.", Arrays.equals(idBefore, idAfter)
                 && Arrays.deepEquals(partsBefore, partsAfter)
                 && Arrays.deepEquals(partsBefore, partsAfter));
     }
