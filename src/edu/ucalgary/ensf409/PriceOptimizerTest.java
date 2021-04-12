@@ -31,7 +31,8 @@ public class PriceOptimizerTest {
         int[] list = {0,1,2};
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
         p.setItemCount(1);
-        assertTrue(p.compatible(list));
+        assertTrue("compatible returns false despite a valid " +
+                "situation.", p.compatible(list));
     }
 
     /**
@@ -51,7 +52,8 @@ public class PriceOptimizerTest {
         int[] list = {0,1,2};
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
         p.setItemCount(1);
-        assertFalse(p.compatible(list));
+        assertFalse("compatible returns true despite an invalid" +
+                " situation.", p.compatible(list));
     }
 
 
@@ -70,7 +72,8 @@ public class PriceOptimizerTest {
         int[] list = {0};
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
         p.setItemCount(1);
-        assertFalse(p.compatible(list));
+        assertFalse("compatible returns true despite an invalid" +
+                " situation.", p.compatible(list));
     }
 
     /**
@@ -92,7 +95,8 @@ public class PriceOptimizerTest {
         int[] list = {0,1,2};
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
         p.setItemCount(2);
-        assertFalse(p.compatible(list));
+        assertFalse("compatible returned true despite an" +
+                " invalid situation", p.compatible(list));
     }
 
     /**
@@ -115,7 +119,8 @@ public class PriceOptimizerTest {
         int[] list = {0,1,2};
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
         p.setItemCount(2);
-        assertTrue(p.compatible(list));
+        assertTrue("compatible returned false despite a " +
+                "valid situation", p.compatible(list));
     }
 
     /**
@@ -140,7 +145,8 @@ public class PriceOptimizerTest {
         int[] list = {0,1,2,4};
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
         p.setItemCount(3);
-        assertTrue(p.compatible(list));
+        assertTrue("compatible returned false despite a" +
+                "valid situation", p.compatible(list));
     }
 
     /**
@@ -164,7 +170,8 @@ public class PriceOptimizerTest {
         int[] list = {0,1,2,3};
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
         p.setItemCount(3);
-        assertFalse(p.compatible(list));
+        assertFalse("compatible returned true despite an" +
+                "invalid situation", p.compatible(list));
     }
 
     /**
@@ -192,7 +199,8 @@ public class PriceOptimizerTest {
         int[] list = {4,6,7};
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
         p.setItemCount(3);
-        assertTrue(p.compatible(list));
+        assertTrue("compatible returned false despite a" +
+                "valid situation", p.compatible(list));
     }
 
     /**
@@ -219,7 +227,7 @@ public class PriceOptimizerTest {
             System.out.println(result[i] + " ");
         }
 
-        Assert.assertTrue("Output array incorrect.",
+        Assert.assertTrue("Output array does not match any expected result.",
                 Arrays.equals(expected, result) ||
                         Arrays.equals(expected2, result));
     }
@@ -243,7 +251,8 @@ public class PriceOptimizerTest {
         PriceOptimizer p = new PriceOptimizer(id, parts, price);
         p.optimize(1);
         int priceResult = p.getCurrentCost();
-        Assert.assertEquals(150, priceResult);
+        Assert.assertEquals("Optimize price was incorrect: ",
+                150, priceResult);
     }
 
     /**
@@ -265,7 +274,9 @@ public class PriceOptimizerTest {
                 {false, false, false, true}
         };
         PriceOptimizer p = new PriceOptimizer(id, parts, price);
-        p.optimize(1);
+        String[] result = p.optimize(1);
+        Assert.assertNull("Array not null despite impossible " +
+                "configuration", result);
     }
 
     /**
@@ -290,9 +301,10 @@ public class PriceOptimizerTest {
         PriceOptimizer p = new PriceOptimizer(id, parts, price);
         String[] result = p.optimize(2);
         String[] expected = {"C0942", "C6748"};
-        Assert.assertTrue("Output array incorrect.",
+        String[] expected2 = {"C6748", "C0942"};
+        Assert.assertTrue("Output array does not match any expected result.",
                 Arrays.equals(expected, result) ||
-                        Arrays.equals(result, expected));
+                        Arrays.equals(result, expected2));
     }
 
     /**
@@ -316,7 +328,8 @@ public class PriceOptimizerTest {
             System.out.print(s + " ");
         }
         int priceResult = p.getCurrentCost();
-        Assert.assertEquals(175, priceResult);
+        Assert.assertEquals("Optimize price was incorrect: ",
+                175, priceResult);
     }
 
     /**
@@ -375,7 +388,11 @@ public class PriceOptimizerTest {
         for (String s : result) {
             System.out.print(s + " ");
         }
-        Assert.assertTrue("Output array incorrect.",
+        // Sort the result array to make sure it is in order
+        Arrays.sort(expected);
+        Arrays.sort(expected2);
+        Arrays.sort(result);
+        Assert.assertTrue("Output array does not match any expected result.",
                 Arrays.equals(expected, result) ||
                         Arrays.equals(result, expected2));
     }
@@ -406,9 +423,10 @@ public class PriceOptimizerTest {
         for (String s : result) {
             System.out.print(s + " ");
         }
-        Assert.assertTrue("Output array incorrect.",
-                Arrays.equals(expected, result) ||
-                        Arrays.equals(result, expected));
+        Arrays.sort(result);
+        Arrays.sort(expected);
+        assertArrayEquals("Output array does not match any expected result.",
+                expected, result);
     }
 
     /**
@@ -436,8 +454,10 @@ public class PriceOptimizerTest {
         for (String s : result) {
             System.out.print(s + " ");
         }
-        Assert.assertTrue("Output array incorrect.",
-                Arrays.equals(expected, result));
+        Arrays.sort(expected);
+        Arrays.sort(result);
+        assertArrayEquals("Output array does not match any expected result.",
+                expected, result);
     }
 
     /**
@@ -465,12 +485,13 @@ public class PriceOptimizerTest {
         PriceOptimizer p = new PriceOptimizer(id, parts, price);
         String[] result = p.optimize(2);
         String[] expected = {"3","4","5","6"};
+        Arrays.sort(result);
+        Arrays.sort(expected);
         for (String s : result) {
             System.out.print(s + " ");
         }
-        Assert.assertTrue("Output array incorrect.",
-                Arrays.equals(expected, result) ||
-                        Arrays.equals(result, expected));
+        assertArrayEquals("Output array does not match any expected result.",
+                expected, result);
     }
 
     /**
@@ -496,7 +517,8 @@ public class PriceOptimizerTest {
         int[] list = {0,1,2,3,4};
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
         p.setItemCount(2);
-        assertTrue(p.compatible(list));
+        assertTrue("Compatible returned false despite a valid configuration.",
+                p.compatible(list));
     }
 
     /**
@@ -526,7 +548,8 @@ public class PriceOptimizerTest {
         for (String s : result) {
             System.out.print(s + " ");
         }
-        Assert.assertTrue("Output array incorrect.",
+        Arrays.sort(result);
+        Assert.assertTrue("Output array does not match any expected result.",
                 Arrays.equals(expected, result) ||
                         Arrays.equals(expected2, result));
     }
@@ -558,9 +581,9 @@ public class PriceOptimizerTest {
         for (String s : result) {
             System.out.print(s + " ");
         }
-        Assert.assertTrue("Output array incorrect.",
-                Arrays.equals(expected, result) ||
-                        Arrays.equals(result, expected));
+        Arrays.sort(result);
+        assertArrayEquals("Output array does not match any expected result.",
+                expected, result);
     }
 
     /**
@@ -589,7 +612,8 @@ public class PriceOptimizerTest {
                 {true, true, true, true}
         };
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
-        assertNull(p.optimize(3));
+        assertNull("Optimize output a result despite it being impossible.",
+                p.optimize(3));
     }
 
     /**
@@ -615,7 +639,8 @@ public class PriceOptimizerTest {
         };
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
         String[] result = p.optimize(2);
-        assertNull(result);
+        assertNull("Optimize output a result despite it being impossible.",
+                result);
     }
 
     /**

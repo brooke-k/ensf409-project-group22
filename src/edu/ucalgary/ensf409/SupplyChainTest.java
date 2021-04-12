@@ -517,9 +517,8 @@ public class SupplyChainTest {
         int[] list = {0,1,2};
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
         p.setItemCount(1);
-        assertTrue("Price optimizer with void id and price fails to " +
-                        "identify compatible items.",
-                p.compatible(list));
+        assertTrue("compatible returns false despite a valid " +
+                "situation.", p.compatible(list));
     }
 
     /**
@@ -539,9 +538,8 @@ public class SupplyChainTest {
         int[] list = {0,1,2};
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
         p.setItemCount(1);
-        assertFalse("Price optimizer with void id and price does not" +
-                        " identify incompatible combinations.",
-                p.compatible(list));
+        assertFalse("compatible returns true despite an invalid" +
+                " situation.", p.compatible(list));
     }
 
 
@@ -560,10 +558,8 @@ public class SupplyChainTest {
         int[] list = {0};
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
         p.setItemCount(1);
-        assertFalse("Price optimizer with void id and price, and " +
-                        "one set of parts does not return " +
-                        "an invalid compatibility.",
-                p.compatible(list));
+        assertFalse("compatible returns true despite an invalid" +
+                " situation.", p.compatible(list));
     }
 
     /**
@@ -585,10 +581,8 @@ public class SupplyChainTest {
         int[] list = {0,1,2};
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
         p.setItemCount(2);
-        assertFalse("Price optimizer for two items and invalid " +
-                        "compatibility did not identify an " +
-                        "incompatible combination.",
-                p.compatible(list));
+        assertFalse("compatible returned true despite an" +
+                " invalid situation", p.compatible(list));
     }
 
     /**
@@ -611,10 +605,8 @@ public class SupplyChainTest {
         int[] list = {0,1,2};
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
         p.setItemCount(2);
-        assertTrue("Price optimizer with two item request and " +
-                        "valid compatibility did not identify the " +
-                        "compatibility.",
-                p.compatible(list));
+        assertTrue("compatible returned false despite a " +
+                "valid situation", p.compatible(list));
     }
 
     /**
@@ -639,9 +631,8 @@ public class SupplyChainTest {
         int[] list = {0,1,2,4};
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
         p.setItemCount(3);
-        assertTrue("Price optimizer with three item request and " +
-                "valid compatibility did not identify the " +
-                "compatibility.",p.compatible(list));
+        assertTrue("compatible returned false despite a" +
+                "valid situation", p.compatible(list));
     }
 
     /**
@@ -665,9 +656,8 @@ public class SupplyChainTest {
         int[] list = {0,1,2,3};
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
         p.setItemCount(3);
-        assertFalse("Price optimizer with three item request and " +
-                "invalid compatibility did not identify the " +
-                "non-compatibility.",p.compatible(list));
+        assertFalse("compatible returned true despite an" +
+                "invalid situation", p.compatible(list));
     }
 
     /**
@@ -695,10 +685,8 @@ public class SupplyChainTest {
         int[] list = {4,6,7};
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
         p.setItemCount(3);
-        assertTrue("PriceOptimizer with a three item order and " +
-                        "simple compatibility did not identify a " +
-                        "valid compatibility.",
-                p.compatible(list));
+        assertTrue("compatible returned false despite a" +
+                "valid situation", p.compatible(list));
     }
 
     /**
@@ -725,7 +713,7 @@ public class SupplyChainTest {
             System.out.println(result[i] + " ");
         }
 
-        Assert.assertTrue("Output array incorrect.",
+        Assert.assertTrue("Output array does not match any expected result.",
                 Arrays.equals(expected, result) ||
                         Arrays.equals(expected2, result));
     }
@@ -749,8 +737,7 @@ public class SupplyChainTest {
         PriceOptimizer p = new PriceOptimizer(id, parts, price);
         p.optimize(1);
         int priceResult = p.getCurrentCost();
-        Assert.assertEquals("PriceOptimizer did not correctly " +
-                        "identify the lowest possible price for an order.",
+        Assert.assertEquals("Optimize price was incorrect: ",
                 150, priceResult);
     }
 
@@ -773,10 +760,9 @@ public class SupplyChainTest {
                 {false, false, false, true}
         };
         PriceOptimizer p = new PriceOptimizer(id, parts, price);
-        String[] producedArray = p.optimize(1);
-        assertNull("PriceOptimizer did not return null for a " +
-                        "selection of incompatible items.",
-                producedArray);
+        String[] result = p.optimize(1);
+        Assert.assertNull("Array not null despite impossible " +
+                "configuration", result);
     }
 
     /**
@@ -801,9 +787,10 @@ public class SupplyChainTest {
         PriceOptimizer p = new PriceOptimizer(id, parts, price);
         String[] result = p.optimize(2);
         String[] expected = {"C0942", "C6748"};
-        Assert.assertTrue("Output array incorrect.",
+        String[] expected2 = {"C6748", "C0942"};
+        Assert.assertTrue("Output array does not match any expected result.",
                 Arrays.equals(expected, result) ||
-                        Arrays.equals(result, expected));
+                        Arrays.equals(result, expected2));
     }
 
     /**
@@ -827,8 +814,7 @@ public class SupplyChainTest {
             System.out.print(s + " ");
         }
         int priceResult = p.getCurrentCost();
-        Assert.assertEquals("PriceOptimizer did not produce " +
-                        "the correct price.",
+        Assert.assertEquals("Optimize price was incorrect: ",
                 175, priceResult);
     }
 
@@ -888,14 +874,18 @@ public class SupplyChainTest {
         for (String s : result) {
             System.out.print(s + " ");
         }
-        Assert.assertTrue("Output array incorrect.",
+        // Sort the result array to make sure it is in order
+        Arrays.sort(expected);
+        Arrays.sort(expected2);
+        Arrays.sort(result);
+        Assert.assertTrue("Output array does not match any expected result.",
                 Arrays.equals(expected, result) ||
                         Arrays.equals(result, expected2));
     }
 
     /**
-     * testPriceOptimizer_testOptimize2v1_3Partsv1 provides a second variation
-     * of testPriceOptimizer_testOptimize2, testing that it is possible to make
+     * testPriceOptimizer_testOptimize2v1_3Partsv1 provides a second variation of
+     * testPriceOptimizer_testOptimize2, testing that it is possible to make
      * 2 furniture items based on a different configuration of parts.
      * With 3 parts per furniture item.
      * <p>
@@ -919,17 +909,17 @@ public class SupplyChainTest {
         for (String s : result) {
             System.out.print(s + " ");
         }
-        Assert.assertTrue("Output array incorrect.",
-                Arrays.equals(expected, result) ||
-                        Arrays.equals(result, expected));
+        Arrays.sort(result);
+        Arrays.sort(expected);
+        assertArrayEquals("Output array does not match any expected result.",
+                expected, result);
     }
 
     /**
-     * testPriceOptimizer_testOptimize2v1_3Partsv2_allTrue provides a second
-     * variation of testPriceOptimizer_testOptimize2, testing that it is
-     * possible to make 2 furniture items based on a different configuration
-     * of parts, with 3 parts per furniture item and all furniture items are
-     * true.
+     * testPriceOptimizer_testOptimize2v1_3Partsv2_allTrue provides a second variation of
+     * testPriceOptimizer_testOptimize2, testing that it is possible to make
+     * 2 furniture items based on a different configuration of parts.
+     * With 3 parts per furniture item and all furniture items are true.
      * <p>
      * Asserts that object Price Optimizer produces an order that completes
      * a furniture item with a combination of pieces that has the lowest
@@ -950,13 +940,15 @@ public class SupplyChainTest {
         for (String s : result) {
             System.out.print(s + " ");
         }
-        Assert.assertTrue("Output array incorrect.",
-                Arrays.equals(expected, result));
+        Arrays.sort(expected);
+        Arrays.sort(result);
+        assertArrayEquals("Output array does not match any expected result.",
+                expected, result);
     }
 
     /**
-     * testPriceOptimizer_testOptimize2v1_3Partsv2 provides a second variation
-     * of testPriceOptimizer_testOptimize2, testing that it is possible to make
+     * testPriceOptimizer_testOptimize2v1_3Partsv2 provides a second variation of
+     * testPriceOptimizer_testOptimize2, testing that it is possible to make
      * 2 furniture items based on a different configuration of parts.
      * With 3 parts per furniture item.
      * <p>
@@ -979,18 +971,19 @@ public class SupplyChainTest {
         PriceOptimizer p = new PriceOptimizer(id, parts, price);
         String[] result = p.optimize(2);
         String[] expected = {"3","4","5","6"};
+        Arrays.sort(result);
+        Arrays.sort(expected);
         for (String s : result) {
             System.out.print(s + " ");
         }
-        Assert.assertTrue("Output array incorrect.",
-                Arrays.equals(expected, result) ||
-                        Arrays.equals(result, expected));
+        assertArrayEquals("Output array does not match any expected result.",
+                expected, result);
     }
 
     /**
-     * testPriceOptimizer_testOptimize2v1_3Partsv2_compatible provides a second
-     * variation of testPriceOptimizer_testOptimize2 just testing the compatible
-     * method with a configuration of 3 parts per furniture item.
+     * testPriceOptimizer_testOptimize2v1_3Partsv2_compatible provides a second variation of
+     * testPriceOptimizer_testOptimize2 just testing the compatible method with a
+     * configuration of 3 parts per furniture item.
      * <p>
      * Asserts that object Price Optimizer produces an order that completes
      * a furniture item with a combination of pieces that has the lowest
@@ -1010,7 +1003,8 @@ public class SupplyChainTest {
         int[] list = {0,1,2,3,4};
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
         p.setItemCount(2);
-        assertTrue(p.compatible(list));
+        assertTrue("Compatible returned false despite a valid configuration.",
+                p.compatible(list));
     }
 
     /**
@@ -1040,16 +1034,17 @@ public class SupplyChainTest {
         for (String s : result) {
             System.out.print(s + " ");
         }
-        Assert.assertTrue("Output array incorrect.",
+        Arrays.sort(result);
+        Assert.assertTrue("Output array does not match any expected result.",
                 Arrays.equals(expected, result) ||
                         Arrays.equals(expected2, result));
     }
 
     /**
-     * testPriceOptimizer_testOptimize2v1_2Parts_SwingArm provides a second
-     * variation of testPriceOptimizer_testOptimize2, testing that it is
-     * possible to make 2 furniture items based on a different configuration
-     * of parts with 2 parts per furniture item.
+     * testPriceOptimizer_testOptimize2v1_2Parts_SwingArm provides a second variation of
+     * testPriceOptimizer_testOptimize2, testing that it is possible to make
+     * 2 furniture items based on a different configuration of parts with
+     * a 2 parts per furniture item.
      * This test is based on Swing Arm
      * <p>
      * Asserts that object Price Optimizer produces an order that completes
@@ -1072,9 +1067,9 @@ public class SupplyChainTest {
         for (String s : result) {
             System.out.print(s + " ");
         }
-        Assert.assertTrue("Output array incorrect.",
-                Arrays.equals(expected, result) ||
-                        Arrays.equals(result, expected));
+        Arrays.sort(result);
+        assertArrayEquals("Output array does not match any expected result.",
+                expected, result);
     }
 
     /**
@@ -1103,8 +1098,7 @@ public class SupplyChainTest {
                 {true, true, true, true}
         };
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
-        assertNull("PriceOptimizer did not return null when" +
-                        " given an impossible to combine series of pieces.",
+        assertNull("Optimize output a result despite it being impossible.",
                 p.optimize(3));
     }
 
@@ -1131,8 +1125,8 @@ public class SupplyChainTest {
         };
         PriceOptimizer p = new PriceOptimizer(id,parts,price);
         String[] result = p.optimize(2);
-        assertNull("PriceOptimizer did not return null when" +
-                " given an impossible to combine series of pieces.",result);
+        assertNull("Optimize output a result despite it being impossible.",
+                result);
     }
 
     /**
@@ -1150,10 +1144,8 @@ public class SupplyChainTest {
         };
         int[] price = {100, 75, 75, 50};
         PriceOptimizer p = new PriceOptimizer (id,parts,price);
-        assertTrue("PriceOptimizer was not properly constructed.",
-                Arrays.equals(id, p.getId()) &&
-                Arrays.equals(parts, p.getParts()) &&
-                        Arrays.equals(price, p.getPrice()));
+        assertTrue("Constructor failed.", Arrays.equals(id, p.getId()) &&
+                Arrays.equals(parts, p.getParts()) && Arrays.equals(price, p.getPrice()));
     }
 
     /**
