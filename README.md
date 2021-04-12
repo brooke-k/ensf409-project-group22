@@ -22,6 +22,14 @@ the submitted zip file, with the exception of the presentation video.*
 *The presentation video can be found in an independant zip file within the same dropbox, 
 or at the link above.*
 
+*Copies of certain tests, including those for classes DatabaseIO and PriceOptimizer, 
+are located in separate files to allow for tests to be run on those classes as isolated instances. 
+They are intended to be used for debugging and finetuning certain individual classes.*
+
+*All unit tests for 'Supply Chain Manager', including tests which can also be found in 
+other test files, are contained in "SupplyChainTest.java", to allow for all 81 total
+tests to be run in one operation.*
+
 ----------------------------------------------------------------------
 
 ## About the Program
