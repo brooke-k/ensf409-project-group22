@@ -100,6 +100,8 @@ command
    the *Supply Chain Manager*. 
 ---------------------------------------------------------------------
 ## Execution Instructions for *Supply Chain Manager* Unit Testing
+*Note: The following instructions are intended to execute all 81 possible tests
+for 'Supply Chain Manager'.*
 1. Enter the directory `"SupplyChainManager/"` in the command line
 2. Ensure the *Supply Chain Manager* program has been compiled correctly
 3. Ensure the following directories are contained within the current 
